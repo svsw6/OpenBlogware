@@ -122,11 +122,6 @@ Component.extend('werkl-blog-detail', 'sw-cms-detail', {
                     }
                 });
             }
-
-            if (this.acl.can('system_config.read')) {
-                this.getDefaultLayouts();
-            }
-
             this.setPageContext();
         },
 
