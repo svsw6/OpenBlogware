@@ -93,10 +93,10 @@ Component.extend('werkl-blog-detail', 'sw-cms-detail', {
     methods: {
         createdComponent() {
             this.publishExtensionData();
-            State.commit('adminMenu/collapseSidebar');
+            Shopware.Store.get('adminMenu').collapseSidebar();
 
             const isSystemDefaultLanguage = State.getters['context/isSystemDefaultLanguage'];
-            this.$store.commit('cmsPageState/setIsSystemDefaultLanguage', isSystemDefaultLanguage);
+            this.cmsPageState.setIsSystemDefaultLanguage(isSystemDefaultLanguage);
 
             this.resetCmsPageState();
 
@@ -156,6 +156,7 @@ Component.extend('werkl-blog-detail', 'sw-cms-detail', {
                 if (entity.cmsPageId) {
                     this.page = entity.cmsPage;
                     this.pageId = entity.cmsPageId;
+                    this.cmsPageState.setCurrentPageType(this.page.type);
                     delete this.blog.cmsPage;
                     return this.loadCMSDataResolver();
                 } else {
@@ -196,7 +197,7 @@ Component.extend('werkl-blog-detail', 'sw-cms-detail', {
             return this.salesChannelRepository.search(new Criteria()).then((response) => {
                 this.salesChannels = response;
                 const isSystemDefaultLanguage = State.getters['context/isSystemDefaultLanguage'];
-                this.$store.commit('cmsPageState/setIsSystemDefaultLanguage', isSystemDefaultLanguage);
+                this.cmsPageState.setIsSystemDefaultLanguage(isSystemDefaultLanguage);
                 return this.loadBlog(this.blogId);
             });
         },
@@ -210,7 +211,7 @@ Component.extend('werkl-blog-detail', 'sw-cms-detail', {
 
             return this.cmsDataResolverService.resolve(this.page).then(() => {
                 this.updateSectionAndBlockPositions();
-                State.commit('cmsPageState/setCurrentPage', this.page);
+                this.cmsPageState.setCurrentPage(this.page);
 
                 this.updateDataMapping();
                 this.pageOrigin = cloneDeep(this.page);
