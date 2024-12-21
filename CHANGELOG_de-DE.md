@@ -1,5 +1,7 @@
-# 4.0.3
+# 4.1.0
 - Shopware 6.6.7.0 Kompatibilität
+- Achtung: Diese Version ist nicht kompatibel mit Shopware Versionen vor 6.6.7
+- Fehlende CMS-Blöcke behoben [12](https://github.com/Werkstattl/OpenBlogware/issues/12)
 
 # 4.0.2
 - Fehler beim deinstallieren des Plugins behoben.
