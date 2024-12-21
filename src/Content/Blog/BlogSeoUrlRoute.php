@@ -13,6 +13,7 @@ use Shopware\Core\System\SalesChannel\SalesChannelEntity;
 class BlogSeoUrlRoute implements SeoUrlRouteInterface
 {
     public const ROUTE_NAME = 'werkl.frontend.blog.detail';
+    public const DEFAULT_TEMPLATE = 'blog/{{ entry.blogCategories.first.translated.name|lower }}/{{ entry.translated.title|lower }}';
 
     /**
      * @var BlogEntriesDefinition
@@ -29,7 +30,8 @@ class BlogSeoUrlRoute implements SeoUrlRouteInterface
         return new SeoUrlRouteConfig(
             $this->definition,
             self::ROUTE_NAME,
-            'blog/{{ entry.blogCategories.first.translated.name|lower }}/{{ entry.translated.title|lower }}'
+            self::DEFAULT_TEMPLATE,
+            true
         );
     }
 
