@@ -1,3 +1,6 @@
+# 4.0.3
+- Shopware 6.6.7.0 Kompatibilität
+
 # 4.0.2
 - Fehler beim deinstallieren des Plugins behoben.
 
