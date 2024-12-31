@@ -1,3 +1,6 @@
+# 4.1.2
+- Added blog URL preview link to CMS sidebar component [14](https://github.com/Werkstattl/OpenBlogware/issues/14)
+
 # 4.1.1
 - Added category id classes to blog listings [10](https://github.com/Werkstattl/OpenBlogware/issues/10)
 

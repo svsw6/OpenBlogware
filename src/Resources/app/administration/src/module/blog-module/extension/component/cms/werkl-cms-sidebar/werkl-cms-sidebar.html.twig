@@ -40,7 +40,16 @@
                                     :placeholder="$tc('werkl-blog.detail.slugPlaceholder')"
                                 ></sw-text-field>
                             {% endblock %}
-
+                            <div class="sw-field">
+                                <span class="sw-field__label">URL</span>
+                                <a
+                                    :href="`/blog/${blog.slug}`"
+                                    target="_blank"
+                                    class="werkl-blog-preview"
+                                >
+                                    /blog/{{blog.slug}}
+                                </a>
+                            </div>
                             {% block werkl_blog_cms_sidebar_page_basic_information_teaser_field %}
                                 <sw-textarea-field
                                     type="textarea"
