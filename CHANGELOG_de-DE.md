@@ -1,3 +1,6 @@
+# 4.1.1
+- Kategorie-ID-Klassen bei Listings hinzugefügt [10](https://github.com/Werkstattl/OpenBlogware/issues/10)
+
 # 4.1.0
 - Shopware 6.6.7.0 Kompatibilität
 - Achtung: Diese Version ist nicht kompatibel mit Shopware Versionen vor 6.6.7

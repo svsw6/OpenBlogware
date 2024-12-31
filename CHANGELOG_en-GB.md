@@ -1,3 +1,6 @@
+# 4.1.1
+- Added category id classes to blog listings [10](https://github.com/Werkstattl/OpenBlogware/issues/10)
+
 # 4.1.0
 - Shopware 6.6.7.0 compatibility
 - Note: This version is not compatible with Shopware versions below 6.6.7
