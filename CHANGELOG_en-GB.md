@@ -1,3 +1,6 @@
+# 4.1.3
+- Fixed mixed search results [12](https://github.com/Werkstattl/OpenBlogware/issues/12)
+
 # 4.1.2
 - Added blog URL preview link to CMS sidebar component [14](https://github.com/Werkstattl/OpenBlogware/issues/14)
 

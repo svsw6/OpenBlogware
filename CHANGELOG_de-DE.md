@@ -1,3 +1,6 @@
+# 4.1.3
+- Fehler bei gemischten Suchergebnissen behoben [12](https://github.com/Werkstattl/OpenBlogware/issues/12)
+
 # 4.1.2
 - Blog URL Vorschau-Link zu CMS sidebar hinzgefügt [14](https://github.com/Werkstattl/OpenBlogware/issues/14)
 
