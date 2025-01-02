@@ -31,7 +31,7 @@
             "description": "{{ entry.translated.teaser }}",
             "author": {
                 "@type": "Person",
-                "name": "{{ entry.author.translated.name }}"
+                "name": "{{ entry.blogAuthor.firstName }} {{ entry.blogAuthor.lastName }}"
             },
             {% if entry.media.thumbnails.elements|length %}
             "image":[{% for item in entry.media.thumbnails.elements %}"{{ item.url }}"{{ loop.last ? '' : ',' }}{% endfor %}],{% endif %}

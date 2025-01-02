@@ -1,3 +1,6 @@
+# 4.1.4
+- Fehler bei Author für Meta-Daten behoben [9](https://github.com/Werkstattl/OpenBlogware/issues/9)
+
 # 4.1.3
 - Fehler bei gemischten Suchergebnissen behoben [12](https://github.com/Werkstattl/OpenBlogware/issues/12)
 

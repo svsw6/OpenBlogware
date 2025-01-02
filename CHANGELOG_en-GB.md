@@ -1,3 +1,6 @@
+# 4.1.4
+- Fixed author for meta data [9](https://github.com/Werkstattl/OpenBlogware/issues/9)
+
 # 4.1.3
 - Fixed mixed search results [12](https://github.com/Werkstattl/OpenBlogware/issues/12)
 

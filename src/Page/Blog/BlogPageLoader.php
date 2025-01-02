@@ -111,8 +111,8 @@ class BlogPageLoader
     {
         $criteria = (new Criteria([$articleId]))
             ->addAssociation('author.salutation')
-            ->addAssociation('blogCategories');
-
+            ->addAssociation('blogCategories')
+            ->addAssociation('blogAuthor');
         $this->eventDispatcher->dispatch(new BlogPageCriteriaEvent($articleId, $criteria, $context));
 
         $blogEntry = $this->blogRepository
