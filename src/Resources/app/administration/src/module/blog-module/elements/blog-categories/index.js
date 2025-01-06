@@ -4,7 +4,7 @@ import './preview';
 
 Shopware.Service('cmsService').registerCmsElement({
     name: 'blog-categories',
-    label: 'werkl-blog.elements.categories.preview.label',
+    label: 'Blog Categories',
     component: 'sw-cms-el-categories',
     configComponent: 'sw-cms-el-config-categories',
     previewComponent: 'sw-cms-el-preview-categories',
