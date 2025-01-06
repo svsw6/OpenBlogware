@@ -42,7 +42,7 @@ class BlogSingleSelectDataResolver extends AbstractCmsElementResolver
             new ContainsFilter('customFields.salesChannelIds', $resolverContext->getSalesChannelContext()->getSalesChannelId()),
             new EqualsFilter('customFields.salesChannelIds', null),
         ]));
-        $criteria->addAssociations(['blogAuthor', 'blogAuthor.media', 'blogAuthor.blogEntries', 'blogCategories']);
+        $criteria->addAssociations(['blogAuthor', 'blogAuthor.media', 'blogAuthor.blogEntries', 'blogCategories', 'tags']);
 
         $criteriaCollection = new CriteriaCollection();
 

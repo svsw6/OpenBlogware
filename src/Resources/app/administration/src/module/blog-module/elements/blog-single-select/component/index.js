@@ -56,6 +56,7 @@ Shopware.Component.register('sw-cms-el-blog-single-select', {
             if (this.element.config.blogEntry.value) {
                 const criteria = new Criteria();
                 criteria.addAssociation('blogCategories');
+                criteria.addAssociation('tags');
 
                 this.repository
                     .get(this.element.config.blogEntry.value, Context.api, criteria)

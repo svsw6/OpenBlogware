@@ -1,3 +1,6 @@
+# 4.2.0
+- Added tags [5](https://github.com/Werkstattl/OpenBlogware/issues/5)
+
 # 4.1.4
 - Fixed author for meta data [9](https://github.com/Werkstattl/OpenBlogware/issues/9)
 

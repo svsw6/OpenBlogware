@@ -26,6 +26,10 @@
             <tag name="shopware.entity.definition"/>
         </service>
 
+        <service id="Werkl\OpenBlogware\Content\Blog\Aggregate\BlogEntriesTagMappingDefinition">
+            <tag name="shopware.entity.definition"/>
+        </service>
+
         <service id="Werkl\OpenBlogware\Content\BlogAuthor\BlogAuthorDefinition">
             <tag name="shopware.entity.definition"/>
         </service>

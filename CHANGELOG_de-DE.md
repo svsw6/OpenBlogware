@@ -1,3 +1,6 @@
+# 4.2.0
+- Tags hinzugefügt [5](https://github.com/Werkstattl/OpenBlogware/issues/5)
+
 # 4.1.4
 - Fehler bei Author für Meta-Daten behoben [9](https://github.com/Werkstattl/OpenBlogware/issues/9)
 

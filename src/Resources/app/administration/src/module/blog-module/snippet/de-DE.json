@@ -36,6 +36,8 @@
             "teaserLabel": "Teaser",
             "teaserImageLabel": "Teaser Bild",
             "teaserPlaceholder": "Der Teaser Text, welcher im Blog Listing angezeigt wird ...",
+            "tagsLabel": "Tags",
+            "tagsPlaceholder": "Füge Tags hinzu ...",
             "editorCardTitle": "Dein Artikel",
             "editorLabel": "Blog Inhalt",
             "editorPlaceholder": "Starte deinen Blog Beitrag ...",

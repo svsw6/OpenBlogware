@@ -94,6 +94,7 @@ Component.register('werkl-blog-list', {
             const criteria = new Criteria(this.page, this.limit);
             criteria.addAssociation('blogAuthor');
             criteria.addAssociation('blogCategories');
+            criteria.addAssociation('tags');
 
             criteria.addSorting(Criteria.sort('publishedAt', 'DESC', false));
 

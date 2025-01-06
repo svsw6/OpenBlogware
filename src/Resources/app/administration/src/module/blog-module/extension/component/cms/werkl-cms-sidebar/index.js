@@ -65,6 +65,10 @@ Component.extend('werkl-cms-sidebar', 'sw-cms-sidebar', {
             return this.repositoryFactory.create('media');
         },
 
+        tagRepository() {
+            return this.repositoryFactory.create('tag');
+        },
+
         positionIdentifierExtension() {
             return 'werkl-cms-sidebar-extension';
         },

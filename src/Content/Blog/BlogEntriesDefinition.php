@@ -23,6 +23,7 @@ use Shopware\Core\Framework\DataAbstractionLayer\Field\ReferenceVersionField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\TranslatedField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\TranslationsAssociationField;
 use Shopware\Core\Framework\DataAbstractionLayer\FieldCollection;
+use Shopware\Core\System\Tag\TagDefinition;
 use Werkl\OpenBlogware\Content\Blog\Aggregate\BlogCategoryMappingDefinition;
 use Werkl\OpenBlogware\Content\Blog\BlogEntriesTranslation\BlogEntriesTranslationDefinition;
 use Werkl\OpenBlogware\Content\BlogAuthor\BlogAuthorDefinition;
@@ -81,6 +82,7 @@ class BlogEntriesDefinition extends EntityDefinition
             (new ManyToManyAssociationField('blogCategories', BlogCategoryDefinition::class, BlogCategoryMappingDefinition::class, 'werkl_blog_entries_id', 'werkl_blog_category_id'))->addFlags(new CascadeDelete(), new ApiAware(), new SearchRanking(SearchRanking::ASSOCIATION_SEARCH_RANKING)),
             (new ManyToOneAssociationField('blogAuthor', 'author_id', BlogAuthorDefinition::class, 'id', false))->addFlags(new ApiAware(), new SearchRanking(SearchRanking::ASSOCIATION_SEARCH_RANKING)),
             (new OneToOneAssociationField('cmsPage', 'cms_page_id', 'id', CmsPageDefinition::class, false))->addFlags(new ApiAware()),
+            (new ManyToManyAssociationField('tags', TagDefinition::class, 'werkl_blog_entries_tag', 'werkl_blog_entries_id', 'tag_id'))->addFlags(new ApiAware()),
         ]);
     }
 }

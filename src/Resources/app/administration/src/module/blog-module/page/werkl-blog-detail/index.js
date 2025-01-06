@@ -51,6 +51,7 @@ Component.extend('werkl-blog-detail', 'sw-cms-detail', {
 
             criteria
                 .addAssociation('blogCategories')
+                .addAssociation('tags')
 
                 .getAssociation('cmsPage')
                 .getAssociation('sections')

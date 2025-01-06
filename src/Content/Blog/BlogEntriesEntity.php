@@ -8,6 +8,7 @@ use Shopware\Core\Content\Media\MediaEntity;
 use Shopware\Core\Framework\DataAbstractionLayer\Entity;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityCustomFieldsTrait;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityIdTrait;
+use Shopware\Core\System\Tag\TagCollection;
 use Werkl\OpenBlogware\Content\Blog\BlogEntriesTranslation\BlogEntriesTranslationCollection;
 use Werkl\OpenBlogware\Content\BlogAuthor\BlogAuthorEntity;
 use Werkl\OpenBlogware\Content\BlogCategory\BlogCategoryCollection;
@@ -56,6 +57,11 @@ class BlogEntriesEntity extends Entity
     protected ?string $cmsPageId;
 
     protected ?CmsPageEntity $cmsPage;
+
+    /**
+     * @var TagCollection|null
+     */
+    protected ?TagCollection $tags = null;
 
     public function getTitle(): ?string
     {
@@ -225,5 +231,21 @@ class BlogEntriesEntity extends Entity
     public function setCmsPageId(string $cmsPageId): void
     {
         $this->cmsPageId = $cmsPageId;
+    }
+
+    /**
+     * @return TagCollection|null
+     */
+    public function getTags(): ?TagCollection
+    {
+        return $this->tags;
+    }
+
+    /**
+     * @param TagCollection|null $tags
+     */
+    public function setTags(?TagCollection $tags): void
+    {
+        $this->tags = $tags;
     }
 }

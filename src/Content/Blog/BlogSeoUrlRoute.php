@@ -40,6 +40,7 @@ class BlogSeoUrlRoute implements SeoUrlRouteInterface
         $criteria->addAssociations([
             'blogCategories',
             'blogAuthor',
+            'tags'
         ]);
     }
 

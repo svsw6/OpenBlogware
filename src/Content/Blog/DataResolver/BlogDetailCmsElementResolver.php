@@ -36,7 +36,7 @@ class BlogDetailCmsElementResolver extends AbstractCmsElementResolver
             new EqualsFilter('customFields.salesChannelIds', null),
         ]));
         $criteria
-            ->addAssociations(['blogAuthor', 'blogCategories'])
+            ->addAssociations(['blogAuthor', 'blogCategories', 'tags'])
             ->addAssociation('cmsPage.sections.backgroundMedia')
             ->addAssociation('cmsPage.sections.blocks.backgroundMedia');
         $criteria

@@ -42,6 +42,8 @@
             "teaserLabel": "Teaser",
             "teaserImageLabel": "Teaser Image",
             "teaserPlaceholder": "The teaser text which will be shown as an introduction within the blog listing ...",
+            "tagsLabel": "Tags",
+            "tagsPlaceholder": "Enter a tag ...",
             "editorCardTitle": "Your article",
             "editorLabel": "Blog Content",
             "editorPlaceholder": "Start your blog post ...",

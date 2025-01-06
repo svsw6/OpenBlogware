@@ -113,6 +113,7 @@ class BlogNewestListingCmsElementResolver extends AbstractCmsElementResolver
             'blogAuthor.media',
             'blogAuthor.blogEntries',
             'blogCategories',
+            'tags',
         ]);
 
         $showTypeConfig = $config->get('showType') ?? null;

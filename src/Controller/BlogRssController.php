@@ -39,7 +39,7 @@ class BlogRssController extends StorefrontController
         $dateTime = new \DateTime();
 
         $criteria = new Criteria();
-        $criteria->addAssociations(['blogAuthor.salutation']);
+        $criteria->addAssociations(['blogAuthor.salutation', 'tags']);
         $criteria->addFilter(
             new EqualsFilter('active', true),
             new RangeFilter('publishedAt', [RangeFilter::LTE => $dateTime->format(\DATE_ATOM)])
