@@ -95,7 +95,7 @@
                         }
                     },
                     "showType": {
-                        "label": "Anzeigetyp",
+                        "label": "Kategorien",
                         "options": {
                             "all": "Alle",
                             "select": "Kategorien auswählen"

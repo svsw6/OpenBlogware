@@ -104,7 +104,7 @@
                         }
                     },
                     "showType": {
-                        "label": "Show type",
+                        "label": "Categories",
                         "options": {
                             "all": "All",
                             "select": "Select categories"
