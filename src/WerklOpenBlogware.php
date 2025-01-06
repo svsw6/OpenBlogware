@@ -74,6 +74,7 @@ class WerklOpenBlogware extends Plugin
         $connection->executeStatement('DROP TABLE IF EXISTS `werkl_blog_category`');
         $connection->executeStatement('DROP TABLE IF EXISTS `werkl_blog_author_translation`');
         $connection->executeStatement('DROP TABLE IF EXISTS `werkl_blog_author`');
+        $connection->executeStatement('DROP TABLE IF EXISTS `werkl_blog_entries_tag`');
 
         /** @var EntityRepository $cmsBlockRepo */
         $cmsBlockRepo = $this->container->get('cms_block.repository');
