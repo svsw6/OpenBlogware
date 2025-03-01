@@ -1,3 +1,6 @@
+# 4.2.1
+- Added full width option to blog detail cms element
+
 # 4.2.0
 - Added tags [5](https://github.com/Werkstattl/OpenBlogware/issues/5)
 

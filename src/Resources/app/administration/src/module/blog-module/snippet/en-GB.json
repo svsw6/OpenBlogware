@@ -125,7 +125,8 @@
                     "showMeta": {
                         "label": "Detail view meta information",
                         "showAuthor": "Show author",
-                        "showCategory": "Show category"
+                        "showCategory": "Show category",
+                        "fullWidth": "Full width"
                     }
                 },
                 "component": {
