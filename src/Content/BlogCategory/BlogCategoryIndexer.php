@@ -133,7 +133,7 @@ class BlogCategoryIndexer extends EntityIndexer
     {
         $query = $this->connection->createQueryBuilder();
         $query->select('DISTINCT LOWER(HEX(category.id))');
-        $query->from('category');
+        $query->from('werkl_blog_category', 'category');
 
         $wheres = [];
         foreach ($categoryIds as $id) {
