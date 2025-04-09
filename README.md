@@ -1,6 +1,9 @@
 ![](https://res.cloudinary.com/dtgdh7noz/image/upload/v1584709250/preview-blog_nn8mcq.jpg)
 
 # OpenBlogware - Shopware 6 Blog Plugin
+
+**Note:** This plugin is currently not compatible with Shopware 6.7.0.0-rc1 or later.
+
 After the plugin installation you can find the entity if you hop to `content -> blog`.
 
 ![](https://sbp-plugin-images.s3.eu-west-1.amazonaws.com/phpZoe2dS)
