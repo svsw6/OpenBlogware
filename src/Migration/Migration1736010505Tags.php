@@ -25,7 +25,8 @@ class Migration1736010505Tags extends MigrationStep
                 CONSTRAINT `fk.werkl_blog_entries_tag.werkl_blog_entries_id` FOREIGN KEY (`werkl_blog_entries_id`) REFERENCES `werkl_blog_entries` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
                 CONSTRAINT `fk.werkl_blog_entries_tag.tag_id` FOREIGN KEY (`tag_id`) REFERENCES `tag` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-        ');    }
+        ');
+    }
 
     public function updateDestructive(Connection $connection): void
     {

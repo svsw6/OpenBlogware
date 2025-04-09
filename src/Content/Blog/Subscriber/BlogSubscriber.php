@@ -4,16 +4,21 @@ declare(strict_types=1);
 namespace Werkl\OpenBlogware\Content\Blog\Subscriber;
 
 use Shopware\Core\Content\Cms\DataResolver\CriteriaCollection;
+use Shopware\Core\Content\Media\MediaCollection;
 use Shopware\Core\Content\Product\SalesChannel\Listing\Filter;
 use Shopware\Core\Content\Product\SalesChannel\Listing\FilterCollection;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
+use Shopware\Core\Framework\DataAbstractionLayer\Event\EntityLoadedEvent;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Aggregation\Bucket\FilterAggregation;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Aggregation\Metric\EntityAggregation;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsAnyFilter;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\RangeFilter;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Werkl\OpenBlogware\Content\Blog\BlogEntriesDefinition;
+use Werkl\OpenBlogware\Content\Blog\BlogEntriesEntity;
 use Werkl\OpenBlogware\Content\Blog\BlogListingFilterBuildEvent;
 use Werkl\OpenBlogware\Content\Blog\Events\BlogMainFilterEvent;
 
@@ -22,8 +27,42 @@ class BlogSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
+            'werkl_blog_entries.loaded' => 'onBlogEntriesLoaded',
             BlogListingFilterBuildEvent::BLOG_MAIN_FILTER_EVENT => 'onBlogMainFilter',
         ];
+    }
+
+    public function __construct(
+        private readonly EntityRepository $mediaRepository,
+    ) {
+    }
+
+    public function onBlogEntriesLoaded(EntityLoadedEvent $event): void
+    {
+        /** @var BlogEntriesEntity[] $blogEntries */
+        $blogEntries = $event->getEntities();
+
+        $mediaIds = array_unique(array_filter(array_map(
+            fn (BlogEntriesEntity $blogEntry) => $blogEntry->getTranslation('mediaId'),
+            $blogEntries
+        )));
+
+        if (empty($mediaIds)) {
+            return;
+        }
+
+        /** @var MediaCollection $media */
+        $media = $this->mediaRepository->search(new Criteria($mediaIds), $event->getContext())->getEntities();
+
+        foreach ($blogEntries as $blogEntry) {
+            $mediaId = $blogEntry->getTranslation('mediaId');
+
+            if ($mediaId === null) {
+                continue;
+            }
+
+            $blogEntry->setMedia($media->get($mediaId));
+        }
     }
 
     public function onBlogMainFilter(BlogMainFilterEvent $event): void

@@ -15,6 +15,8 @@ class BlogEntriesTranslationEntity extends TranslationEntity
 
     protected BlogEntriesEntity $werklBlogEntries;
 
+    protected ?string $mediaId;
+
     protected string $title;
 
     protected string $slug;
@@ -45,6 +47,16 @@ class BlogEntriesTranslationEntity extends TranslationEntity
     public function setWerklBlogEntries(BlogEntriesEntity $werklBlogEntries): void
     {
         $this->werklBlogEntries = $werklBlogEntries;
+    }
+
+    public function getMediaId(): ?string
+    {
+        return $this->mediaId;
+    }
+
+    public function setMediaId(?string $mediaId): void
+    {
+        $this->mediaId = $mediaId;
     }
 
     public function getTitle(): ?string
