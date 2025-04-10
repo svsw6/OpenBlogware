@@ -48,7 +48,7 @@ class BlogEntriesEntity extends Entity
 
     protected ?BlogAuthorEntity $blogAuthor;
 
-    protected string $mediaId;
+    protected ?string $mediaId;
 
     protected ?MediaEntity $media;
 
@@ -58,9 +58,6 @@ class BlogEntriesEntity extends Entity
 
     protected ?CmsPageEntity $cmsPage;
 
-    /**
-     * @var TagCollection|null
-     */
     protected ?TagCollection $tags = null;
 
     public function getTitle(): ?string
@@ -193,12 +190,12 @@ class BlogEntriesEntity extends Entity
         $this->publishedAt = $publishedAt;
     }
 
-    public function getMediaId(): string
+    public function getMediaId(): ?string
     {
         return $this->mediaId;
     }
 
-    public function setMediaId(string $mediaId): void
+    public function setMediaId(?string $mediaId): void
     {
         $this->mediaId = $mediaId;
     }
@@ -233,17 +230,11 @@ class BlogEntriesEntity extends Entity
         $this->cmsPageId = $cmsPageId;
     }
 
-    /**
-     * @return TagCollection|null
-     */
     public function getTags(): ?TagCollection
     {
         return $this->tags;
     }
 
-    /**
-     * @param TagCollection|null $tags
-     */
     public function setTags(?TagCollection $tags): void
     {
         $this->tags = $tags;

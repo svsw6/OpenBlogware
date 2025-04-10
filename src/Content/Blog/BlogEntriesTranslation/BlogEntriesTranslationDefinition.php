@@ -3,8 +3,10 @@ declare(strict_types=1);
 
 namespace Werkl\OpenBlogware\Content\Blog\BlogEntriesTranslation;
 
+use Shopware\Core\Content\Media\MediaDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityTranslationDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\CustomFields;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\FkField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\AllowHtml;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\ApiAware;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\Required;
@@ -40,6 +42,7 @@ class BlogEntriesTranslationDefinition extends EntityTranslationDefinition
     protected function defineFields(): FieldCollection
     {
         return new FieldCollection([
+            new FkField('media_id', 'mediaId', MediaDefinition::class),
             (new StringField('title', 'title'))->addFlags(new Required()),
             (new StringField('slug', 'slug'))->addFlags(new Required()),
             new StringField('teaser', 'teaser'),

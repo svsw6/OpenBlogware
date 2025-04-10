@@ -229,6 +229,8 @@
         </service>
 
         <service id="Werkl\OpenBlogware\Content\Blog\Subscriber\BlogSubscriber" >
+            <argument type="service" id="media.repository"/>
+
             <tag name="kernel.event_subscriber" />
         </service>
 
@@ -240,10 +242,6 @@
             <argument type="service" id="Shopware\Core\System\SystemConfig\SystemConfigService"/>
 
             <tag name="kernel.event_subscriber"/>
-        </service>
-
-        <service id="Werkl\OpenBlogware\Content\Blog\Subscriber\BlogSubscriber" >
-            <tag name="kernel.event_subscriber" />
         </service>
     </services>
 </container>

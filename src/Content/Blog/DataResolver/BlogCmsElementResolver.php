@@ -60,7 +60,7 @@ class BlogCmsElementResolver extends AbstractCmsElementResolver
             'blogAuthor.media',
             'blogAuthor.blogEntries',
             'blogCategories',
-            'tags'
+            'tags',
         ]);
 
         $criteria->addSorting(

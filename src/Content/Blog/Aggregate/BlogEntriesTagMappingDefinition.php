@@ -12,7 +12,6 @@ use Shopware\Core\Framework\DataAbstractionLayer\MappingEntityDefinition;
 use Shopware\Core\System\Tag\TagDefinition;
 use Werkl\OpenBlogware\Content\Blog\BlogEntriesDefinition;
 
-
 class BlogEntriesTagMappingDefinition extends MappingEntityDefinition
 {
     public const ENTITY_NAME = 'werkl_blog_entries_tag';

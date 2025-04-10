@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Werkl\OpenBlogware\Content\Blog;
 
 use Shopware\Core\Content\Cms\CmsPageDefinition;
-use Shopware\Core\Content\Media\MediaDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\BoolField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\DateField;
@@ -60,13 +59,11 @@ class BlogEntriesDefinition extends EntityDefinition
             (new BoolField('active', 'active'))->addFlags(new ApiAware()),
             (new BoolField('detail_teaser_image', 'detailTeaserImage'))->addFlags(new ApiAware()),
 
-            new FkField('media_id', 'mediaId', MediaDefinition::class),
             (new FkField('author_id', 'authorId', BlogAuthorDefinition::class))->addFlags(new Required()),
             (new FkField('cms_page_id', 'cmsPageId', CmsPageDefinition::class))->addFlags(new ApiAware(), new Inherited()),
             (new ReferenceVersionField(CmsPageDefinition::class))->addFlags(new PrimaryKey(), new Required()),
 
-            (new OneToOneAssociationField('media', 'media_id', 'id', MediaDefinition::class, true))->addFlags(new ApiAware()),
-
+            (new TranslatedField('mediaId'))->addFlags(new ApiAware()),
             (new TranslatedField('title'))->addFlags(new ApiAware(), new SearchRanking(SearchRanking::HIGH_SEARCH_RANKING)),
             (new TranslatedField('slug'))->addFlags(new ApiAware(), new SearchRanking(SearchRanking::HIGH_SEARCH_RANKING)),
             (new TranslatedField('teaser'))->addFlags(new ApiAware(), new SearchRanking(SearchRanking::HIGH_SEARCH_RANKING)),
