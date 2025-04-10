@@ -1,3 +1,7 @@
+# 4.2.2
+- Fixed category indexer fetching children from wrong table [#22](https://github.com/Werkstattl/OpenBlogware/pull/22)
+- Added teaser image translation [#24](https://github.com/Werkstattl/OpenBlogware/pull/24)
+
 # 4.2.1
 - Added full width option to blog detail cms element
 
