@@ -1,3 +1,7 @@
+# 4.2.2
+- Fehler bei Kategorien-Indexierung behoben [#22](https://github.com/Werkstattl/OpenBlogware/pull/22)
+- Übersetzbare Teaser Bilder [#24](https://github.com/Werkstattl/OpenBlogware/pull/24)
+
 # 4.2.1
 - Option für volle Breite für Blog-Details CMS-Element hinzugefügt
 
