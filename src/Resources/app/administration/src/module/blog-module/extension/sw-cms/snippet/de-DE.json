@@ -1,11 +1,11 @@
 {
     "sw-cms": {
         "sorting": {
-            "labelSortByBlogPages": "Blog pages"
+            "labelSortByBlogPages": "Blogseiten"
         },
         "detail": {
             "label": {
-                "pageTypeBlog": "Blog page"
+                "pageTypeBlog": "Blogseite"
             }
         }
     }

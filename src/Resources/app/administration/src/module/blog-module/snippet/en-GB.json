@@ -195,13 +195,11 @@
             }
         }
     },
-
     "sw-seo-url-template-card": {
         "routeNames": {
             "werkl-frontend-blog-detail": "Blog Detail Page"
         }
     },
-
     "werkl-blog-category": {
         "general": {
             "treeHeadline": "Blog categories",

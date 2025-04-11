@@ -20,6 +20,11 @@
             }
         },
         "detail": {
+            "serp": {
+                "title": "SERP Vorschau",
+                "metaDescription": "Meta Beschreibung",
+                "metaTitle": "Meta Titel"
+            },
             "sidebar": {
                 "heading": "Blog detail",
                 "basicInformation": "Grundlegende Information",
@@ -33,6 +38,7 @@
             "slugPlaceholder": "Undefiniert",
             "titleLabel": "Titel",
             "mediaLabel": "Teaser Image",
+            "titlePlaceholder": "Deinen Blog Titel eingeben",
             "teaserLabel": "Teaser",
             "teaserImageLabel": "Teaser Bild",
             "teaserPlaceholder": "Der Teaser Text, welcher im Blog Listing angezeigt wird ...",
@@ -77,6 +83,9 @@
             "salesChannels": {
                 "labelSalesChannels": "Verkaufskanal",
                 "placeholderSalesChannels": "Wähle Verkaufskanäle aus ..."
+            },
+            "warning": {
+                "maxTextCountReached": "Es sind noch {charLeft} Zeichen übrig"
             }
         },
         "elements": {
@@ -184,6 +193,11 @@
                     "label": "Blog Categories"
                 }
             }
+        }
+    },
+    "sw-seo-url-template-card": {
+        "routeNames": {
+            "werkl-frontend-blog-detail": "Blogdetailseite"
         }
     },
     "werkl-blog-category": {
