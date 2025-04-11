@@ -1,5 +1,7 @@
-import './component';
-import './preview';
+const { Component } = Shopware;
+
+Component.register('sw-cms-block-blog-newest-listing', () => import('./component'));
+Component.register('werkl-cms-preview-newest-listing', () => import('./preview'));
 
 Shopware.Service('cmsService').registerCmsBlock({
     name: 'blog-newest-listing',

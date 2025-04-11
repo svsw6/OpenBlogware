@@ -1,8 +1,6 @@
 import template from './werkl-blog-category-tree.html.twig';
 
-const { Component } = Shopware;
-
-Component.extend('werkl-blog-category-tree', 'sw-category-tree', {
+export default {
     template,
 
     data() {
@@ -38,4 +36,4 @@ Component.extend('werkl-blog-category-tree', 'sw-category-tree', {
             return;
         },
     },
-});
+};

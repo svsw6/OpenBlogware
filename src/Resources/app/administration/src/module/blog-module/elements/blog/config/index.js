@@ -1,10 +1,10 @@
 import template from './sw-cms-el-config-blog.html.twig';
 import './sw-cms-el-config-blog.scss';
 
-const { Component, Mixin } = Shopware;
+const { Mixin } = Shopware;
 const { EntityCollection, Criteria } = Shopware.Data;
 
-Component.register('sw-cms-el-config-blog', {
+export default {
     template,
 
     inject: ['repositoryFactory'],
@@ -76,4 +76,4 @@ Component.register('sw-cms-el-config-blog', {
             }
         },
     },
-});
+};

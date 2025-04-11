@@ -8,7 +8,7 @@ const {
     mapPropertyErrors,
 } = Component.getComponentHelper();
 
-Component.extend('werkl-cms-sidebar', 'sw-cms-sidebar', {
+export default {
     template,
 
     inject: [
@@ -124,4 +124,4 @@ Component.extend('werkl-cms-sidebar', 'sw-cms-sidebar', {
             });
         },
     },
-});
+};

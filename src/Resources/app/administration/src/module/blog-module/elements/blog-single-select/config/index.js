@@ -1,8 +1,8 @@
 import template from './sw-cms-el-config-blog-single-select.html.twig';
 
-const { Component, Mixin } = Shopware;
+const { Mixin } = Shopware;
 
-Component.register('sw-cms-el-config-blog-single-select', {
+export default {
     template,
 
     inject: ['repositoryFactory'],
@@ -32,4 +32,4 @@ Component.register('sw-cms-el-config-blog-single-select', {
             this.initElementConfig('blog-single-select');
         },
     },
-});
+};

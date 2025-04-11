@@ -1,11 +1,11 @@
 import template from './werkl-blog-author-list.html.twig';
 import './werkl-blog-author-list.scss';
 
-const { Component, Mixin } = Shopware;
+const { Mixin } = Shopware;
 
 const Criteria = Shopware.Data.Criteria;
 
-Component.register('werkl-blog-author-list', {
+export default {
     template,
 
     inject: ['repositoryFactory'],
@@ -90,4 +90,4 @@ Component.register('werkl-blog-author-list', {
             });
         },
     },
-});
+};

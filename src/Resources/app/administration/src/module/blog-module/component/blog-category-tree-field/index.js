@@ -1,7 +1,6 @@
-const { Component } = Shopware;
 const { Criteria } = Shopware.Data;
 
-Component.extend('werkl-blog-category-tree-field', 'sw-category-tree-field', {
+export default {
     computed: {
         globalCategoryRepository() {
             return this.repositoryFactory.create('werkl_blog_category');
@@ -17,4 +16,4 @@ Component.extend('werkl-blog-category-tree-field', 'sw-category-tree-field', {
             return this.globalCategoryRepository.search(categorySearchCriteria, Shopware.Context.api);
         },
     },
-});
+};

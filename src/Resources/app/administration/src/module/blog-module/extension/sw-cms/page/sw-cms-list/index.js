@@ -1,6 +1,4 @@
-const { Component } = Shopware;
-
-Component.override('sw-cms-list', {
+export default {
     computed: {
         sortPageTypes() {
             return [
@@ -13,4 +11,4 @@ Component.override('sw-cms-list', {
             ];
         },
     },
-});
+};

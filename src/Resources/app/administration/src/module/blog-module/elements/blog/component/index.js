@@ -3,7 +3,7 @@ import './sw-cms-el-blog.scss';
 
 const { Mixin } = Shopware;
 
-Shopware.Component.register('sw-cms-el-blog', {
+export default {
     template,
 
     mixins: [
@@ -19,4 +19,4 @@ Shopware.Component.register('sw-cms-el-blog', {
             this.initElementConfig('blog');
         },
     },
-});
+};

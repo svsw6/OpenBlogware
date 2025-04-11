@@ -1,6 +1,8 @@
-import './component';
-import './config';
-import './preview';
+const { Component } = Shopware;
+
+Component.register('sw-cms-el-blog', () => import('./component'));
+Component.register('sw-cms-el-config-blog', () => import('./config'));
+Component.register('sw-cms-el-preview-blog', () => import('./preview'));
 
 Shopware.Service('cmsService').registerCmsElement({
     name: 'blog',

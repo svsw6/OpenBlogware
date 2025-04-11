@@ -1,7 +1,7 @@
 import template from './sw-cms-sidebar.html.twig';
 import BLOG from '../../../../constant/open-blogware.constant';
 
-Shopware.Component.override('sw-cms-sidebar', {
+export default {
     template,
 
     computed: {
@@ -12,4 +12,4 @@ Shopware.Component.override('sw-cms-sidebar', {
             return this.page.type === BLOG.PAGE_TYPES.BLOG_DETAIL;
         },
     },
-});
+};

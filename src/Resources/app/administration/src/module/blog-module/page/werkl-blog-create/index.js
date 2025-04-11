@@ -1,8 +1,6 @@
 import template from './werkl-blog-create.html.twig';
 
-const { Component } = Shopware;
-
-Component.extend('werkl-blog-create', 'werkl-blog-detail', {
+export default {
     template,
 
     methods: {
@@ -34,4 +32,4 @@ Component.extend('werkl-blog-create', 'werkl-blog-detail', {
             this.blogId = this.blog.id;
         },
     },
-});
+};

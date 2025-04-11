@@ -1,9 +1,9 @@
 import template from './sw-cms-el-config-blog-detail.html.twig';
 import './sw-cms-el-config-blog-detail.scss';
 
-const { Component, Mixin } = Shopware;
+const { Mixin } = Shopware;
 
-Component.register('sw-cms-el-config-blog-detail', {
+export default {
     template,
 
     inject: ['repositoryFactory'],
@@ -21,4 +21,4 @@ Component.register('sw-cms-el-config-blog-detail', {
             this.initElementConfig('blog');
         },
     },
-});
+};

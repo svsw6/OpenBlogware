@@ -3,7 +3,7 @@ import './werkl-blog-element-blog-detail.scss';
 
 const { Mixin } = Shopware;
 
-Shopware.Component.register('werkl-blog-el-blog-detail', {
+export default {
     template,
 
     mixins: [
@@ -19,4 +19,4 @@ Shopware.Component.register('werkl-blog-el-blog-detail', {
             this.initElementConfig('blog-detail');
         },
     },
-});
+};

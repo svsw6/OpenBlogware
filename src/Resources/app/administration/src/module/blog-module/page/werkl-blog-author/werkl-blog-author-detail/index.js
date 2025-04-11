@@ -1,11 +1,11 @@
 import './werkl-blog-author-detail.scss';
 import template from './werkl-blog-author-detail.html.twig';
 
-const { Component, Mixin } = Shopware;
+const { Mixin } = Shopware;
 const { Criteria } = Shopware.Data;
 const { mapPropertyErrors } = Shopware.Component.getComponentHelper();
 
-Component.register('werkl-blog-author-detail', {
+export default {
     template,
 
     inject: [
@@ -152,4 +152,4 @@ Component.register('werkl-blog-author-detail', {
             this.onSetMediaItem({ targetId: dropItem.id });
         },
     },
-});
+};
