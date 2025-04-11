@@ -5,9 +5,6 @@ export default {
     template,
 
     computed: {
-        pageRepository() {
-            return this.repositoryFactory.create('cms_page');
-        },
         isBlogDetail() {
             return this.page.type === BLOG.PAGE_TYPES.BLOG_DETAIL;
         },
