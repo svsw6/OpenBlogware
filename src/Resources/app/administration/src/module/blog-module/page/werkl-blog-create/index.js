@@ -1,8 +1,4 @@
-import template from './werkl-blog-create.html.twig';
-
 export default {
-    template,
-
     methods: {
         async createdComponent() {
             Shopware.Store.get('adminMenu').collapseSidebar();

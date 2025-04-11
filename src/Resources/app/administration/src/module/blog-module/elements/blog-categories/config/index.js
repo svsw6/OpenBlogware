@@ -1,5 +1,4 @@
 import template from './sw-cms-el-config-categories.html.twig';
-import './sw-cms-el-config-categories.scss';
 
 const { Mixin } = Shopware;
 // const { EntityCollection, Criteria } = Shopware.Data;
