@@ -20,6 +20,7 @@ export default {
             editingCategory: null,
         };
     },
+
     methods: {
         onEditCategory(category) {
             this.editingCategory = category;
