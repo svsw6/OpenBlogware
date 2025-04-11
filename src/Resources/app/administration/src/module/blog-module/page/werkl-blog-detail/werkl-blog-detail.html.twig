@@ -5,12 +5,13 @@
 {% endblock %}
 
 {% block sw_cms_detail_toolbar_language_switch %}
-    <sw-language-switch
-        #language-switch
-        :disabled="isLoading"
-        :save-changes-function="saveOnLanguageChange"
-        @on-change="onChangeLanguage"
-    />
+    <template #language-switch>
+        <sw-language-switch
+            :disabled="isLoading"
+            :save-changes-function="saveOnLanguageChange"
+            @on-change="onChangeLanguage"
+        />
+    </template>
 {% endblock %}
 
 {% block sw_cms_detail_toolbar_back_button %}
