@@ -1,6 +1,4 @@
-const { Component } = Shopware;
-
-Component.extend('werkl-blog-author-create', 'werkl-blog-author-detail', {
+export default {
     methods: {
         createdComponent() {
             Shopware.State.commit('context/resetLanguageToDefault');
@@ -8,4 +6,4 @@ Component.extend('werkl-blog-author-create', 'werkl-blog-author-detail', {
             this.blogAuthor = this.blogAuthorRepository.create(Shopware.Context.api);
         },
     },
-});
+};

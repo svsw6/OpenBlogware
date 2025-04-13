@@ -1,8 +1,6 @@
 import template from './blog-tree-item.html.twig';
 
-const { Component } = Shopware;
-
-Component.extend('werkl-blog-tree-item', 'sw-tree-item', {
+export default {
     template,
 
     computed: {
@@ -22,6 +20,7 @@ Component.extend('werkl-blog-tree-item', 'sw-tree-item', {
             editingCategory: null,
         };
     },
+
     methods: {
         onEditCategory(category) {
             this.editingCategory = category;
@@ -43,4 +42,4 @@ Component.extend('werkl-blog-tree-item', 'sw-tree-item', {
             this.$super('abortCreateElement', item);
         },
     },
-});
+};

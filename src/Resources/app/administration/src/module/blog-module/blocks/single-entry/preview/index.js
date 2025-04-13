@@ -1,7 +1,7 @@
 import template from './werkl-cms-preview-blog-single-entry.html.twig';
 import './werkl-cms-preview-blog-single-entry.scss';
 
-Shopware.Component.register('werkl-cms-preview-blog-single-entry', {
+export default {
     template,
 
     computed: {
@@ -9,4 +9,4 @@ Shopware.Component.register('werkl-cms-preview-blog-single-entry', {
             return new Date().toLocaleDateString();
         },
     },
-});
+};

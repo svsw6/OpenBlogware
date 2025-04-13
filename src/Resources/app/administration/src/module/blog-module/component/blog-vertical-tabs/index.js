@@ -1,8 +1,6 @@
 import template from './blog-vertical-tabs.html.twig';
 
-const { Component } = Shopware;
-
-Component.register('werkl-blog-vertical-tabs', {
+export default {
     template,
 
     props: {
@@ -17,4 +15,4 @@ Component.register('werkl-blog-vertical-tabs', {
             this.currentTab = name;
         },
     },
-});
+};

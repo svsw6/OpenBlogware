@@ -4,7 +4,7 @@ import './sw-cms-el-blog-single-select.scss';
 const { Mixin, Context } = Shopware;
 const { Criteria } = Shopware.Data;
 
-Shopware.Component.register('sw-cms-el-blog-single-select', {
+export default {
     template,
 
     inject: ['repositoryFactory'],
@@ -83,4 +83,4 @@ Shopware.Component.register('sw-cms-el-blog-single-select', {
             this.getEntityProperties();
         },
     },
-});
+};

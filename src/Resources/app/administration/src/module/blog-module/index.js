@@ -1,70 +1,10 @@
 const { Module } = Shopware;
 
-/**
- * Components
- */
-import './component/blog-extension-component-sections';
-
-/**
- * Extensions
- */
-import './extension/sw-cms/component/sw-cms-sidebar';
-import './extension/sw-cms/page/sw-cms-list';
-import './extension/component/cms/werkl-cms-sidebar';
-
-/**
- * privileges
- */
-import './page/werkl-blog-detail/acl';
-import './page/werkl-blog-author/acl';
-import './page/werkl-blog-list/acl';
-
-/**
- * Pages
- */
-import './page/werkl-blog-list';
-import './page/werkl-blog-create';
-import './page/werkl-blog-detail';
-
-/**
- * Language Snippets
- */
-import deDE from './snippet/de-DE.json';
-import enGB from './snippet/en-GB.json';
-
-/**
- * CMS Blocks
- */
-import './blocks/listing';
-import './blocks/detail';
-import './blocks/single-entry';
-import './blocks/newest-listing';
-import './blocks/categories';
-
-/**
- * CMS Elements
- */
-import './elements/blog-detail';
-import './elements/blog';
-import './elements/blog-single-select';
-import './elements/blog-newest-listing';
-import './elements/blog-categories';
-
-/**
- * Blog Category
- */
-import './component/blog-tree-item';
-import './component/blog-category-tree';
-import './component/blog-category-tree-field';
-
-/**
- * Blog author
- */
-import './page/werkl-blog-author/werkl-blog-author-list';
-import './page/werkl-blog-author/werkl-blog-author-detail';
-import './page/werkl-blog-author/werkl-blog-author-create';
-
-import './component/blog-vertical-tabs';
+import './blocks';
+import './component';
+import './elements';
+import './extension';
+import './page';
 
 Module.register('blog-module', {
     type: 'plugin',
@@ -73,11 +13,6 @@ Module.register('blog-module', {
     description: 'werkl-blog.general.descriptionTextModule',
     color: '#F965AF',
     icon: 'regular-content',
-
-    snippets: {
-        'de-DE': deDE,
-        'en-GB': enGB,
-    },
 
     routes: {
         index: {

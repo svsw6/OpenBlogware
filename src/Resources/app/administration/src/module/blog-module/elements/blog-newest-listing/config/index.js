@@ -1,10 +1,10 @@
 import template from './werkl-cms-el-config-newest-listing.html.twig';
 import './werkl-cms-el-config-newest-listing.scss';
 
-const { Component, Mixin } = Shopware;
+const { Mixin } = Shopware;
 const { EntityCollection, Criteria } = Shopware.Data;
 
-Component.register('werkl-cms-el-config-newest-listing', {
+export default {
     template,
 
     inject: ['repositoryFactory'],
@@ -77,4 +77,4 @@ Component.register('werkl-cms-el-config-newest-listing', {
             }
         },
     },
-});
+};

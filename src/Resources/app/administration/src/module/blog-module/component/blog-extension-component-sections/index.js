@@ -1,11 +1,8 @@
 import template from './blog-extension-component-sections.html.twig';
 
-const {
-    Component,
-    State,
-} = Shopware;
+const { State } = Shopware;
 
-Component.register('werkl-blog-extension-component-sections', {
+export default {
     template,
 
     props: {
@@ -20,4 +17,4 @@ Component.register('werkl-blog-extension-component-sections', {
             return State.get('extensionComponentSections').identifier[this.positionIdentifier] ?? [];
         },
     },
-});
+};

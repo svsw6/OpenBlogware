@@ -1,9 +1,9 @@
 import template from './werkl-cms-el-newest-listing.html.twig';
 import './werkl-cms-el-newest-listing.scss';
 
-const { Component, Mixin } = Shopware;
+const { Mixin } = Shopware;
 
-Component.register('werkl-cms-el-newest-listing', {
+export default {
     template,
 
     mixins: [
@@ -20,4 +20,4 @@ Component.register('werkl-cms-el-newest-listing', {
             this.initElementData('blog-newest-listing');
         },
     },
-});
+};

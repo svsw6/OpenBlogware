@@ -3,7 +3,6 @@ import template from './werkl-blog-detail.html.twig';
 import BLOG from '../../constant/open-blogware.constant';
 
 const {
-    Component,
     Data,
     Utils,
     Classes,
@@ -17,7 +16,7 @@ const { cloneDeep } = Utils.object;
 const { ShopwareError } = Classes;
 const debounceTimeout = 300;
 
-Component.extend('werkl-blog-detail', 'sw-cms-detail', {
+export default {
     template,
 
     data() {
@@ -453,4 +452,4 @@ Component.extend('werkl-blog-detail', 'sw-cms-detail', {
             this.pageId = this.page.id;
         },
     },
-});
+};
