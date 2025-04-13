@@ -50,7 +50,7 @@ class BlogEntriesEntity extends Entity
 
     protected ?string $mediaId;
 
-    protected ?MediaEntity $media;
+    protected ?MediaEntity $media = null;
 
     protected \DateTimeInterface $publishedAt;
 
