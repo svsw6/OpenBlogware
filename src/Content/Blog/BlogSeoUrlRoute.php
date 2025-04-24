@@ -15,14 +15,8 @@ class BlogSeoUrlRoute implements SeoUrlRouteInterface
     public const ROUTE_NAME = 'werkl.frontend.blog.detail';
     public const DEFAULT_TEMPLATE = 'blog/{{ entry.blogCategories.first.translated.name|lower }}/{{ entry.translated.title|lower }}';
 
-    /**
-     * @var BlogEntriesDefinition
-     */
-    private $definition;
-
-    public function __construct(BlogEntriesDefinition $definition)
+    public function __construct(private readonly BlogEntriesDefinition $definition)
     {
-        $this->definition = $definition;
     }
 
     public function getConfig(): SeoUrlRouteConfig

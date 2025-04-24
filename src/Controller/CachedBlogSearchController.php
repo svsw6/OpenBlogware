@@ -3,48 +3,34 @@ declare(strict_types=1);
 
 namespace Werkl\OpenBlogware\Controller;
 
-use Shopware\Core\Framework\Adapter\Cache\AbstractCacheTracer;
 use Shopware\Core\Framework\Adapter\Cache\CacheValueCompressor;
 use Shopware\Core\Framework\DataAbstractionLayer\Cache\EntityCacheKeyGenerator;
-use Shopware\Core\Framework\Routing\RoutingException;
 use Shopware\Core\Framework\Util\Json;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 use Shopware\Storefront\Controller\StorefrontController;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Cache\CacheInterface;
 use Symfony\Contracts\Cache\ItemInterface;
+use Shopware\Core\Framework\Event\AddCacheTags;
 
 /**
  * Handle Cache for BlogSearchController
  */
-#[Route(defaults: ['_routeScope' => ['storefront']])]
+#[\Symfony\Component\Routing\Attribute\Route(defaults: ['_routeScope' => ['storefront']])]
 class CachedBlogSearchController extends StorefrontController
 {
     public const SEARCH_TAG = 'werkl-blog-search';
 
-    private BlogSearchController $decorated;
-
-    private CacheInterface $cache;
-
-    private EntityCacheKeyGenerator $generator;
-
-    /**
-     * @var AbstractCacheTracer<Response>
-     */
-    private AbstractCacheTracer $tracer;
-
     public function __construct(
-        BlogSearchController $decorated,
-        CacheInterface $cache,
-        EntityCacheKeyGenerator $generator,
-        AbstractCacheTracer $tracer
-    ) {
-        $this->decorated = $decorated;
-        $this->cache = $cache;
-        $this->generator = $generator;
-        $this->tracer = $tracer;
+        private readonly BlogSearchController $decorated,
+        private readonly CacheInterface $cache,
+        private readonly EntityCacheKeyGenerator $generator,
+        private readonly EventDispatcherInterface $eventDispatcher
+    )
+    {
     }
 
     public static function buildName(string $salesChannelId): string
@@ -52,7 +38,7 @@ class CachedBlogSearchController extends StorefrontController
         return 'werkl-blog-search-' . $salesChannelId;
     }
 
-    #[Route(path: '/werkl_blog_search', name: 'werkl.frontend.blog.search', methods: ['GET'])]
+    #[\Symfony\Component\Routing\Attribute\Route(path: '/werkl_blog_search', name: 'werkl.frontend.blog.search', methods: ['GET'])]
     public function search(Request $request, SalesChannelContext $context): Response
     {
         $key = $this->generateSearchKey($request, $context);
@@ -71,16 +57,19 @@ class CachedBlogSearchController extends StorefrontController
     /**
      * @throws RoutingException
      */
-    #[Route(path: '/widgets/blog-search', name: 'widgets.blog.search.pagelet', methods: ['GET', 'POST'], defaults: ['XmlHttpRequest' => true])]
+    #[\Symfony\Component\Routing\Attribute\Route(path: '/widgets/blog-search', name: 'widgets.blog.search.pagelet', methods: ['GET', 'POST'], defaults: ['XmlHttpRequest' => true])]
     public function ajax(Request $request, SalesChannelContext $context): Response
     {
         $key = $this->generateSearchKey($request, $context);
 
         $value = $this->cache->get($key, function (ItemInterface $item) use ($request, $context) {
             $name = self::buildName($context->getSalesChannelId());
-            $response = $this->tracer->trace($name, function () use ($request, $context) {
-                return $this->decorated->ajax($request, $context);
-            });
+            
+            // Directly call the method without tracing
+            $response = $this->decorated->ajax($request, $context);
+            
+            // Trigger an event to collect cache tags
+            $this->eventDispatcher->dispatch(new AddCacheTags(), $name);
 
             $item->tag($this->generateSearchTags($context));
 
@@ -106,10 +95,17 @@ class CachedBlogSearchController extends StorefrontController
      */
     private function generateSearchTags(SalesChannelContext $context): array
     {
-        $tags = array_merge(
-            $this->tracer->get(self::buildName($context->getSalesChannelId())),
-            [self::buildName($context->getSalesChannelId()), self::SEARCH_TAG],
-        );
+        $tags = [self::buildName($context->getSalesChannelId()), self::SEARCH_TAG];
+        
+        // Use the event system for collecting cache tags
+        $event = new AddCacheTags();
+        $name = self::buildName($context->getSalesChannelId());
+        
+        $this->eventDispatcher->dispatch($event, $name);
+        
+        if (method_exists($event, 'getTags')) {
+            $tags = array_merge($event->getTags(), $tags);
+        }
 
         return array_unique(array_filter($tags));
     }

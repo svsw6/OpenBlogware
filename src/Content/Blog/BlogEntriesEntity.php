@@ -18,17 +18,17 @@ class BlogEntriesEntity extends Entity
     use EntityCustomFieldsTrait;
     use EntityIdTrait;
 
-    protected ?string $title;
+    protected ?string $title = null;
 
-    protected ?string $slug;
+    protected ?string $slug = null;
 
-    protected ?string $teaser;
+    protected ?string $teaser = null;
 
-    protected ?string $metaTitle;
+    protected ?string $metaTitle = null;
 
-    protected ?string $metaDescription;
+    protected ?string $metaDescription = null;
 
-    protected ?string $content;
+    protected ?string $content = null;
 
     protected bool $active;
 
@@ -46,17 +46,17 @@ class BlogEntriesEntity extends Entity
 
     protected string $authorId;
 
-    protected ?BlogAuthorEntity $blogAuthor;
+    protected ?BlogAuthorEntity $blogAuthor = null;
 
-    protected ?string $mediaId;
+    protected ?string $mediaId = null;
 
     protected ?MediaEntity $media = null;
 
     protected \DateTimeInterface $publishedAt;
 
-    protected ?string $cmsPageId;
+    protected ?string $cmsPageId = null;
 
-    protected ?CmsPageEntity $cmsPage;
+    protected ?CmsPageEntity $cmsPage = null;
 
     protected ?TagCollection $tags = null;
 

@@ -24,11 +24,8 @@ use Werkl\OpenBlogware\Content\Blog\Events\NewestListingCriteriaEvent;
 
 class BlogNewestListingCmsElementResolver extends AbstractCmsElementResolver
 {
-    private EventDispatcherInterface $eventDispatcher;
-
-    public function __construct(EventDispatcherInterface $eventDispatcher)
+    public function __construct(private readonly EventDispatcherInterface $eventDispatcher)
     {
-        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**

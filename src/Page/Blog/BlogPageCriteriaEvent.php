@@ -11,17 +11,8 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class BlogPageCriteriaEvent extends Event implements ShopwareSalesChannelEvent
 {
-    protected string $articleId;
-
-    protected Criteria $criteria;
-
-    protected SalesChannelContext $salesChannelContext;
-
-    public function __construct(string $articleId, Criteria $criteria, SalesChannelContext $context)
+    public function __construct(protected string $articleId, protected Criteria $criteria, protected SalesChannelContext $salesChannelContext)
     {
-        $this->articleId = $articleId;
-        $this->criteria = $criteria;
-        $this->salesChannelContext = $context;
     }
 
     public function getArticleId(): string

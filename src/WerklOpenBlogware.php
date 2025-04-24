@@ -154,9 +154,7 @@ class WerklOpenBlogware extends Plugin
         $mediaFolderIds = $mediaFolderRepository->searchIds($criteria, $context)->getIds();
 
         if (!empty($mediaFolderIds)) {
-            $ids = array_map(static function ($id) {
-                return ['id' => $id];
-            }, $mediaFolderIds);
+            $ids = array_map(static fn($id) => ['id' => $id], $mediaFolderIds);
             $mediaFolderRepository->delete($ids, $context);
         }
     }
@@ -176,9 +174,7 @@ class WerklOpenBlogware extends Plugin
         $mediaFolderIds = $mediaFolderRepository->searchIds($criteria, $context)->getIds();
 
         if (!empty($mediaFolderIds)) {
-            $ids = array_map(static function ($id) {
-                return ['id' => $id];
-            }, $mediaFolderIds);
+            $ids = array_map(static fn($id) => ['id' => $id], $mediaFolderIds);
             $mediaFolderRepository->delete($ids, $context);
         }
     }
@@ -198,9 +194,7 @@ class WerklOpenBlogware extends Plugin
         $seoUrlTemplateIds = $seoUrlTemplateRepository->searchIds($criteria, $context)->getIds();
 
         if (!empty($seoUrlTemplateIds)) {
-            $ids = array_map(static function ($id) {
-                return ['id' => $id];
-            }, $seoUrlTemplateIds);
+            $ids = array_map(static fn($id) => ['id' => $id], $seoUrlTemplateIds);
             $seoUrlTemplateRepository->delete($ids, $context);
         }
     }

@@ -14,8 +14,6 @@ use Werkl\OpenBlogware\Content\Blog\DataResolver\BlogDetailCmsElementResolver;
 
 class WerklCmsSlotsDataResolver extends CmsSlotsDataResolver
 {
-    private CmsSlotsDataResolver $decorated;
-
     /**
      * @var CmsElementResolverInterface[]
      */
@@ -24,10 +22,8 @@ class WerklCmsSlotsDataResolver extends CmsSlotsDataResolver
     /**
      * @param CmsElementResolverInterface[] $resolvers
      */
-    public function __construct(CmsSlotsDataResolver $decorated, iterable $resolvers)
+    public function __construct(private readonly CmsSlotsDataResolver $decorated, iterable $resolvers)
     {
-        $this->decorated = $decorated;
-
         foreach ($resolvers as $resolver) {
             $this->resolvers[$resolver->getType()] = $resolver;
         }

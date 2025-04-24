@@ -15,7 +15,7 @@ class BlogEntriesTranslationEntity extends TranslationEntity
 
     protected BlogEntriesEntity $werklBlogEntries;
 
-    protected ?string $mediaId;
+    protected ?string $mediaId = null;
 
     protected string $title;
 
@@ -25,9 +25,9 @@ class BlogEntriesTranslationEntity extends TranslationEntity
 
     protected string $teaser;
 
-    protected ?string $metaTitle;
+    protected ?string $metaTitle = null;
 
-    protected ?string $metaDescription;
+    protected ?string $metaDescription = null;
 
     public function getWerklBlogEntriesId(): string
     {

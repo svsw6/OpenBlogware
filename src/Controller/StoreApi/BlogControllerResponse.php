@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Werkl\OpenBlogware\Controller\StoreApi;
 
 use Shopware\Core\Framework\DataAbstractionLayer\Search\EntitySearchResult;
+use Shopware\Core\Framework\Struct\Struct;
 use Shopware\Core\System\SalesChannel\StoreApiResponse;
 use Werkl\OpenBlogware\Content\Blog\BlogEntriesCollection;
 
@@ -12,7 +13,7 @@ class BlogControllerResponse extends StoreApiResponse
     /**
      * @var EntitySearchResult
      */
-    protected $object;
+    protected Struct $object;
 
     public function __construct(EntitySearchResult $object)
     {

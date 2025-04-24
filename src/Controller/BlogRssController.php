@@ -18,22 +18,14 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Rss controller
  */
-#[Route(defaults: ['_routeScope' => ['storefront']])]
+#[\Symfony\Component\Routing\Attribute\Route(defaults: ['_routeScope' => ['storefront']])]
 class BlogRssController extends StorefrontController
 {
-    private GenericPageLoaderInterface $genericPageLoader;
-
-    private EntityRepository $blogRepository;
-
-    public function __construct(
-        GenericPageLoaderInterface $genericPageLoader,
-        EntityRepository $blogRepository
-    ) {
-        $this->genericPageLoader = $genericPageLoader;
-        $this->blogRepository = $blogRepository;
+    public function __construct(private readonly GenericPageLoaderInterface $genericPageLoader, private readonly EntityRepository $blogRepository)
+    {
     }
 
-    #[Route(path: '/blog/rss', name: 'frontend.werkl_blog.rss', methods: ['GET'])]
+    #[\Symfony\Component\Routing\Attribute\Route(path: '/blog/rss', name: 'frontend.werkl_blog.rss', methods: ['GET'])]
     public function rss(Request $request, SalesChannelContext $context): Response
     {
         $dateTime = new \DateTime();

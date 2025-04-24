@@ -12,17 +12,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 class BlogMainFilterEvent extends NestedEvent implements ShopwareSalesChannelEvent
 {
-    protected Request $request;
-
-    protected Criteria $criteria;
-
-    protected SalesChannelContext $context;
-
-    public function __construct(Request $request, Criteria $criteria, SalesChannelContext $context)
+    public function __construct(protected Request $request, protected Criteria $criteria, protected SalesChannelContext $context)
     {
-        $this->request = $request;
-        $this->criteria = $criteria;
-        $this->context = $context;
     }
 
     public function getRequest(): Request

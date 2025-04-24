@@ -11,7 +11,7 @@ class BlogPage extends NavigationPage
 {
     protected BlogEntriesEntity $blogEntry;
 
-    protected ?string $navigationId;
+    protected ?string $navigationId = null;
 
     public function getBlogEntry(): BlogEntriesEntity
     {

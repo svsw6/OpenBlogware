@@ -18,16 +18,8 @@ class BlogSearchPageLoader
 
     private const DEFAULT_PAGE = 1;
 
-    private GenericPageLoaderInterface $genericLoader;
-
-    private EntityRepository $blogRepository;
-
-    public function __construct(
-        GenericPageLoaderInterface $genericLoader,
-        EntityRepository $blogRepository
-    ) {
-        $this->genericLoader = $genericLoader;
-        $this->blogRepository = $blogRepository;
+    public function __construct(private readonly GenericPageLoaderInterface $genericLoader, private readonly EntityRepository $blogRepository)
+    {
     }
 
     /**
