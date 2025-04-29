@@ -40,6 +40,10 @@ export default {
             return this.repositoryFactory.create('werkl_blog_entries');
         },
 
+        mediaRepository() {
+            return this.repositoryFactory.create('media');
+        },
+
         localeRepository() {
             return this.repositoryFactory.create('locale');
         },
@@ -152,6 +156,12 @@ export default {
             return this.blogRepository.get(blogId, Context.api, this.loadBlogCriteria).then((entity) => {
                 this.blog = entity;
                 this.originalSlug = entity.slug;
+
+                if (this.blog.translated.mediaId) {
+                    this.mediaRepository.get(this.blog.translated.mediaId).then((media) => {
+                        this.blog.media = media;
+                    });
+                }
 
                 if (entity.cmsPageId) {
                     this.page = entity.cmsPage;
