@@ -71,6 +71,7 @@
             <argument type="service" id="Werkl\OpenBlogware\Controller\CachedBlogController.inner"/>
             <argument type="service" id="cache.object"/>
             <argument type="service" id="Shopware\Core\Framework\DataAbstractionLayer\Cache\EntityCacheKeyGenerator"/>
+            <argument type="service" id="Shopware\Core\Framework\Adapter\Cache\CacheTracer"/>
 
             <call method="setContainer">
                 <argument type="service" id="service_container"/>
@@ -95,6 +96,7 @@
             <argument type="service" id="Werkl\OpenBlogware\Controller\CachedBlogSearchController.inner"/>
             <argument type="service" id="cache.object"/>
             <argument type="service" id="Shopware\Core\Framework\DataAbstractionLayer\Cache\EntityCacheKeyGenerator"/>
+            <argument type="service" id="Shopware\Core\Framework\Adapter\Cache\CacheTracer"/>
 
             <call method="setContainer">
                 <argument type="service" id="service_container"/>
@@ -119,6 +121,7 @@
             <argument type="service" id="Werkl\OpenBlogware\Controller\CachedBlogRssController.inner"/>
             <argument type="service" id="cache.object"/>
             <argument type="service" id="Shopware\Core\Framework\DataAbstractionLayer\Cache\EntityCacheKeyGenerator"/>
+            <argument type="service" id="Shopware\Core\Framework\Adapter\Cache\CacheTracer"/>
 
             <call method="setContainer">
                 <argument type="service" id="service_container"/>

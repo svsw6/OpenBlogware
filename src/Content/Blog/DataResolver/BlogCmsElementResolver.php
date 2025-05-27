@@ -24,8 +24,11 @@ use Werkl\OpenBlogware\Content\Blog\Events\BlogMainFilterEvent;
 
 class BlogCmsElementResolver extends AbstractCmsElementResolver
 {
-    public function __construct(private readonly EventDispatcherInterface $eventDispatcher)
+    private EventDispatcherInterface $eventDispatcher;
+
+    public function __construct(EventDispatcherInterface $eventDispatcher)
     {
+        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function getType(): string
