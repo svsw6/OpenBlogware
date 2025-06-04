@@ -113,6 +113,17 @@
                     "blogCategories": {
                         "label": "Categories",
                         "placeholder": "Select categories"
+                    },
+                    "showTags": {
+                        "label": "Tags",
+                        "options": {
+                            "all": "All",
+                            "select": "Select tags"
+                        }
+                    },
+                    "blogTags": {
+                        "label": "Tags",
+                        "placeholder": "Select tags"
                     }
                 },
                 "component": {

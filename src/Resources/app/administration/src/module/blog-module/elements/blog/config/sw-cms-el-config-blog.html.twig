@@ -38,6 +38,25 @@
     </werkl-blog-category-tree-field>
     {% endblock %}
 
+    {% block werkl_cms_element_blog_listing_config_show_tags %}
+    <sw-select-field
+        :label="$tc('werkl-blog.elements.listing.config.showTags.label')"
+        v-model:value="element.config.showTags.value"
+    >
+        <option value="all">{{ $tc('werkl-blog.elements.listing.config.showTags.options.all') }}</option>
+        <option value="select">{{ $tc('werkl-blog.elements.listing.config.showTags.options.select') }}</option>
+    </sw-select-field>
+    {% endblock %}
+
+    {% block werkl_cms_element_blog_listing_config_select_tags %}
+    <sw-entity-tag-select
+        v-if="element.config.showTags.value !== 'all' && selectedTags"
+        v-model:entityCollection="selectedTags"
+        :label="$tc('werkl-blog.elements.listing.config.blogTags.label')"
+        :placeholder="$tc('werkl-blog.elements.listing.config.blogTags.placeholder')">
+    </sw-entity-tag-select>
+    {% endblock %}
+
     {% block werkl_cms_element_blog_listing_config_show_filter_select %}
     <sw-card
         :title="$tc('werkl-blog.elements.listing.config.showFilter.label')"
