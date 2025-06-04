@@ -4,7 +4,8 @@
             "meta": {
                 "author": "Author",
                 "category": "Categories"
-            }
+            },
+            "backToListing": "Back to blog listing"
         },
         "element": {
             "detail": {
