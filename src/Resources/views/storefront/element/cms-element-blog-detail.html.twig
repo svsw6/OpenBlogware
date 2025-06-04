@@ -93,13 +93,15 @@
         </article>
 
         {% block werkl_blog_detail_back_link %}
-            <div class="mt-4">
-                <a
-                    class="btn btn-link"
-                    href="{% if page.navigationId is not null %}{{ path('frontend.cms.navigation.page', { navigationId: page.navigationId }) }}{% else %}javascript:history.back(){% endif %}">
-                    {{ 'werkl-blog.detail.backToListing'|trans }}
-                </a>
-            </div>
+            {% if page.navigationId is not null %}
+                <div class="mt-4">
+                    <a
+                        class="btn btn-link"
+                        href="{{ path('frontend.cms.navigation.page', { navigationId: page.navigationId }) }}">
+                        {{ 'werkl-blog.detail.backToListing'|trans }}
+                    </a>
+                </div>
+            {% endif %}
         {% endblock %}
     {% else %}
         {% sw_include '@Storefront/storefront/utilities/alert.html.twig' with {
