@@ -52,6 +52,21 @@ where you can also select from all available variables.
 ## RSS Feed
 For access **RSS Feed** url you can use this path `/blog/rss`
 Example(`http://Your-domain/blog/rss`)
+### Duplicate Blog Entries
+Use the new console command to duplicate an existing blog entry:
+```bash
+php bin/console werkl-blog:duplicate <source-id> --title="New Title"
+```
+The command copies translations, categories and tags while reusing the same CMS page.
+
+You can also trigger duplication via the Administration API:
+```bash
+curl -X POST \
+     -H 'Content-Type: application/json' \
+     -d '{"title":"New Title"}' \
+     http://YOUR-SHOP/api/_action/werkl-blog/duplicate/<source-id>
+```
+The endpoint returns the ID of the newly created entry and can be used from custom backend components.
 
 ## Installation
 

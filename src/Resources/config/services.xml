@@ -243,5 +243,13 @@
 
             <tag name="kernel.event_subscriber"/>
         </service>
+    <service id="Werkl\OpenBlogware\Command\DuplicateBlogEntryCommand" public="true">
+        <argument type="service" id="werkl_blog_entries.repository" />
+        <tag name="console.command" command="werkl-blog:duplicate" />
+    </service>
+    <service id="Werkl\OpenBlogware\Controller\Admin\DuplicateBlogEntryController" public="true">
+        <argument type="service" id="werkl_blog_entries.repository" />
+        <tag name="controller.service_arguments" />
+    </service>
     </services>
 </container>

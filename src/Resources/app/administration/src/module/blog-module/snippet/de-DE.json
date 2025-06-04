@@ -17,6 +17,9 @@
                 "active": "Aktiv",
                 "author": "Autor",
                 "publishedAt": "Veröffentlicht am"
+            },
+            "actions": {
+                "duplicate": "Duplizieren"
             }
         },
         "detail": {

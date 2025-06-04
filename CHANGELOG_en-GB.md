@@ -1,3 +1,7 @@
+# 4.3.1
+- Added console command to duplicate blog entries
+- Added API endpoint to duplicate entries via the administration
+
 # 4.2.2
 - Fixed category indexer fetching children from wrong table [#22](https://github.com/Werkstattl/OpenBlogware/pull/22)
 - Added teaser image translation [#24](https://github.com/Werkstattl/OpenBlogware/pull/24)
