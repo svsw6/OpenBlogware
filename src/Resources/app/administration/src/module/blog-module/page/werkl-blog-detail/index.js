@@ -28,6 +28,7 @@ export default {
             localeLanguage: null,
             showSectionModal: false,
             sectionDontRemind: false,
+            slugEdited: false,
         };
     },
 
@@ -392,8 +393,10 @@ export default {
             }
 
             this.page.name = blogTitle;
-            this.getLocaleLanguage();
-            this.generateSlug(blogTitle);
+            if (!this.slugEdited) {
+                this.getLocaleLanguage();
+                this.generateSlug(blogTitle);
+            }
         }, debounceTimeout),
 
         addBlogError({
@@ -432,6 +435,8 @@ export default {
                 lower: true,
             });
 
+            this.slugEdited = false;
+
             if (!this.localeLanguage) {
                 this.blog.slug = slug;
                 return;
@@ -452,6 +457,10 @@ export default {
             }).catch(() => {
                 this.blog.slug = slug;
             });
+        },
+
+        onSlugInput() {
+            this.slugEdited = true;
         },
 
         createPage(name) {
