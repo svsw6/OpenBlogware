@@ -325,6 +325,7 @@ export default {
 
             return [
                 this.missingTitleValidation(),
+                this.missingSlugValidation(),
                 this.missingPublishedAtValidation(),
                 this.missingAuthorIdValidation(),
                 this.missingCategoriesValidation(),
@@ -338,6 +339,19 @@ export default {
 
             this.addBlogError({
                 property: 'title',
+                message: this.$tc('sw-cms.detail.notification.messageMissingFields'),
+            });
+
+            return false;
+        },
+
+        missingSlugValidation() {
+            if (this.blog.slug) {
+                return true;
+            }
+
+            this.addBlogError({
+                property: 'slug',
                 message: this.$tc('sw-cms.detail.notification.messageMissingFields'),
             });
 
