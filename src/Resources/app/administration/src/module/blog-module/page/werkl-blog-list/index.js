@@ -7,7 +7,7 @@ const Criteria = Shopware.Data.Criteria;
 export default {
     template,
 
-    inject: ['repositoryFactory'],
+    inject: ['repositoryFactory', 'loginService'],
 
     mixins: [
         Mixin.getByName('salutation'),
@@ -110,7 +110,12 @@ export default {
         },
 
         duplicateBlog(item) {
-            const headers = this.blogEntriesRepository.getBasicHeaders();
+            let headers = {};
+            if (typeof this.blogEntriesRepository.getBasicHeaders === 'function') {
+                headers = this.blogEntriesRepository.getBasicHeaders();
+            } else if (Shopware.Service && typeof Shopware.Service('loginService')?.getBasicHeaders === 'function') {
+                headers = Shopware.Service('loginService').getBasicHeaders();
+            }
             this.blogEntriesRepository.httpClient
                 .post(`/_action/werkl-blog/duplicate/${item.id}`, {}, { headers })
                 .then((response) => {
