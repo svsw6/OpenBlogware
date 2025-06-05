@@ -1,3 +1,9 @@
+# 4.4.0
+- Listing-CMS-Element im Backend mit Tag-Multi-Auswahl erweitern [#4](https://github.com/Werkstattl/OpenBlogware/issues/4)
+- Mögliche Lösung für MySQL 8.4 Fremdschlüssel [#19](https://github.com/Werkstattl/OpenBlogware/issues/19)
+- JS-Fehler im Search-Popup [#31](https://github.com/Werkstattl/OpenBlogware/issues/31)
+- Teaser nur anzeigen, wenn gefüllt [#32](https://github.com/Werkstattl/OpenBlogware/issues/32)
+
 # 4.3.0
 - Administration Optimierungen von @lacknere in [#25](https://github.com/Werkstattl/OpenBlogware/pull/25)
 - Fehler im Frontend, wenn kein Teaser-Bild gesetzt ist behoben [#26](https://github.com/Werkstattl/OpenBlogware/issues/26)
