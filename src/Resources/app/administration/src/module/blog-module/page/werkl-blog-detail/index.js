@@ -473,8 +473,19 @@ export default {
             });
         },
 
-        onSlugInput() {
+        onSlugInput(event) {
             this.slugEdited = true;
+
+            const value = event?.target?.value || this.blog.slug;
+            if (!value) {
+                this.blog.slug = '';
+                return;
+            }
+
+            this.blog.slug = slugify(value, {
+                locale: this.localeLanguage,
+                lower: true,
+            });
         },
 
         createPage(name) {
