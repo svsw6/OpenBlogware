@@ -32,9 +32,9 @@
                 {% block werkl_blog_cms_sidebar_page_basic_information_slug_field %}
                 <sw-text-field
                     required
+                    disabled
                     name="sw-field--blog-slug"
                     v-model:value="blog.slug"
-                    @input="onSlugInput"
                     :label="$tc('werkl-blog.detail.slugLabel')"
                     :error="blogSlugError"
                     :placeholder="$tc('werkl-blog.detail.slugPlaceholder')"

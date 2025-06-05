@@ -28,7 +28,6 @@ export default {
             localeLanguage: null,
             showSectionModal: false,
             sectionDontRemind: false,
-            slugEdited: false,
         };
     },
 
@@ -407,10 +406,8 @@ export default {
             }
 
             this.page.name = blogTitle;
-            if (!this.slugEdited) {
-                this.getLocaleLanguage();
-                this.generateSlug(blogTitle);
-            }
+            this.getLocaleLanguage();
+            this.generateSlug(blogTitle);
         }, debounceTimeout),
 
         addBlogError({
@@ -449,8 +446,6 @@ export default {
                 lower: true,
             });
 
-            this.slugEdited = false;
-
             if (!this.localeLanguage) {
                 this.blog.slug = slug;
                 return;
@@ -470,21 +465,6 @@ export default {
                 }
             }).catch(() => {
                 this.blog.slug = slug;
-            });
-        },
-
-        onSlugInput(event) {
-            this.slugEdited = true;
-
-            const value = event?.target?.value || this.blog.slug;
-            if (!value) {
-                this.blog.slug = '';
-                return;
-            }
-
-            this.blog.slug = slugify(value, {
-                locale: this.localeLanguage,
-                lower: true,
             });
         },
 

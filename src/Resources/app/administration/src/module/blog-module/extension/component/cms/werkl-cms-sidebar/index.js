@@ -89,10 +89,6 @@ export default {
             });
         },
 
-        onSlugInput() {
-            this.$emit('slug-edit');
-        },
-
         onSetMediaItem({ targetId }) {
             return this.mediaRepository.get(targetId, Shopware.Context.api).then((updatedMedia) => {
                 this.blog.mediaId = targetId;
