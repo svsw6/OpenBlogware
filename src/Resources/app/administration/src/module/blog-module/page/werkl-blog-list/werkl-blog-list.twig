@@ -85,12 +85,6 @@
             </template>
             {% endblock %}
 
-            <template #actions="{ item }">
-                <sw-context-menu-item @click="duplicateBlog(item)">
-                    {{ $tc('werkl-blog.list.actions.duplicate') }}
-                </sw-context-menu-item>
-            </template>
-
         </sw-entity-listing>
         {% endblock %}
 

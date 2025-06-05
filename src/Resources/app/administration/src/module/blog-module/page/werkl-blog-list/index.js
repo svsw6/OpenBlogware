@@ -12,7 +12,6 @@ export default {
     mixins: [
         Mixin.getByName('salutation'),
         Mixin.getByName('listing'),
-        Mixin.getByName('notification'),
     ],
 
     data() {
@@ -107,23 +106,6 @@ export default {
                 this.blogEntries = result;
                 this.isLoading = false;
             });
-        },
-
-        duplicateBlog(item) {
-            const headers = this.blogEntriesRepository.getBasicHeaders();
-            this.blogEntriesRepository.httpClient
-                .post(`/_action/werkl-blog/duplicate/${item.id}`, {}, { headers })
-                .then((response) => {
-                    if (response && response.data && response.data.id) {
-                        this.createNotificationSuccess({
-                            message: this.$tc('werkl-blog.list.actions.duplicate'),
-                        });
-                        this.$router.push({ name: 'blog.module.detail', params: { id: response.data.id } });
-                    }
-                })
-                .catch(() => {
-                    this.createNotificationError();
-                });
         },
     },
 };
