@@ -3,6 +3,7 @@
 - Possible solution for MySQL 8.4 foreign key [#19](https://github.com/Werkstattl/OpenBlogware/issues/19)
 - JS error in search popup [#31](https://github.com/Werkstattl/OpenBlogware/issues/31)
 - Teaser only display when filled [#32](https://github.com/Werkstattl/OpenBlogware/issues/32)
+- Fixed translatable teaser image in administration by @lacknere [#27](https://github.com/Werkstattl/OpenBlogware/pull/27)
 
 # 4.3.0
 - Administration optimizations by @lacknere in [#25](https://github.com/Werkstattl/OpenBlogware/pull/25)

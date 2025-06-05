@@ -3,6 +3,7 @@
 - Mögliche Lösung für MySQL 8.4 Fremdschlüssel [#19](https://github.com/Werkstattl/OpenBlogware/issues/19)
 - JS-Fehler im Search-Popup [#31](https://github.com/Werkstattl/OpenBlogware/issues/31)
 - Teaser nur anzeigen, wenn gefüllt [#32](https://github.com/Werkstattl/OpenBlogware/issues/32)
+- Fehler bei übersetzbaren Teaser-Bildern in der Administration behoben von @lacknere [#27](https://github.com/Werkstattl/OpenBlogware/pull/27)
 
 # 4.3.0
 - Administration Optimierungen von @lacknere in [#25](https://github.com/Werkstattl/OpenBlogware/pull/25)
