@@ -91,18 +91,6 @@
                 {% endblock %}
             {% endblock %}
         </article>
-
-        {% block werkl_blog_detail_back_link %}
-            {% if page.navigationId is not null %}
-                <div class="mt-4">
-                    <a
-                        class="btn btn-link"
-                        href="{{ url('frontend.cms.navigation.page', { navigationId: page.navigationId }) }}">
-                        {{ 'werkl-blog.detail.backToListing'|trans }}
-                    </a>
-                </div>
-            {% endif %}
-        {% endblock %}
     {% else %}
         {% sw_include '@Storefront/storefront/utilities/alert.html.twig' with {
             type: "warning",
