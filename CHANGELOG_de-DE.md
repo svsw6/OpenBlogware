@@ -1,3 +1,7 @@
+# 4.3.0
+- Administration Optimierungen von @lacknere in [#25](https://github.com/Werkstattl/OpenBlogware/pull/25)
+- Fehler im Frontend, wenn kein Teaser-Bild gesetzt ist behoben [#26](https://github.com/Werkstattl/OpenBlogware/issues/26)
+
 # 4.2.2
 - Fehler bei Kategorien-Indexierung behoben [#22](https://github.com/Werkstattl/OpenBlogware/pull/22)
 - Übersetzbare Teaser Bilder [#24](https://github.com/Werkstattl/OpenBlogware/pull/24)
