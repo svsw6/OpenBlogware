@@ -79,6 +79,12 @@ bin/console plugin:install --activate WerklOpenBlogware
 bin/console cache:clear
 ```
 
+## 🙏 Support
+
+If you find this plugin useful, consider supporting me on [GitHub Sponsors](https://github.com/sponsors/7underlines)!
+
+Your support helps me maintain and improve this project. Thank you! 💜
+
 ## Credits
 
 This plugin began as a fork of the latest MIT-licensed version of a Shopware 6 plugin that adds blog functionality. The source code of the original project is no longer publicly available.
