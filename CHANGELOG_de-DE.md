@@ -1,3 +1,6 @@
+# 4.4.1
+- Fehler im CMS-Listing-Bereich der Administration behoben [#16](https://github.com/Werkstattl/OpenBlogware/issues/16)
+
 # 4.4.0
 - Listing-CMS-Element im Backend mit Tag-Multi-Auswahl erweitern [#4](https://github.com/Werkstattl/OpenBlogware/issues/4)
 - Mögliche Lösung für MySQL 8.4 Fremdschlüssel [#19](https://github.com/Werkstattl/OpenBlogware/issues/19)
