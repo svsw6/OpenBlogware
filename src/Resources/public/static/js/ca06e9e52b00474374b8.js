@@ -1,0 +1,1 @@
+"use strict";(window["webpackJsonpPluginwerkl-open-blogware"]=window["webpackJsonpPluginwerkl-open-blogware"]||[]).push([[291],{8291:function(e,o,t){t.r(o),o.default={methods:{createdComponent(){Shopware.State.commit("context/resetLanguageToDefault"),this.blogAuthor=this.blogAuthorRepository.create(Shopware.Context.api)}}}}}]);
