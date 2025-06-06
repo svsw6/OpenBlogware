@@ -1,5 +1,9 @@
-# 4.4.1
+# 4.4.2
 - Fixed error in cms listing page in the administration [#16](https://github.com/Werkstattl/OpenBlogware/issues/16)
+- Add support development button
+
+# 4.4.1
+- Preliminary work for fixing error in cms listing page in the administration [#16](https://github.com/Werkstattl/OpenBlogware/issues/16)
 
 # 4.4.0
 - Listing cms element in the backend extended with tag multi-selection [#4](https://github.com/Werkstattl/OpenBlogware/issues/4)

@@ -1,5 +1,9 @@
-# 4.4.1
+# 4.4.2
 - Fehler im CMS-Listing-Bereich der Administration behoben [#16](https://github.com/Werkstattl/OpenBlogware/issues/16)
+- Entwicklung unterstützen Button hinzugefügt
+
+# 4.4.1
+- Vorarbeiten zur Behebung des Fehlers im CMS-Listing-Bereich der Administration [#16](https://github.com/Werkstattl/OpenBlogware/issues/16)
 
 # 4.4.0
 - Listing-CMS-Element im Backend mit Tag-Multi-Auswahl erweitern [#4](https://github.com/Werkstattl/OpenBlogware/issues/4)
