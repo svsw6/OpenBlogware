@@ -11,6 +11,7 @@
         "list": {
             "textBlogOverview": "Blog entries",
             "buttonAddBlogEntry": "Create blog entry",
+            "buttonSponsor": "Sponsor this plugin",
             "messageEmpty": "No blog entries ...",
             "table": {
                 "title": "Title",

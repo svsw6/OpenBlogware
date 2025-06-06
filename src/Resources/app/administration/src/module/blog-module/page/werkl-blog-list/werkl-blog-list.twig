@@ -24,6 +24,9 @@
         <sw-button :router-link="{ name: 'blog.module.create' }" variant="primary">
             {{ $tc('werkl-blog.list.buttonAddBlogEntry') }}
         </sw-button>
+        <sw-button variant="secondary" @click="openSponsorPage">
+            {{ $tc('werkl-blog.list.buttonSponsor') }}
+        </sw-button>
         {% endblock %}
     </template>
     {% endblock %}

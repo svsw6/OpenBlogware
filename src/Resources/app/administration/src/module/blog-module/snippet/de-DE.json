@@ -11,6 +11,7 @@
         "list": {
             "textBlogOverview": "Blog Einträge",
             "buttonAddBlogEntry": "Blog Eintrag erstellen",
+            "buttonSponsor": "Plugin sponsern",
             "messageEmpty": "Keine Einträge vorhanden",
             "table": {
                 "title": "Titel",
