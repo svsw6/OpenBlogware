@@ -1,3 +1,6 @@
+# 4.4.3
+- Possible solution for MySQL 8.4 foreign key [#19](https://github.com/Werkstattl/OpenBlogware/issues/19)
+
 # 4.4.2
 - Fixed error in cms listing page in the administration [#16](https://github.com/Werkstattl/OpenBlogware/issues/16)
 - Add support development button

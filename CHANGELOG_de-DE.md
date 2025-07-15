@@ -1,3 +1,6 @@
+# 4.4.3
+- Mögliche Lösung für MySQL 8.4 Fremdschlüssel [#19](https://github.com/Werkstattl/OpenBlogware/issues/19)
+
 # 4.4.2
 - Fehler im CMS-Listing-Bereich der Administration behoben [#16](https://github.com/Werkstattl/OpenBlogware/issues/16)
 - Entwicklung unterstützen Button hinzugefügt
