@@ -18,8 +18,11 @@ class Migration1621260479AddVersionIdToBlogCategoryTable extends MigrationStep
     {
         $version = Defaults::LIVE_VERSION;
         $connection->executeStatement('
-            ALTER TABLE `werkl_blog_category` add `version_id` BINARY(16) NOT NULL AFTER `id`,
-            DROP PRIMARY KEY , ADD PRIMARY KEY ( `id`, `version_id` );
+            ALTER TABLE `werkl_blog_category`
+                ADD COLUMN `version_id` BINARY(16) NOT NULL AFTER `id`,
+                ADD UNIQUE INDEX `uniq_werkl_blog_category_id` (`id`),
+                DROP PRIMARY KEY,
+                ADD PRIMARY KEY (`id`, `version_id`);
         ');
 
         $connection->executeStatement('
