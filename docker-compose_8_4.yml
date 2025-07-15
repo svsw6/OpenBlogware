@@ -28,3 +28,5 @@ networks:
     external: false
 
 # DATABASE_URL=mysql://shopuser:secret@db:3306/shopware
+# bin/console system:install --basic-setup --force
+# bin/console plugin:install WerklOpenBlogware
