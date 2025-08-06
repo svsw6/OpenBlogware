@@ -11,19 +11,17 @@ use Shopware\Core\Framework\Plugin\Exception\DecorationPatternException;
 use Shopware\Core\Framework\Uuid\Uuid;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
+use Werkl\OpenBlogware\Content\Blog\BlogEntryCollection;
 
 #[Route(defaults: ['_routeScope' => ['store-api']])]
 class BlogController extends AbstractBlogController
 {
     /**
-     * @var EntityRepository
+     * @param EntityRepository<BlogEntryCollection> $blogRepository
      */
-    private $blogRepository;
-
-    public function __construct(EntityRepository $blogRepository)
+    public function __construct(private readonly EntityRepository $blogRepository)
     {
-        $this->blogRepository = $blogRepository;
     }
 
     public function getDecorated(): AbstractBlogController
@@ -31,10 +29,10 @@ class BlogController extends AbstractBlogController
         throw new DecorationPatternException(self::class);
     }
 
-    #[Route(path: '/store-api/blog', name: 'store-api.werkl_blog.load', methods: ['GET', 'POST'], defaults: ['_entity' => 'werkl_blog_entries'])]
+    #[Route(path: '/store-api/blog', name: 'store-api.werkl_blog.load', methods: ['GET', 'POST'], defaults: ['_entity' => 'werkl_blog_entry'])]
     #[OAT\Get(
         path: '/store-api/blog',
-        summary: 'This route can be used to load the werkl_blog_entries by specific filters',
+        summary: 'This route can be used to load the werkl_blog_entry by specific filters',
         operationId: 'listBlog',
         tags: ['Store API', 'Blog'],
         parameters: [
@@ -71,7 +69,9 @@ class BlogController extends AbstractBlogController
     {
         $criteria = $this->buildCriteria($request, $criteria);
 
-        return new BlogControllerResponse($this->blogRepository->search($criteria, $context->getContext()));
+        $blogEntries = $this->blogRepository->search($criteria, $context->getContext())->getEntities();
+
+        return new BlogControllerResponse($blogEntries);
     }
 
     protected function buildCriteria(Request $request, Criteria $criteria): Criteria

@@ -1,3 +1,7 @@
+# 5.0.0
+- Compatibility with Shopware 6.7
+- Renamed BlogEntries entities to BlogEntry
+
 # 4.4.3
 - Possible solution for MySQL 8.4 foreign key [#19](https://github.com/Werkstattl/OpenBlogware/issues/19)
 
@@ -58,7 +62,7 @@
 - All content must be fully recreated. Refer to [#8](https://github.com/Werkstattl/OpenBlogware/issues/8) for the SQL commands required for a one-time migration.
 
 # 3.0.4
-- Added offset count functionality to the newest blog items element 
+- Added offset count functionality to the newest blog items element
 
 # 3.0.3
 - Changed git tag format so that the plugin can be installed via composer
@@ -106,7 +110,7 @@
 # 2.0.1
 - Fixed `Replace` button did not show on CMS designer
 
-# 2.0.0 
+# 2.0.0
 - Added feature to be able to create blog entries with the CMS designer
 
 # 1.5.15

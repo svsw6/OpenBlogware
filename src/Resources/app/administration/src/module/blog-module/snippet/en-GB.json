@@ -70,7 +70,7 @@
                 },
                 "error": {
                     "missingCategory": "Please choose at least one blog category!",
-                    "pageInvalid": "Errors occured. Please check the error list in the editor."
+                    "blogInvalid": "Some required fields for the blog entry are not filled in. Please check the fields in the sidebar."
                 }
             },
             "author": {
@@ -90,7 +90,8 @@
             }
         },
         "elements": {
-            "listing": {
+            "blog": {
+                "label": "Blog listing",
                 "config": {
                     "paginationCount": "Pagination count",
                     "showFilter": {
@@ -132,7 +133,15 @@
                     "infoText": "The blog listing content will be automatically fetched by the element."
                 }
             },
-            "detail": {
+            "blogCategories": {
+                "label": "Blog categories",
+                "component": {
+                    "elementHeadline": "Blog categories element",
+                    "infoText": "The blog categories content will be automatically fetched by the element."
+                }
+            },
+            "blogDetail": {
+                "label": "Blog detail",
                 "config": {
                     "showMeta": {
                         "label": "Detail view meta information",
@@ -146,12 +155,8 @@
                     "infoText": "The blog detail content will be automatically fetched by the element. There's currently no configuration available."
                 }
             },
-            "single-select": {
-                "label": "Blog Single Select",
-                "selectFieldLabel": "Select a blog entry",
-                "previewText": "Lorem Ipsum Dolor"
-            },
-            "newestListing": {
+            "blogNewestListing": {
+                "label": "Newest blog entries",
                 "config": {
                     "itemCount": "Item count",
                     "offsetCount": "Offset count",
@@ -170,40 +175,28 @@
                 "component": {
                     "elementHeadline": "Blog newest listing element",
                     "infoText": "The blog newest listing content will be automatically fetched by the element."
-                },
-                "preview": {
-                    "label": "Blog Newest Listing"
                 }
             },
-            "categories": {
-                "component": {
-                    "elementHeadline": "Blog categories element",
-                    "infoText": "The blog categories content will be automatically fetched by the element."
-                }
+            "blogSingleSelect": {
+                "label": "Single blog entry",
+                "selectFieldLabel": "Select a blog entry"
             }
         },
         "blocks": {
-            "blog": {
-                "listing": {
-                    "previewTitle": "Blog Listing",
-                    "label": "Blog Listing"
-                },
-                "detail": {
-                    "previewTitle": "Blog Detail View",
-                    "label": "Blog Detail"
-                },
-                "singleEntry": {
-                    "previewTitle": "Single Blog Entry",
-                    "label": "Single Blog Entry"
-                },
-                "newestListing": {
-                    "previewTitle": "Blog Newest Listing",
-                    "label": "Blog Newest Listing"
-                },
-                "categories": {
-                    "previewTitle": "Blog Categories",
-                    "label": "Blog Categories"
-                }
+            "blogCategories": {
+                "label": "Blog categories"
+            },
+            "blogDetail": {
+                "label": "Blog detail"
+            },
+            "blogListing": {
+                "label": "Blog listing"
+            },
+            "blogNewestListing": {
+                "label": "Newest blog entries"
+            },
+            "blogSingleEntry": {
+                "label": "Single blog entry"
             }
         }
     },
@@ -305,6 +298,17 @@
             },
             "werkl-blog-category": {
                 "label": "Category Blog"
+            }
+        }
+    },
+    "apps": {
+        "sw-cms": {
+            "detail": {
+                "label": {
+                    "blockCategory": {
+                        "werkl-blog": "Blog"
+                    }
+                }
             }
         }
     }

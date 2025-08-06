@@ -13,9 +13,9 @@ use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\EntitySearchResult;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
-use Werkl\OpenBlogware\Content\Blog\BlogEntriesCollection;
-use Werkl\OpenBlogware\Content\Blog\BlogEntriesDefinition;
-use Werkl\OpenBlogware\Content\Blog\BlogEntriesEntity;
+use Werkl\OpenBlogware\Content\Blog\BlogEntryCollection;
+use Werkl\OpenBlogware\Content\Blog\BlogEntryDefinition;
+use Werkl\OpenBlogware\Content\Blog\BlogEntryEntity;
 use Werkl\OpenBlogware\Core\Content\Sitemap\Provider\BlogUrlProvider;
 
 class BlogUrlProviderTest extends TestCase
@@ -34,7 +34,7 @@ class BlogUrlProviderTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->blogRepository = new FakeEntityRepository(new BlogEntriesDefinition());
+        $this->blogRepository = new FakeEntityRepository(new BlogEntryDefinition());
         $this->connection = $this->createMock(Connection::class);
         $this->eventDispatcher = $this->createMock(EventDispatcherInterface::class);
 
@@ -51,7 +51,7 @@ class BlogUrlProviderTest extends TestCase
      * This test verifies that method getUrls correctly returns
      * an instance of UrlResult with empty urls.
      */
-    public function testGetUrlsWithEmptyBlogEntries(): void
+    public function testGetUrlsWithEmptyBlogEntry(): void
     {
         $limit = 10;
         $searchResults = $this->createEmptyBlogSearchResults();
@@ -96,14 +96,14 @@ class BlogUrlProviderTest extends TestCase
      */
     private function createBlogSearchResults(string $articleId): EntitySearchResult
     {
-        $blogEntity = $this->createConfiguredMock(BlogEntriesEntity::class, [
+        $blogEntity = $this->createConfiguredMock(BlogEntryEntity::class, [
             'getId' => $articleId,
         ]);
 
         return new EntitySearchResult(
-            BlogEntriesDefinition::ENTITY_NAME,
+            BlogEntryDefinition::ENTITY_NAME,
             1,
-            new BlogEntriesCollection([$blogEntity]),
+            new BlogEntryCollection([$blogEntity]),
             null,
             new Criteria(),
             $this->getContext($this)

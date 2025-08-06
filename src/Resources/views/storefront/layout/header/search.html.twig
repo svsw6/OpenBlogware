@@ -1,21 +1,16 @@
 {% sw_extends '@Storefront/storefront/layout/header/search.html.twig' %}
 
-{% block layout_header_search %}
+{% block layout_header_search_form %}
     {% if app.request.attributes.get('_route') == 'werkl.frontend.blog.search' %}
-        <div class="collapse"
-             id="searchCollapse">
-            <div class="header-search">
-                <form action="{{ path('werkl.frontend.blog.search') }}"
-                      method="get"
-                      data-search-form="true"
-                      data-url="{{ path('frontend.search.suggest') }}?search="
-                      class="header-search-form">
-                    {% block layout_header_search_input_group %}
-                        {{ parent() }}
-                    {% endblock %}
-                </form>
-            </div>
-        </div>
+        <form action="{{ path('werkl.frontend.blog.search') }}"
+              method="get"
+              data-search-widget="true"
+              data-search-widget-options="{{ searchWidgetOptions|json_encode }}"
+              data-url="{{ path('frontend.search.suggest') }}?search="
+              class="header-search-form js-search-form">
+            {% block layout_header_search_input_group %}
+                {{ parent() }}
+            {% endblock %}
     {% else %}
         {{ parent() }}
     {% endif %}

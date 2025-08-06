@@ -6,7 +6,7 @@ namespace Werkl\OpenBlogware\Util;
 use Doctrine\DBAL\Connection;
 use Psr\Container\ContainerInterface;
 use Shopware\Core\Framework\Plugin\Context\UpdateContext;
-use Werkl\OpenBlogware\Content\Blog\BlogEntriesDefinition;
+use Werkl\OpenBlogware\Content\Blog\BlogEntryDefinition;
 use Werkl\OpenBlogware\Migration\Migration1602739765AddTeaserImageColumnToBlogEntries;
 use Werkl\OpenBlogware\Migration\Migration1612160298CreatePubslihedDateColumn;
 
@@ -28,10 +28,9 @@ class Update
         /** @var Connection $connection */
         $connection = $container->get(Connection::class);
 
-        $blogEntriesEntityName = BlogEntriesDefinition::ENTITY_NAME;
-        if (!$connection->getSchemaManager()->tablesExist([$blogEntriesEntityName])) {
-            $blogEntriesMigration = new Migration1602739765AddTeaserImageColumnToBlogEntries();
-            $blogEntriesMigration->update($connection);
+        if (!$connection->createSchemaManager()->tablesExist([BlogEntryDefinition::ENTITY_NAME])) {
+            $blogEntryMigration = new Migration1602739765AddTeaserImageColumnToBlogEntries();
+            $blogEntryMigration->update($connection);
         }
     }
 
@@ -40,10 +39,9 @@ class Update
         /** @var Connection $connection */
         $connection = $container->get(Connection::class);
 
-        $blogEntriesEntityName = BlogEntriesDefinition::ENTITY_NAME;
-        if (!$connection->getSchemaManager()->tablesExist([$blogEntriesEntityName])) {
-            $blogEntriesMigration = new Migration1612160298CreatePubslihedDateColumn();
-            $blogEntriesMigration->update($connection);
+        if (!$connection->createSchemaManager()->tablesExist([BlogEntryDefinition::ENTITY_NAME])) {
+            $blogEntryMigration = new Migration1612160298CreatePubslihedDateColumn();
+            $blogEntryMigration->update($connection);
         }
     }
 }

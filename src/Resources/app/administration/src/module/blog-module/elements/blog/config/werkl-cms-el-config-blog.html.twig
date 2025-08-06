@@ -1,0 +1,80 @@
+{% block werkl_cms_element_blog_config %}
+<div class="werkl-cms-el-config-blog">
+
+    {% block werkl_cms_element_blog_config_pagination_count %}
+    <mt-number-field
+        v-model="element.config.paginationCount.value"
+        number-type="int"
+        :allow-empty="false"
+        :min="1"
+        :max="null"
+        :digits="2"
+        :label="$tc('werkl-blog.elements.blog.config.paginationCount')"
+    />
+    {% endblock %}
+
+    {% block werkl_cms_element_blog_config_show_type %}
+    <mt-select
+        v-model="element.config.showType.value"
+        :options="showTypeOptions"
+        :label="$tc('werkl-blog.elements.blog.config.showType.label')"
+    />
+    {% endblock %}
+
+
+    {% block werkl_cms_element_blog_config_blog_categories %}
+    <werkl-blog-category-tree-field
+        v-if="element.config.showType.value === 'select'"
+        :categories-collection="blogCategoryCollection"
+        :label="$tc('werkl-blog.elements.blog.config.blogCategories.label')"
+        :placeholder="$tc('werkl-blog.elements.blog.config.blogCategories.placeholder')"
+        class="sw-product-detail__select-category"
+        @selection-add="onBlogCategoriesChange"
+        @selection-remove="onBlogCategoriesChange"
+    />
+    {% endblock %}
+
+    {% block werkl_cms_element_blog_config_show_tags %}
+    <mt-select
+        v-model="element.config.showTags.value"
+        :options="showTagsOptions"
+        :label="$tc('werkl-blog.elements.blog.config.showTags.label')"
+    />
+    {% endblock %}
+
+    {% block werkl_cms_element_blog_config_tags %}
+    <sw-entity-tag-select
+        v-if="element.config.showTags.value === 'select'"
+        v-model:entity-collection="tagCollection"
+        :label="$tc('werkl-blog.elements.blog.config.blogTags.label')"
+        :placeholder="$tc('werkl-blog.elements.blog.config.blogTags.placeholder')"
+        @update:entity-collection="onTagsChange"
+    />
+    {% endblock %}
+
+    {% block werkl_cms_element_blog_config_filter %}
+    <sw-card
+        :title="$tc('werkl-blog.elements.blog.config.showFilter.label')"
+        :hero="false"
+        :isLoading="false"
+        :large="false"
+        class="werkl-cms-el-config-blog-filter">
+
+        {% block block_werkl_cms_element_blog_config_filter_show_category %}
+        <mt-checkbox
+            v-model:checked="element.config.showCategoryFilter.value"
+            :label="$tc('werkl-blog.elements.blog.config.showFilter.options.filter.category')"
+        />
+        {% endblock %}
+
+        {% block block_werkl_cms_element_blog_config_filter_show_author %}
+        <mt-checkbox
+            v-model:checked="element.config.showAuthorFilter.value"
+            :label="$tc('werkl-blog.elements.blog.config.showFilter.options.filter.author')"
+        />
+        {% endblock %}
+    </sw-card>
+    {% endblock %}
+
+</div>
+{% endblock %}

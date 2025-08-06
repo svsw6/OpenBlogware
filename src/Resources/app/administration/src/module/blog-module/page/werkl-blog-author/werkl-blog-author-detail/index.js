@@ -118,7 +118,7 @@ export default {
                 this.isLoading = false;
                 this.isSaveSuccessful = true;
                 this.createNotificationSuccess({
-                    message: this.$tc('werkl-blog-author.detail.messageSaveSuccess', 0, {
+                    message: this.$tc('werkl-blog-author.detail.messageSaveSuccess', {
                         name: `${this.blogAuthor.firstName} ${this.blogAuthor.lastName}`,
                     }),
                 });

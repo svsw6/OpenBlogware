@@ -1,15 +1,14 @@
 const { Component } = Shopware;
 
-Component.register('sw-cms-el-categories', () => import('./component'));
-Component.register('sw-cms-el-config-categories', () => import('./config'));
-Component.register('sw-cms-el-preview-categories', () => import('./preview'));
+Component.register('werkl-cms-el-blog-categories', () => import('./component'));
+Component.register('werkl-cms-el-config-blog-categories', () => import('./config'));
+Component.register('werkl-cms-el-preview-blog-categories', () => import('./preview'));
 
 Shopware.Service('cmsService').registerCmsElement({
     name: 'blog-categories',
-    label: 'Blog Categories',
-    component: 'sw-cms-el-categories',
-    configComponent: 'sw-cms-el-config-categories',
-    previewComponent: 'sw-cms-el-preview-categories',
-    defaultConfig: {
-    },
+    label: 'werkl-blog.elements.blogCategories.label',
+    component: 'werkl-cms-el-blog-categories',
+    configComponent: 'werkl-cms-el-config-blog-categories',
+    previewComponent: 'werkl-cms-el-preview-blog-categories',
+    defaultConfig: {},
 });

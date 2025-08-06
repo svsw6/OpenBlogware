@@ -11,6 +11,7 @@ use Shopware\Core\Framework\Routing\RoutingException;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 use Shopware\Storefront\Page\GenericPageLoaderInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Werkl\OpenBlogware\Content\Blog\BlogEntryCollection;
 
 class BlogSearchPageLoader
 {
@@ -18,16 +19,13 @@ class BlogSearchPageLoader
 
     private const DEFAULT_PAGE = 1;
 
-    private GenericPageLoaderInterface $genericLoader;
-
-    private EntityRepository $blogRepository;
-
+    /**
+     * @param EntityRepository<BlogEntryCollection> $blogRepository
+     */
     public function __construct(
-        GenericPageLoaderInterface $genericLoader,
-        EntityRepository $blogRepository
+        private readonly GenericPageLoaderInterface $genericLoader,
+        private readonly EntityRepository $blogRepository
     ) {
-        $this->genericLoader = $genericLoader;
-        $this->blogRepository = $blogRepository;
     }
 
     /**
@@ -45,8 +43,6 @@ class BlogSearchPageLoader
         }
 
         $page = $this->genericLoader->load($request, $context);
-
-        /** @var BlogSearchPage $page */
         $page = BlogSearchPage::createFrom($page);
 
         if ($page->getMetaInformation()) {
@@ -85,6 +81,14 @@ class BlogSearchPageLoader
         $criteria->setOffset($offset);
         $criteria->setTitle('blog-search-page');
         $criteria->setTotalCountMode(Criteria::TOTAL_COUNT_MODE_EXACT);
+
+        $criteria->addAssociations([
+            'blogAuthor',
+            'blogAuthor.media',
+            'blogAuthor.blogEntries',
+            'blogCategories',
+            'tags',
+        ]);
 
         return $criteria;
     }

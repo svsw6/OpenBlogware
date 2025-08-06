@@ -4,63 +4,42 @@ declare(strict_types=1);
 namespace Werkl\OpenBlogware\Content\BlogCategory;
 
 use Shopware\Core\Framework\DataAbstractionLayer\Entity;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityCustomFieldsTrait;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityIdTrait;
 use Shopware\Core\System\SalesChannel\SalesChannelCollection;
-use Werkl\OpenBlogware\Content\Blog\BlogEntriesCollection;
+use Werkl\OpenBlogware\Content\Blog\BlogEntryCollection;
 use Werkl\OpenBlogware\Content\BlogCategory\BlogCategoryTranslation\BlogCategoryTranslationCollection;
 
 class BlogCategoryEntity extends Entity
 {
+    use EntityCustomFieldsTrait;
     use EntityIdTrait;
 
-    protected ?string $parentId;
+    protected ?string $parentId = null;
 
-    protected ?string $afterCategoryId;
+    protected ?string $afterCategoryId = null;
 
-    protected ?int $level;
+    protected ?int $level = null;
 
-    protected ?string $path;
+    protected ?string $path = null;
 
-    protected ?int $childCount;
+    protected ?int $childCount = null;
 
     protected ?string $name = null;
 
-    protected ?array $customFields;
+    protected ?BlogCategoryEntity $parent = null;
 
-    /**
-     * @var self|null
-     */
-    protected $parent;
+    protected ?BlogCategoryCollection $children = null;
 
-    /**
-     * @var BlogCategoryCollection|null
-     */
-    protected $children;
+    protected ?BlogCategoryTranslationCollection $translations = null;
 
-    /**
-     * @var BlogCategoryTranslationCollection|null
-     */
-    protected $translations;
+    protected ?BlogEntryCollection $blogEntries = null;
 
-    /**
-     * @var BlogEntriesCollection|null
-     */
-    protected $blogEntries;
+    protected ?SalesChannelCollection $navigationSalesChannels = null;
 
-    /**
-     * @var SalesChannelCollection|null
-     */
-    protected $navigationSalesChannels;
+    protected ?SalesChannelCollection $footerSalesChannels = null;
 
-    /**
-     * @var SalesChannelCollection|null
-     */
-    protected $footerSalesChannels;
-
-    /**
-     * @var SalesChannelCollection|null
-     */
-    protected $serviceSalesChannels;
+    protected ?SalesChannelCollection $serviceSalesChannels = null;
 
     public function getParentId(): ?string
     {
@@ -122,22 +101,12 @@ class BlogCategoryEntity extends Entity
         $this->name = $name;
     }
 
-    public function getCustomFields(): ?array
-    {
-        return $this->customFields;
-    }
-
-    public function setCustomFields(?array $customFields): void
-    {
-        $this->customFields = $customFields;
-    }
-
-    public function getParent(): ?Entity
+    public function getParent(): ?BlogCategoryEntity
     {
         return $this->parent;
     }
 
-    public function setParent(self $parent): void
+    public function setParent(?BlogCategoryEntity $parent): void
     {
         $this->parent = $parent;
     }
@@ -162,12 +131,12 @@ class BlogCategoryEntity extends Entity
         $this->translations = $translations;
     }
 
-    public function getBlogEntries(): ?BlogEntriesCollection
+    public function getBlogEntries(): ?BlogEntryCollection
     {
         return $this->blogEntries;
     }
 
-    public function setBlogEntries(BlogEntriesCollection $blogEntries): void
+    public function setBlogEntries(BlogEntryCollection $blogEntries): void
     {
         $this->blogEntries = $blogEntries;
     }

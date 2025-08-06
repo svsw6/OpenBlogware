@@ -19,7 +19,7 @@
         },
         "box": {
             "author": {
-                "countEntries": "Entries"
+                "countEntries": "{0} No entries | {1} 1 entry | ]1,Inf[ %count% entries"
             }
         },
         "listing": {
@@ -37,9 +37,9 @@
             },
             "in": "In",
             "searchAllResults": "Show all blogs search result",
-            "searchResults": "{1} 1 Entry|]1,Inf[ %count% Entries",
-            "emptyResult": "No blog entries found with the request keyword",
-            "headline": "{0} 0 blogs found for \"%searchTerm%\" | {1} One blog found for \"%searchTerm%\" | ]1,Inf[ %count% blogs found for \"%searchTerm%\""
+            "searchResults": "{0} No entries | {1} 1 entry | ]1,Inf[ %count% entries",
+            "emptyResult": "No blog entries found.",
+            "headline": "{0} 0 blog entries found for \"%searchTerm%\" | {1} One blog entry found for \"%searchTerm%\" | ]1,Inf[ %count% blog entries found for \"%searchTerm%\""
         }
     },
     "header": {

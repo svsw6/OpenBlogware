@@ -9,6 +9,7 @@ use Shopware\Core\Content\Product\SalesChannel\Listing\Filter;
 use Shopware\Core\Content\Product\SalesChannel\Listing\FilterCollection;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Event\EntityLoadedEvent;
+use Shopware\Core\Framework\DataAbstractionLayer\Search\Aggregation\Aggregation;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Aggregation\Bucket\FilterAggregation;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Aggregation\Metric\EntityAggregation;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
@@ -17,9 +18,9 @@ use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\RangeFilter;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Werkl\OpenBlogware\Content\Blog\BlogEntriesDefinition;
-use Werkl\OpenBlogware\Content\Blog\BlogEntriesEntity;
-use Werkl\OpenBlogware\Content\Blog\BlogListingFilterBuildEvent;
+use Werkl\OpenBlogware\Content\Blog\BlogEntryDefinition;
+use Werkl\OpenBlogware\Content\Blog\BlogEntryEntity;
+use Werkl\OpenBlogware\Content\Blog\Events\BlogListingFilterBuildEvent;
 use Werkl\OpenBlogware\Content\Blog\Events\BlogMainFilterEvent;
 
 class BlogSubscriber implements EventSubscriberInterface
@@ -27,23 +28,28 @@ class BlogSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            'werkl_blog_entries.loaded' => 'onBlogEntriesLoaded',
+            BlogEntryDefinition::ENTITY_NAME . '.loaded' => 'onBlogEntryLoaded',
             BlogListingFilterBuildEvent::BLOG_MAIN_FILTER_EVENT => 'onBlogMainFilter',
         ];
     }
 
-    public function __construct(
-        private readonly EntityRepository $mediaRepository,
-    ) {
+    /**
+     * @param EntityRepository<MediaCollection> $mediaRepository
+     */
+    public function __construct(private readonly EntityRepository $mediaRepository)
+    {
     }
 
-    public function onBlogEntriesLoaded(EntityLoadedEvent $event): void
+    /**
+     * @param EntityLoadedEvent<BlogEntryEntity> $event
+     */
+    public function onBlogEntryLoaded(EntityLoadedEvent $event): void
     {
-        /** @var BlogEntriesEntity[] $blogEntries */
+        /** @var BlogEntryEntity[] $blogEntries */
         $blogEntries = $event->getEntities();
 
         $mediaIds = array_unique(array_filter(array_map(
-            fn (BlogEntriesEntity $blogEntry) => $blogEntry->getTranslation('mediaId'),
+            fn (BlogEntryEntity $blogEntry) => $blogEntry->getTranslation('mediaId'),
             $blogEntries
         )));
 
@@ -78,7 +84,7 @@ class BlogSubscriber implements EventSubscriberInterface
         $criteriaCollection = new CriteriaCollection();
         $criteriaCollection->add(
             'werkl_blog',
-            BlogEntriesDefinition::class,
+            BlogEntryDefinition::class,
             $criteria
         );
 
@@ -100,6 +106,9 @@ class BlogSubscriber implements EventSubscriberInterface
         $criteria->addExtension('filters', $filters);
     }
 
+    /**
+     * @return array<Aggregation>
+     */
     private function getAggregations(Request $request, FilterCollection $filters): array
     {
         $aggregations = [];
@@ -196,6 +205,9 @@ class BlogSubscriber implements EventSubscriberInterface
         );
     }
 
+    /**
+     * @return array<string>
+     */
     private function getFilterByCustomIds(string $input, Request $request): array
     {
         $ids = $request->query->get($input, '');

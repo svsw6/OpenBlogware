@@ -32,7 +32,7 @@ class UpdateTest extends TestCase
             ->getMockForAbstractClass();
 
         $connection = $this->createMock(Connection::class);
-        $connection->expects(static::any())->method('getSchemaManager')->willReturn($this->schemaManager);
+        $connection->expects(static::any())->method('createSchemaManager')->willReturn($this->schemaManager);
 
         $this->container = $this->createMock(ContainerInterface::class);
         $this->container->expects(static::any())->method('get')->willReturn($connection);

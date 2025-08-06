@@ -1,22 +1,6 @@
-import template from './werkl-blog-element-blog-detail.html.twig';
-import './werkl-blog-element-blog-detail.scss';
-
-const { Mixin } = Shopware;
+import template from './werkl-cms-el-blog-detail.html.twig';
+import './werkl-cms-el-blog-detail.scss';
 
 export default {
     template,
-
-    mixins: [
-        Mixin.getByName('cms-element'),
-    ],
-
-    created() {
-        this.createdComponent();
-    },
-
-    methods: {
-        createdComponent() {
-            this.initElementConfig('blog-detail');
-        },
-    },
 };

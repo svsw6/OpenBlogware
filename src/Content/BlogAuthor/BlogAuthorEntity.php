@@ -8,7 +8,7 @@ use Shopware\Core\Framework\DataAbstractionLayer\Entity;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityCustomFieldsTrait;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityIdTrait;
 use Shopware\Core\System\Salutation\SalutationEntity;
-use Werkl\OpenBlogware\Content\Blog\BlogEntriesCollection;
+use Werkl\OpenBlogware\Content\Blog\BlogEntryCollection;
 use Werkl\OpenBlogware\Content\BlogAuthor\BlogAuthorTranslation\BlogAuthorTranslationCollection;
 
 class BlogAuthorEntity extends Entity
@@ -22,27 +22,21 @@ class BlogAuthorEntity extends Entity
 
     protected string $email;
 
-    protected ?string $displayName;
+    protected ?string $displayName = null;
 
     protected string $salutationId;
 
-    protected ?SalutationEntity $salutation;
+    protected ?SalutationEntity $salutation = null;
 
-    protected ?string $description;
+    protected ?string $description = null;
 
-    /**
-     * @var BlogAuthorTranslationCollection|null
-     */
-    protected $translations;
+    protected ?BlogAuthorTranslationCollection $translations = null;
 
-    /**
-     * @var BlogEntriesCollection|null
-     */
-    protected $blogEntries;
+    protected ?BlogEntryCollection $blogEntries = null;
 
     protected string $mediaId;
 
-    protected ?MediaEntity $media;
+    protected ?MediaEntity $media = null;
 
     public function getTranslations(): ?BlogAuthorTranslationCollection
     {
@@ -54,12 +48,12 @@ class BlogAuthorEntity extends Entity
         $this->translations = $translations;
     }
 
-    public function getBlogEntries(): ?BlogEntriesCollection
+    public function getBlogEntries(): ?BlogEntryCollection
     {
         return $this->blogEntries;
     }
 
-    public function setBlogEntries(BlogEntriesCollection $blogEntries): void
+    public function setBlogEntries(BlogEntryCollection $blogEntries): void
     {
         $this->blogEntries = $blogEntries;
     }

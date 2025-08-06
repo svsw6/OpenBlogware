@@ -1,5 +1,5 @@
-import template from './sw-cms-el-preview-blog-single-select.html.twig';
-import './sw-cms-el-preview-blog-single-select.scss';
+import template from './werkl-cms-el-preview-blog-single-select.html.twig';
+import './werkl-cms-el-preview-blog-single-select.scss';
 
 const { Filter } = Shopware;
 

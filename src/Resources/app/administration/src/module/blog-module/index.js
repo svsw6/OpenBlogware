@@ -71,7 +71,7 @@ Module.register('blog-module', {
                 privilege: [
                     'werkl-blog-category:read',
                     'werkl_blog_author:read',
-                    'werkl_blog_entries:read',
+                    'werkl_blog_entry:read',
                 ],
             },
         },

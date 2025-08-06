@@ -70,7 +70,7 @@
                 },
                 "error": {
                     "missingCategory": "Bitte wähle mind. eine Kategorie!",
-                    "pageInvalid": "Einige Fehler sind aufgetreten. Bitte überprüfe die Liste im Editor."
+                    "blogInvalid": "Einige erforderliche Felder für den Blogeintrag sind nicht ausgefüllt. Bitte überprüfe die Felder in der Sidebar."
                 }
             },
             "author": {
@@ -90,7 +90,8 @@
             }
         },
         "elements": {
-            "listing": {
+            "blog": {
+                "label": "Blog Listing",
                 "config": {
                     "paginationCount": "Pagination count",
                     "showFilter": {
@@ -132,7 +133,15 @@
                     "infoText": "Der Blog Listen Inhalt wird automatisch in der Storefront ausgespielt."
                 }
             },
-            "detail": {
+            "blogCategories": {
+                "label": "Blog Kategorien",
+                "component": {
+                    "elementHeadline": "Blog Kategorien Element",
+                    "infoText": "Die Blog Kategorien werden automatisch in der Storefront ausgespielt. Derzeit gibt es keine Element Konfiguration."
+                }
+            },
+            "blogDetail": {
+                "label": "Blog Detail",
                 "config": {
                     "showMeta": {
                         "label": "Detail Ansicht Meta Informationen",
@@ -146,12 +155,8 @@
                     "infoText": "Der Blog Inhalt wird automatisch in der Storefront ausgespielt. Derzeit gibt es keine Element Konfiguration."
                 }
             },
-            "single-select": {
-                "label": "Blog Single Select",
-                "selectFieldLabel": "Wähle einen Blog Eintrag",
-                "previewText": "Lorem Ipsum Dolor"
-            },
-            "newestListing": {
+            "blogNewestListing": {
+                "label": "Neueste Blogeinträge",
                 "config": {
                     "itemCount": "Anzahl der Artikel",
                     "offsetCount": "Überspringe Artikel",
@@ -170,40 +175,28 @@
                 "component": {
                     "elementHeadline": "Blog neuestes Listenelement",
                     "infoText": "Der Inhalt des Blogs mit den neuesten Einträgen wird automatisch von diesem Element abgerufen."
-                },
-                "preview": {
-                    "label": "Blog Neueste Auflistung"
                 }
             },
-            "categories": {
-                "component": {
-                    "elementHeadline": "Blog Kategorien Element",
-                    "infoText": "Die Blog Kategorien werden automatisch in der Storefront ausgespielt. Derzeit gibt es keine Element Konfiguration."
-                }
+            "blogSingleSelect": {
+                "label": "Einzelner Blogeintrag",
+                "selectFieldLabel": "Wähle einen Blogeintrag"
             }
         },
         "blocks": {
-            "blog": {
-                "listing": {
-                    "previewTitle": "Blog Liste",
-                    "label": "Blog Listen Ansicht"
-                },
-                "detail": {
-                    "previewTitle": "Blog Detail",
-                    "label": "Blog Detail"
-                },
-                "singleEntry": {
-                    "previewTitle": "Einzelner Blogeintrag",
-                    "label": "Einzelner Blogeintrag"
-                },
-                "newestListing": {
-                    "previewTitle": "Blog Neueste Auflistung",
-                    "label": "Blog Neueste Auflistung"
-                },
-                "categories": {
-                    "previewTitle": "Blog Categories",
-                    "label": "Blog Categories"
-                }
+            "blogCategories": {
+                "label": "Blog Kategorien"
+            },
+            "blogDetail": {
+                "label": "Blog Detail"
+            },
+            "blogListing": {
+                "label": "Blog Listing"
+            },
+            "blogNewestListing": {
+                "label": "Neueste Blogeinträge"
+            },
+            "blogSingleEntry": {
+                "label": "Einzelner Blogeintrag"
             }
         }
     },
@@ -305,6 +298,17 @@
             },
             "werkl-blog-category": {
                 "label": "Blog Kategorien"
+            }
+        }
+    },
+    "apps": {
+        "sw-cms": {
+            "detail": {
+                "label": {
+                    "blockCategory": {
+                        "werkl-blog": "Blog"
+                    }
+                }
             }
         }
     }

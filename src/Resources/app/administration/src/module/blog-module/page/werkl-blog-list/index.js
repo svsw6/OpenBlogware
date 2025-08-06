@@ -1,4 +1,4 @@
-import template from './werkl-blog-list.twig';
+import template from './werkl-blog-list.html.twig';
 import './werkl-blog-list.scss';
 
 const { Mixin } = Shopware;
@@ -35,8 +35,8 @@ export default {
     },
 
     computed: {
-        blogEntriesRepository() {
-            return this.repositoryFactory.create('werkl_blog_entries');
+        blogEntryRepository() {
+            return this.repositoryFactory.create('werkl_blog_entry');
         },
 
         blogCategoryRepository() {
@@ -101,7 +101,7 @@ export default {
             if (this.categoryId) {
                 criteria.addFilter(Criteria.equals('blogCategories.id', this.categoryId));
             }
-            return this.blogEntriesRepository.search(criteria, Shopware.Context.api).then((result) => {
+            return this.blogEntryRepository.search(criteria, Shopware.Context.api).then((result) => {
                 this.total = result.total;
                 this.blogEntries = result;
                 this.isLoading = false;

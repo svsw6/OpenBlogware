@@ -3,37 +3,35 @@
     {% if article.blogCategories.elements|length > 0 %}
         {% set categoryClasses = article.blogCategories.elements|map(c => 'blog-category-' ~ c.id)|join(' ') %}
     {% endif %}
+
     <article class="card blog-card {{categoryClasses}}">
         {% block werkl_blog_card_teaser_image %}
-            <a href="{{ seoUrl('werkl.frontend.blog.detail', {'articleId': article.id}) }}"
-                   title="{{ article.translated.title }}"
-                   class="blog-image-link">
-                    {% if article.media.url %}
-                        {% set attributes = {
-                            'class': 'blog-image card-img-top',
-                            'alt': (article.media.translated.alt ?: article.media.fileName),
-                            'title': (article.media.translated.title ?: article.media.fileName)
-                        } %}
+            {% if article.media.url %}
+                {% set attributes = {
+                    class: 'blog-image card-img-top',
+                    alt: (article.media.translated.alt ?: article.media.fileName),
+                    title: (article.media.translated.title ?: article.media.fileName)
+                } %}
 
-                        {% sw_thumbnails 'blog-image-thumbnails' with {
-                            media: article.media,
-                            sizes: {
-                                'xs': '330px',
-                                'sm': '650px',
-                                'md': '650px',
-                                'lg': '650px',
-                                'xl': '900px',
-                            }
-                        } %}
-                    {% else %}
-                        <div class="blog-image-placeholder">
-                            {% sw_icon 'placeholder' style {
-                                'size': 'fluid'
-                            } %}
-                        </div>
-                    {% endif %}
-                </a>
+                {% sw_thumbnails 'blog-image-thumbnails' with {
+                    media: article.media,
+                    sizes: {
+                        xs: '330px',
+                        sm: '650px',
+                        md: '650px',
+                        lg: '650px',
+                        xl: '900px',
+                    }
+                } %}
+            {% else %}
+                <div class="blog-image-placeholder">
+                    {% sw_icon 'placeholder' style {
+                        size: 'fluid'
+                    } %}
+                </div>
+            {% endif %}
         {% endblock %}
+
         {% block werkl_blog_card_body %}
             <div class="card-body">
                 <div class="d-flex flex-column">
@@ -42,18 +40,20 @@
                             <small>{{ article.publishedAt|format_date('short', locale=app.request.locale) }}</small>
                         </p>
                     {% endblock %}
+
                     {% block werkl_blog_card_title %}
                         <h2 class="card-title mt-0 blog-title">
                             {% block werkl_blog_card_title_link %}
                                 <a href="{{ seoUrl('werkl.frontend.blog.detail', { articleId: article.id }) }}"
                                    title="{{ article.translated.title }}"
-                                   class="text-decoration-none">
+                                   class="text-decoration-none stretched-link">
                                     {{ article.translated.title }}
                                 </a>
                             {% endblock %}
                         </h2>
                     {% endblock %}
                 </div>
+
                 {% block werkl_blog_card_teaser %}
                     {# Display teaser only if it is filled #}
                     {% if article.translated.teaser is not empty %}
@@ -69,26 +69,26 @@
                 {% if config('WerklOpenBlogware').config.showAuthor %}
                     {% if article.blogAuthor.media.url %}
                         {% set attributes = {
-                            'class': 'blog-author-avatar',
-                            'alt': (article.blogAuthor.media.translated.alt ?: article.blogAuthor.media.fileName),
-                            'title': (article.blogAuthor.media.translated.title ?: article.blogAuthor.media.fileName)
+                            class: 'blog-author-avatar',
+                            alt: (article.blogAuthor.media.translated.alt ?: article.blogAuthor.media.fileName),
+                            title: (article.blogAuthor.media.translated.title ?: article.blogAuthor.media.fileName)
                         } %}
 
                         {% sw_thumbnails 'blog-author-avatar-thumbnails' with {
                             media: article.blogAuthor.media,
                             sizes: {
-                            'xs': '80px'
-                        }
-                            } %}
+                                xs: '80px'
+                            }
+                        } %}
                     {% else %}
                         <div class="blog-image-placeholder">
                             {% sw_icon 'placeholder' style {
-                                'size': 'fluid'
-                                } %}
+                                size: 'fluid'
+                            } %}
                         </div>
                     {% endif %}
                     <p class="blog-author-display-name">{{ article.blogAuthor.displayName }}<br>
-                        <small class="text-muted">{{ article.blogAuthor.blogEntries|length }} {{ 'werkl-blog.box.author.countEntries'|trans|sw_sanitize }}</small>
+                        <small class="text-muted">{{ 'werkl-blog.box.author.countEntries'|trans({'%count%': article.blogAuthor.blogEntries|length})|sw_sanitize }}</small>
                     </p>
                 {% endif %}
             {% endblock %}

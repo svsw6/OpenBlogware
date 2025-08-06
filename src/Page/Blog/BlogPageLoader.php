@@ -11,38 +11,27 @@ use Shopware\Core\Framework\DataAbstractionLayer\Exception\InconsistentCriteriaI
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\Routing\RoutingException;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
-use Shopware\Core\System\SystemConfig\Exception\ConfigurationNotFoundException;
+use Shopware\Core\System\SystemConfig\SystemConfigException;
 use Shopware\Core\System\SystemConfig\SystemConfigService;
 use Shopware\Storefront\Page\GenericPageLoaderInterface;
 use Shopware\Storefront\Page\MetaInformation;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Werkl\OpenBlogware\Content\Blog\BlogEntriesEntity;
+use Werkl\OpenBlogware\Content\Blog\BlogEntryCollection;
+use Werkl\OpenBlogware\Content\Blog\BlogEntryEntity;
 
 class BlogPageLoader
 {
-    private SystemConfigService $systemConfigService;
-
-    private GenericPageLoaderInterface $genericLoader;
-
-    private EventDispatcherInterface $eventDispatcher;
-
-    private SalesChannelCmsPageLoaderInterface $cmsPageLoader;
-
-    private EntityRepository $blogRepository;
-
+    /**
+     * @param EntityRepository<BlogEntryCollection> $blogRepository
+     */
     public function __construct(
-        SystemConfigService $systemConfigService,
-        GenericPageLoaderInterface $genericLoader,
-        EventDispatcherInterface $eventDispatcher,
-        SalesChannelCmsPageLoaderInterface $cmsPageLoader,
-        EntityRepository $blogRepository
+        private readonly SystemConfigService $systemConfigService,
+        private readonly GenericPageLoaderInterface $genericLoader,
+        private readonly EventDispatcherInterface $eventDispatcher,
+        private readonly SalesChannelCmsPageLoaderInterface $cmsPageLoader,
+        private readonly EntityRepository $blogRepository
     ) {
-        $this->systemConfigService = $systemConfigService;
-        $this->genericLoader = $genericLoader;
-        $this->eventDispatcher = $eventDispatcher;
-        $this->cmsPageLoader = $cmsPageLoader;
-        $this->blogRepository = $blogRepository;
     }
 
     /**
@@ -55,7 +44,7 @@ class BlogPageLoader
      * @throws PageNotFoundException
      * @throws InconsistentCriteriaIdsException
      * @throws RoutingException
-     * @throws ConfigurationNotFoundException
+     * @throws SystemConfigException
      */
     public function load(Request $request, SalesChannelContext $context): BlogPage
     {
@@ -73,16 +62,8 @@ class BlogPageLoader
         $page->setBlogEntry($blogEntry);
         $page->setCmsPage($detailCmsPage);
 
-        if (
-            $page->getHeader()
-            && $page->getHeader()->getNavigation()
-            && $page->getHeader()->getNavigation()->getActive()
-        ) {
-            $navigationId = $page->getHeader()->getNavigation()->getActive()->getId();
-            $page->setNavigationId($navigationId);
-        }
-
         $metaInformation = $page->getMetaInformation();
+
         if ($metaInformation instanceof MetaInformation) {
             $metaTitle = $blogEntry->getTranslation('metaTitle') ?? $blogEntry->getTitle();
             $metaDescription = $blogEntry->getTranslation('metaDescription') ?? $blogEntry->getTeaser();
@@ -107,7 +88,7 @@ class BlogPageLoader
      *
      * @throws PageNotFoundException
      */
-    private function loadBlogEntry(string $articleId, SalesChannelContext $context): BlogEntriesEntity
+    private function loadBlogEntry(string $articleId, SalesChannelContext $context): BlogEntryEntity
     {
         $criteria = (new Criteria([$articleId]))
             ->addAssociation('author.salutation')
@@ -120,7 +101,7 @@ class BlogPageLoader
             ->search($criteria, $context->getContext())
             ->first();
 
-        if (!$blogEntry instanceof BlogEntriesEntity) {
+        if (!$blogEntry instanceof BlogEntryEntity) {
             throw new PageNotFoundException($articleId);
         }
 
@@ -133,13 +114,13 @@ class BlogPageLoader
      * It gets and returns the CMS Page's instance for the given id
      *
      * @throws PageNotFoundException
-     * @throws ConfigurationNotFoundException
+     * @throws SystemConfigException
      */
     private function loadBlogDetailCmsPage(Request $request, SalesChannelContext $context): CmsPageEntity
     {
         $detailCmsPageId = $this->systemConfigService->getString('WerklOpenBlogware.config.cmsBlogDetailPage');
         if (!$detailCmsPageId) {
-            throw new ConfigurationNotFoundException('WerklOpenBlogware');
+            throw SystemConfigException::configurationNotFound('WerklOpenBlogware');
         }
 
         $detailCmsPage = $this->cmsPageLoader->load($request, new Criteria([$detailCmsPageId]), $context)->first();

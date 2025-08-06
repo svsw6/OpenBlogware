@@ -2,18 +2,11 @@ import slugify from 'slugify';
 import template from './werkl-blog-detail.html.twig';
 import BLOG from '../../constant/open-blogware.constant';
 
-const {
-    Data,
-    Utils,
-    Classes,
-    ExtensionAPI,
-    State,
-    Context,
-} = Shopware;
-const { Criteria } = Data;
-const { debounce } = Utils;
-const { cloneDeep } = Utils.object;
-const { ShopwareError } = Classes;
+const { ExtensionAPI, Context } = Shopware;
+const { Criteria } = Shopware.Data;
+const { debounce } = Shopware.Utils;
+const { cloneDeep } = Shopware.Utils.object;
+const { ShopwareError } = Shopware.Classes;
 const debounceTimeout = 300;
 
 export default {
@@ -37,7 +30,7 @@ export default {
         },
 
         blogRepository() {
-            return this.repositoryFactory.create('werkl_blog_entries');
+            return this.repositoryFactory.create('werkl_blog_entry');
         },
 
         mediaRepository() {
@@ -99,7 +92,7 @@ export default {
             this.publishExtensionData();
             Shopware.Store.get('adminMenu').collapseSidebar();
 
-            const isSystemDefaultLanguage = State.getters['context/isSystemDefaultLanguage'];
+            const isSystemDefaultLanguage = Shopware.Store.get('context').isSystemDefaultLanguage;
             this.cmsPageState.setIsSystemDefaultLanguage(isSystemDefaultLanguage);
 
             this.resetCmsPageState();
@@ -108,13 +101,11 @@ export default {
                 this.isLoading = true;
                 this.blogId = this.$route.params.id;
 
-                const defaultStorefrontId = '8A243080F92E4C719546314B577CF82B';
-
-                Shopware.State.commit('shopwareApps/setSelectedIds', [this.pageId]);
+                Shopware.Store.get('shopwareApps').selectedIds = [this.pageId];
 
                 const criteria = new Criteria(1, 25);
                 criteria.addFilter(
-                    Criteria.equals('typeId', defaultStorefrontId),
+                    Criteria.equals('typeId', Shopware.Defaults.storefrontSalesChannelTypeId),
                 );
 
                 this.salesChannelRepository.search(criteria).then((response) => {
@@ -198,7 +189,6 @@ export default {
 
         addAdditionalSection(type, index) {
             this.onAddSection(type, index);
-            this.onSaveBlog();
         },
 
         async onChangeLanguage() {
@@ -206,7 +196,7 @@ export default {
 
             return this.salesChannelRepository.search(new Criteria()).then((response) => {
                 this.salesChannels = response;
-                const isSystemDefaultLanguage = State.getters['context/isSystemDefaultLanguage'];
+                const isSystemDefaultLanguage = Shopware.Store.get('context').isSystemDefaultLanguage;
                 this.cmsPageState.setIsSystemDefaultLanguage(isSystemDefaultLanguage);
                 return this.loadBlog(this.blogId);
             });
@@ -256,15 +246,17 @@ export default {
         onSaveBlog() {
             if (!this.blogIsValid()) {
                 this.createNotificationError({
-                    message: this.$tc('werkl-blog.detail.notification.error.pageInvalid'),
+                    message: this.$tc('werkl-blog.detail.notification.error.blogInvalid'),
                 });
+
+                this.$refs.cmsSidebar.$refs.blogConfigSidebar.openContent();
 
                 return Promise.reject();
             }
 
             if (!this.pageIsValid()) {
                 this.createNotificationError({
-                    message: this.$tc('werkl-blog.detail.notification.error.pageInvalid'),
+                    message: this.$tc('sw-cms.detail.notification.pageInvalid'),
                 });
 
                 return Promise.reject();
@@ -320,7 +312,7 @@ export default {
         },
 
         blogIsValid() {
-            State.dispatch('error/resetApiErrors');
+            Shopware.Store.get('error').resetApiErrors();
 
             return [
                 this.missingTitleValidation(),
@@ -402,14 +394,14 @@ export default {
             code = BLOG.REQUIRED_FIELD_ERROR_CODE,
             message = '',
         } = {}) {
-            const expression = `werkl_blog_entries.${this.blog.id}.${property}`;
+            const expression = `werkl_blog_entry.${this.blog.id}.${property}`;
             const error = new ShopwareError({
                 code,
                 detail: message,
                 meta: { parameters: payload },
             });
 
-            State.commit('error/addApiError', {
+            Shopware.Store.get('error').addApiError({
                 expression,
                 error,
             });

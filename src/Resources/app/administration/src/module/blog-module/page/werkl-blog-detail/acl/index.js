@@ -5,24 +5,24 @@ Shopware.Service('privileges').addPrivilegeMappingEntry({
     roles: {
         viewer: {
             privileges: [
-                'werkl_blog_entries:read',
-                'werkl_blog_entries_translation:read',
+                'werkl_blog_entry:read',
+                'werkl_blog_entry_translation:read',
                 'werkl_blog_blog_category:read',
             ],
             dependencies: [],
         },
         editor: {
             privileges: [
-                'werkl_blog_entries:update',
-                'werkl_blog_entries_translation:update',
+                'werkl_blog_entry:update',
+                'werkl_blog_entry_translation:update',
                 'system_config:read',
             ],
             dependencies: [],
         },
         creator: {
             privileges: [
-                'werkl_blog_entries:create',
-                'werkl_blog_entries_translation:create',
+                'werkl_blog_entry:create',
+                'werkl_blog_entry_translation:create',
                 'werkl_blog_blog_category:create',
                 'system_config:read',
             ],
@@ -30,8 +30,8 @@ Shopware.Service('privileges').addPrivilegeMappingEntry({
         },
         deleter: {
             privileges: [
-                'werkl_blog_entries:delete',
-                'werkl_blog_entries_translation:delete',
+                'werkl_blog_entry:delete',
+                'werkl_blog_entry_translation:delete',
             ],
             dependencies: [],
         },

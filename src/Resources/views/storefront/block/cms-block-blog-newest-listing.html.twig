@@ -2,6 +2,6 @@
     {% set element = block.slots.getSlot('listing') %}
 
     <div class="col-12" data-cms-element-id="{{ element.id }}">
-        {% sw_include "@Storefront/storefront/element/cms-element-" ~ element.type ~ ".html.twig" ignore missing %}
+        {% sw_include '@Storefront/storefront/element/cms-element-' ~ element.type ~ '.html.twig' ignore missing %}
     </div>
 {% endblock %}

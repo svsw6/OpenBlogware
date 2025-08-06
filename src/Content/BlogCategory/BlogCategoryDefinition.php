@@ -25,8 +25,8 @@ use Shopware\Core\Framework\DataAbstractionLayer\Field\TreePathField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\VersionField;
 use Shopware\Core\Framework\DataAbstractionLayer\FieldCollection;
 use Shopware\Core\System\SalesChannel\SalesChannelDefinition;
-use Werkl\OpenBlogware\Content\Blog\Aggregate\BlogCategoryMappingDefinition;
-use Werkl\OpenBlogware\Content\Blog\BlogEntriesDefinition;
+use Werkl\OpenBlogware\Content\Blog\Aggregate\BlogEntryBlogCategoryMappingDefinition;
+use Werkl\OpenBlogware\Content\Blog\BlogEntryDefinition;
 use Werkl\OpenBlogware\Content\BlogCategory\BlogCategoryTranslation\BlogCategoryTranslationDefinition;
 
 class BlogCategoryDefinition extends EntityDefinition
@@ -71,7 +71,7 @@ class BlogCategoryDefinition extends EntityDefinition
 
             (new TranslationsAssociationField(BlogCategoryTranslationDefinition::class, 'werkl_blog_category_id'))->addFlags(new Required()),
 
-            (new ManyToManyAssociationField('blogEntries', BlogEntriesDefinition::class, BlogCategoryMappingDefinition::class, 'werkl_blog_category_id', 'werkl_blog_entries_id'))->addFlags(new SearchRanking(SearchRanking::ASSOCIATION_SEARCH_RANKING), new CascadeDelete()),
+            (new ManyToManyAssociationField('blogEntries', BlogEntryDefinition::class, BlogEntryBlogCategoryMappingDefinition::class, 'werkl_blog_category_id', 'werkl_blog_entry_id'))->addFlags(new SearchRanking(SearchRanking::ASSOCIATION_SEARCH_RANKING), new CascadeDelete()),
             new OneToManyAssociationField('navigationSalesChannels', SalesChannelDefinition::class, 'navigation_category_id'),
             new OneToManyAssociationField('footerSalesChannels', SalesChannelDefinition::class, 'footer_category_id'),
             new OneToManyAssociationField('serviceSalesChannels', SalesChannelDefinition::class, 'service_category_id'),

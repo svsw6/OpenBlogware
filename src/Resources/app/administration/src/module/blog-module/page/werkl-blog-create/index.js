@@ -3,14 +3,14 @@ export default {
         async createdComponent() {
             Shopware.Store.get('adminMenu').collapseSidebar();
 
-            const isSystemDefaultLanguage = Shopware.State.getters['context/isSystemDefaultLanguage'];
+            const isSystemDefaultLanguage = Shopware.Store.get('context').isSystemDefaultLanguage;
             this.cmsPageState.setIsSystemDefaultLanguage(isSystemDefaultLanguage);
             if (!isSystemDefaultLanguage) {
-                Shopware.State.commit('context/resetLanguageToDefault');
+                Shopware.Store.get('context').resetLanguageToDefault();
             }
 
             if (Shopware.Context.api.languageId !== Shopware.Context.api.systemLanguageId) {
-                Shopware.State.commit('context/setApiLanguageId', Shopware.Context.api.languageId);
+                Shopware.Store.get('context').setApiLanguageId(Shopware.Context.api.languageId);
             }
 
             this.resetCmsPageState();

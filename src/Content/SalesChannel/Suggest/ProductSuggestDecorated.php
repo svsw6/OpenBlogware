@@ -15,23 +15,18 @@ use Shopware\Core\Framework\DataAbstractionLayer\Search\Sorting\FieldSorting;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 use Shopware\Core\System\SystemConfig\SystemConfigService;
 use Symfony\Component\HttpFoundation\Request;
+use Werkl\OpenBlogware\Content\Blog\BlogEntryCollection;
 
 class ProductSuggestDecorated extends AbstractProductSuggestRoute
 {
-    private AbstractProductSuggestRoute $decorated;
-
-    private EntityRepository $blogRepository;
-
-    private SystemConfigService $systemConfigService;
-
+    /**
+     * @param EntityRepository<BlogEntryCollection> $blogRepository
+     */
     public function __construct(
-        AbstractProductSuggestRoute $decorated,
-        EntityRepository $blogRepository,
-        SystemConfigService $systemConfigService
+        private readonly AbstractProductSuggestRoute $decorated,
+        private readonly EntityRepository $blogRepository,
+        private readonly SystemConfigService $systemConfigService
     ) {
-        $this->decorated = $decorated;
-        $this->blogRepository = $blogRepository;
-        $this->systemConfigService = $systemConfigService;
     }
 
     public function getDecorated(): AbstractProductSuggestRoute
@@ -70,6 +65,8 @@ class ProductSuggestDecorated extends AbstractProductSuggestRoute
      * - published: true
      * - publishedAt: before now
      * It then executes the criteria and returns the result.
+     *
+     * @return EntitySearchResult<BlogEntryCollection>
      */
     private function getBlogs(string $term, int $limit, Context $context): EntitySearchResult
     {

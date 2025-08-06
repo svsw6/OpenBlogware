@@ -1,3 +1,7 @@
+# 5.0.0
+- Kompatibilität mit Shopware 6.7
+- BlogEntries Entitäten zu BlogEntry umbenannt
+
 # 4.4.3
 - Mögliche Lösung für MySQL 8.4 Fremdschlüssel [#19](https://github.com/Werkstattl/OpenBlogware/issues/19)
 
@@ -106,7 +110,7 @@
 # 2.0.1
 - Fixed `Replace` im CMS-Designer nicht angezeigt wurde
 
-# 2.0.0 
+# 2.0.0
 -  Feature hinzugefügt: Blog Artikel können nun mittels CMS Designer gestaltet werden
 
 # 1.5.15

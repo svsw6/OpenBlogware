@@ -1,0 +1,15 @@
+{% block werkl_cms_element_blog_single_select_config %}
+<div class="werkl-cms-el-config-blog-single-select">
+    {% block werkl_cms_element_blog_single_select_config_blog_entry %}
+    <sw-entity-single-select
+        v-model:value="element.config.blogEntry.value"
+        :label="$tc('werkl-blog.elements.blogSingleSelect.selectFieldLabel')"
+        :placeholder="$tc('werkl-blog.elements.blogSingleSelect.selectFieldLabel')"
+        entity="werkl_blog_entry"
+        label-property="title"
+        show-clearable-button
+        @update:value="onBlogEntryChange"
+    />
+    {% endblock %}
+</div>
+{% endblock %}

@@ -3,18 +3,19 @@ declare(strict_types=1);
 
 namespace Werkl\OpenBlogware\Content\BlogCategory\BlogCategoryTranslation;
 
+use Shopware\Core\Framework\DataAbstractionLayer\EntityCustomFieldsTrait;
 use Shopware\Core\Framework\DataAbstractionLayer\TranslationEntity;
 use Werkl\OpenBlogware\Content\BlogCategory\BlogCategoryEntity;
 
 class BlogCategoryTranslationEntity extends TranslationEntity
 {
-    protected string $name;
+    use EntityCustomFieldsTrait;
 
-    protected ?array $customFields;
+    protected string $name;
 
     protected string $werklBlogCategoryId;
 
-    protected ?BlogCategoryEntity $werklBlogCategory;
+    protected ?BlogCategoryEntity $werklBlogCategory = null;
 
     public function getName(): ?string
     {
@@ -24,16 +25,6 @@ class BlogCategoryTranslationEntity extends TranslationEntity
     public function setName(string $name): void
     {
         $this->name = $name;
-    }
-
-    public function getCustomFields(): ?array
-    {
-        return $this->customFields;
-    }
-
-    public function setCustomFields(?array $customFields): void
-    {
-        $this->customFields = $customFields;
     }
 
     public function getWerklBlogCategoryId(): string

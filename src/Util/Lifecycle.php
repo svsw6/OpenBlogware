@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Werkl\OpenBlogware\Util;
 
+use Shopware\Core\Content\Cms\CmsPageCollection;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\Uuid\Uuid;
@@ -10,16 +11,13 @@ use Shopware\Core\System\SystemConfig\SystemConfigService;
 
 class Lifecycle
 {
-    private SystemConfigService $systemConfig;
-
-    private EntityRepository $cmsPageRepository;
-
+    /**
+     * @param EntityRepository<CmsPageCollection> $cmsPageRepository
+     */
     public function __construct(
-        SystemConfigService $systemConfig,
-        EntityRepository $cmsPageRepository
+        private readonly SystemConfigService $systemConfig,
+        private readonly EntityRepository $cmsPageRepository
     ) {
-        $this->systemConfig = $systemConfig;
-        $this->cmsPageRepository = $cmsPageRepository;
     }
 
     public function install(Context $context): void
@@ -38,6 +36,9 @@ class Lifecycle
         $this->systemConfig->set('WerklOpenBlogware.config.cmsBlogDetailPage', $blogDetailCmsPageId);
     }
 
+    /**
+     * @return list<array<string, mixed>>
+     */
     private function createCmsPagesData(string $blogListingCmsPageId, string $blogDetailCmsPageId): array
     {
         $blogListingCmsPageData = $this->createBlogListingCmsPageData($blogListingCmsPageId);
@@ -49,6 +50,9 @@ class Lifecycle
         ];
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     private function createBlogListingCmsPageData(string $blogListingCmsPageId): array
     {
         return [
@@ -74,6 +78,9 @@ class Lifecycle
         ];
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     private function createBlogDetailCmsPageData(string $blogDetailCmsPageId): array
     {
         return [

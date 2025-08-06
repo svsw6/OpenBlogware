@@ -4,10 +4,10 @@
         {% set categoriesName = categoriesName|merge([category.translated.name]) %}
     {% endfor %}
     <figure class="werkl-category figure">
-        <figcaption class="figure-caption">{% sw_icon 'folder-thumbnail' style { 'size': 'sm' } %}
+        <figcaption class="figure-caption">{% sw_icon 'folder-thumbnail' style { size: 'sm' } %}
             <span
                 data-toggle="tooltip"
-                title="{{ "werkl-blog.detail.meta.category"|trans|striptags }}"
+                title="{{ 'werkl-blog.detail.meta.category'|trans|striptags }}"
             >
                 {{ categoriesName|join(', ') }}
             </span>

@@ -7,7 +7,7 @@ use Shopware\Core\Content\Media\MediaDefinition;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityExtension;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\OneToOneAssociationField;
 use Shopware\Core\Framework\DataAbstractionLayer\FieldCollection;
-use Werkl\OpenBlogware\Content\Blog\BlogEntriesTranslation\BlogEntriesTranslationDefinition;
+use Werkl\OpenBlogware\Content\Blog\BlogEntryTranslation\BlogEntryTranslationDefinition;
 use Werkl\OpenBlogware\Content\BlogAuthor\BlogAuthorDefinition;
 
 class MediaExtension extends EntityExtension
@@ -15,16 +15,11 @@ class MediaExtension extends EntityExtension
     public function extendFields(FieldCollection $collection): void
     {
         $collection->add(
-            new OneToOneAssociationField('blogEntriesTranslation', 'id', 'media_id', BlogEntriesTranslationDefinition::class, false),
+            new OneToOneAssociationField('blogEntryTranslation', 'id', 'media_id', BlogEntryTranslationDefinition::class, false),
         );
         $collection->add(
             new OneToOneAssociationField('blogAuthor', 'id', 'media_id', BlogAuthorDefinition::class, false),
         );
-    }
-
-    public function getDefinitionClass(): string
-    {
-        return MediaDefinition::class;
     }
 
     public function getEntityName(): string

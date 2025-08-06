@@ -4,7 +4,7 @@
        <ul>
            {% for category in searchResult.entities.elements %}
                <li>
-                     {{ category.translated.name ? category.name }}
+                    {{ category.translated.name ?? category.name }}
                </li>
            {% endfor %}
       </ul>

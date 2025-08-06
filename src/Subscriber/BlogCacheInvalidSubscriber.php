@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Werkl\OpenBlogware\Subscriber;
 
-use Shopware\Core\Content\Category\SalesChannel\CachedCategoryRoute;
+use Shopware\Core\Content\Category\SalesChannel\CategoryRoute;
 use Shopware\Core\Content\Cms\CmsPageEvents;
 use Shopware\Core\Content\Seo\Event\SeoEvents;
 use Shopware\Core\Content\Seo\SeoUrlUpdater;
@@ -18,10 +18,12 @@ use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsAnyFilter;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 use Shopware\Core\System\SystemConfig\SystemConfigService;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Werkl\OpenBlogware\Content\Blog\BlogEntryCollection;
 use Werkl\OpenBlogware\Content\Blog\BlogSeoUrlRoute;
-use Werkl\OpenBlogware\Controller\CachedBlogController;
-use Werkl\OpenBlogware\Controller\CachedBlogRssController;
-use Werkl\OpenBlogware\Controller\CachedBlogSearchController;
+use Werkl\OpenBlogware\Content\BlogCategory\BlogCategoryCollection;
+use Werkl\OpenBlogware\Controller\BlogController;
+use Werkl\OpenBlogware\Controller\BlogRssController;
+use Werkl\OpenBlogware\Controller\BlogSearchController;
 
 /**
  * After you change the SEO Template within the SEO settings, we need to re-generate all existing URLs.
@@ -29,28 +31,17 @@ use Werkl\OpenBlogware\Controller\CachedBlogSearchController;
  */
 class BlogCacheInvalidSubscriber implements EventSubscriberInterface
 {
-    private SeoUrlUpdater $seoUrlUpdater;
-
-    private EntityRepository $categoryRepository;
-
-    private EntityRepository $blogRepository;
-
-    private CacheInvalidator $cacheInvalidator;
-
-    private SystemConfigService $systemConfigService;
-
+    /**
+     * @param EntityRepository<BlogCategoryCollection> $categoryRepository
+     * @param EntityRepository<BlogEntryCollection> $blogRepository
+     */
     public function __construct(
-        SeoUrlUpdater $seoUrlUpdater,
-        EntityRepository $categoryRepository,
-        EntityRepository $blogRepository,
-        CacheInvalidator $cacheInvalidator,
-        SystemConfigService $systemConfigService
+        private readonly SeoUrlUpdater $seoUrlUpdater,
+        private readonly EntityRepository $categoryRepository,
+        private readonly EntityRepository $blogRepository,
+        private readonly CacheInvalidator $cacheInvalidator,
+        private readonly SystemConfigService $systemConfigService
     ) {
-        $this->seoUrlUpdater = $seoUrlUpdater;
-        $this->categoryRepository = $categoryRepository;
-        $this->blogRepository = $blogRepository;
-        $this->cacheInvalidator = $cacheInvalidator;
-        $this->systemConfigService = $systemConfigService;
     }
 
     public static function getSubscribedEvents(): array
@@ -60,11 +51,11 @@ class BlogCacheInvalidSubscriber implements EventSubscriberInterface
                 ['onUpdateSeoUrlCmsPage', 10],
                 ['onUpdateInvalidateCacheCmsPage', 11],
             ],
-            'werkl_blog_entries.written' => [
+            'werkl_blog_entry.written' => [
                 ['onUpdateSeoUrl', 10],
                 ['onUpdateInvalidateCache', 11],
             ],
-            'werkl_blog_entries.deleted' => [
+            'werkl_blog_entry.deleted' => [
                 ['onDeleteSeoUrl', 10],
                 ['onDeleteInvalidateCache', 11],
             ],
@@ -81,7 +72,7 @@ class BlogCacheInvalidSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $this->seoUrlUpdater->update(BlogSeoUrlRoute::ROUTE_NAME, $blogIds);
+        $this->seoUrlUpdater->update(BlogSeoUrlRoute::ROUTE_NAME, array_values($blogIds));
     }
 
     public function onUpdateInvalidateCacheCmsPage(EntityWrittenEvent $event): void
@@ -91,7 +82,7 @@ class BlogCacheInvalidSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $this->invalidateCache($blogIds);
+        $this->invalidateCache(array_values($blogIds));
 
         $this->invalidateCacheCategory($event->getContext());
     }
@@ -149,10 +140,13 @@ class BlogCacheInvalidSubscriber implements EventSubscriberInterface
 
         // invalidates the category route cache when a category changed
         $this->cacheInvalidator->invalidate(
-            array_map([CachedCategoryRoute::class, 'buildName'], $catIds)
+            array_map([CategoryRoute::class, 'buildName'], $catIds)
         );
     }
 
+    /**
+     * @return array<string>
+     */
     private function getBlogCategoryIds(Context $context): array
     {
         $criteria = new Criteria();
@@ -165,18 +159,20 @@ class BlogCacheInvalidSubscriber implements EventSubscriberInterface
 
     /**
      * Invalidate cache
+     *
+     * @param array<string> $articleIds
      */
     private function invalidateCache(array $articleIds): void
     {
         $this->cacheInvalidator->invalidate(
-            array_map([CachedBlogController::class, 'buildName'], $articleIds)
+            array_map([BlogController::class, 'buildName'], $articleIds)
         );
 
         $this->cacheInvalidator->invalidate([
             'product-suggest-route',
             'product-search-route',
-            CachedBlogSearchController::SEARCH_TAG,
-            CachedBlogRssController::RSS_TAG,
+            BlogSearchController::ALL_TAG,
+            BlogRssController::ALL_TAG,
         ]);
 
         $cmsBlogDetailPageId = $this->systemConfigService->get('WerklOpenBlogware.config.cmsBlogDetailPage');
@@ -189,11 +185,17 @@ class BlogCacheInvalidSubscriber implements EventSubscriberInterface
         );
     }
 
+    /**
+     * @return list<string>
+     */
     private function getBlogIds(EntityWrittenEvent $event): array
     {
-        return $this->blogRepository->searchIds(
+        /** @var list<string> $ids */
+        $ids = $this->blogRepository->searchIds(
             (new Criteria())->addFilter(new EqualsAnyFilter('cmsPageId', $event->getIds())),
             $event->getContext()
         )->getIds();
+
+        return $ids;
     }
 }

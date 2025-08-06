@@ -1,5 +1,5 @@
-import template from './sw-cms-el-config-blog-detail.html.twig';
-import './sw-cms-el-config-blog-detail.scss';
+import template from './werkl-cms-el-config-blog-detail.html.twig';
+import './werkl-cms-el-config-blog-detail.scss';
 
 const { Mixin } = Shopware;
 
@@ -18,7 +18,7 @@ export default {
 
     methods: {
         createdComponent() {
-            this.initElementConfig('blog');
+            this.initElementConfig('blog-detail');
         },
     },
 };

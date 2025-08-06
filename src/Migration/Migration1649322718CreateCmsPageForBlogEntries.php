@@ -22,16 +22,34 @@ class Migration1649322718CreateCmsPageForBlogEntries extends MigrationStep
 
         SQL;
 
+    /**
+     * @var list<array<string, string|int>>
+     */
     private array $cmsPageQueue = [];
 
+    /**
+     * @var list<array<string, string>>
+     */
     private array $cmsPageTranslationQueue = [];
 
+    /**
+     * @var list<array<string, string|int>>
+     */
     private array $cmsSectionQueue = [];
 
+    /**
+     * @var list<array<string, string|int>>
+     */
     private array $cmsBlockQueue = [];
 
+    /**
+     * @var list<array<string, string>>
+     */
     private array $cmsSlotQueue = [];
 
+    /**
+     * @var list<array<string, string>>
+     */
     private array $cmsSlotTranslationQueue = [];
 
     public function getCreationTimestamp(): int
@@ -83,6 +101,9 @@ class Migration1649322718CreateCmsPageForBlogEntries extends MigrationStep
         // implement update destructive
     }
 
+    /**
+     * @param list<array<string, mixed>> $blogTranslations
+     */
     private function createCmsPage(array $blogTranslations, string $versionId, string $createdAt): string
     {
         $cmsPageId = Uuid::randomBytes();

@@ -15,8 +15,8 @@ use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\RangeFilter;
 use Shopware\Core\Framework\Plugin\Exception\DecorationPatternException;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
-use Werkl\OpenBlogware\Content\Blog\BlogEntriesCollection;
-use Werkl\OpenBlogware\Content\Blog\BlogEntriesEntity;
+use Werkl\OpenBlogware\Content\Blog\BlogEntryCollection;
+use Werkl\OpenBlogware\Content\Blog\BlogEntryEntity;
 use Werkl\OpenBlogware\Content\Blog\Events\BlogIndexerEvent;
 
 class BlogUrlProvider extends AbstractUrlProvider
@@ -24,20 +24,14 @@ class BlogUrlProvider extends AbstractUrlProvider
     public const CHANGE_FREQ = 'daily';
     public const PRIORITY = 1.0;
 
-    private EntityRepository $blogRepository;
-
-    private Connection $connection;
-
-    private EventDispatcherInterface $eventDispatcher;
-
+    /**
+     * @param EntityRepository<BlogEntryCollection> $blogRepository
+     */
     public function __construct(
-        EntityRepository $blogRepository,
-        Connection $connection,
-        EventDispatcherInterface $eventDispatcher
+        private readonly EntityRepository $blogRepository,
+        private readonly Connection $connection,
+        private readonly EventDispatcherInterface $eventDispatcher
     ) {
-        $this->blogRepository = $blogRepository;
-        $this->connection = $connection;
-        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function getDecorated(): AbstractUrlProvider
@@ -64,25 +58,24 @@ class BlogUrlProvider extends AbstractUrlProvider
             new RangeFilter('publishedAt', [RangeFilter::LTE => $dateTime->format(\DATE_ATOM)])
         );
 
-        /** @var BlogEntriesCollection $blogEntities */
-        $blogEntities = $this->blogRepository->search($criteria, $context->getContext())->getEntities();
+        /** @var BlogEntryCollection $blogEntries */
+        $blogEntries = $this->blogRepository->search($criteria, $context->getContext())->getEntities();
 
-        if ($blogEntities->count() === 0) {
+        if ($blogEntries->count() === 0) {
             return new UrlResult([], null);
         }
-        $this->eventDispatcher->dispatch(new BlogIndexerEvent($blogEntities->getIds(), $context->getContext()));
-        $seoUrls = $this->getSeoUrls($blogEntities->getIds(), 'werkl.frontend.blog.detail', $context, $this->connection);
+        $this->eventDispatcher->dispatch(new BlogIndexerEvent($blogEntries->getIds(), $context->getContext()));
+        $seoUrls = $this->getSeoUrls($blogEntries->getIds(), 'werkl.frontend.blog.detail', $context, $this->connection);
 
         $seoUrls = FetchModeHelper::groupUnique($seoUrls);
         $urls = [];
 
-        /*  @var BlogEntriesEntity  $blogEntity */
-        foreach ($blogEntities as $blogEntity) {
-            if (!\array_key_exists($blogEntity->getId(), $seoUrls)) {
+        foreach ($blogEntries as $blogEntry) {
+            if (!\array_key_exists($blogEntry->getId(), $seoUrls)) {
                 continue;
             }
 
-            $seoUrl = $seoUrls[$blogEntity->getId()];
+            $seoUrl = $seoUrls[$blogEntry->getId()];
             if (!\array_key_exists('seo_path_info', $seoUrl)) {
                 continue;
             }
@@ -92,11 +85,11 @@ class BlogUrlProvider extends AbstractUrlProvider
             }
 
             $blogUrl = new Url();
-            $blogUrl->setLastmod($blogEntity->getUpdatedAt() ?? new \DateTime());
+            $blogUrl->setLastmod($blogEntry->getUpdatedAt() ?? new \DateTime());
             $blogUrl->setChangefreq(self::CHANGE_FREQ);
             $blogUrl->setPriority(self::PRIORITY);
-            $blogUrl->setResource(BlogEntriesEntity::class);
-            $blogUrl->setIdentifier($blogEntity->getId());
+            $blogUrl->setResource(BlogEntryEntity::class);
+            $blogUrl->setIdentifier($blogEntry->getId());
             $blogUrl->setLoc($seoUrl['seo_path_info']);
 
             $urls[] = $blogUrl;

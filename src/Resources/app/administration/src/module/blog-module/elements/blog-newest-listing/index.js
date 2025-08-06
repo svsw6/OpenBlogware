@@ -6,7 +6,7 @@ Component.register('werkl-cms-el-preview-newest-listing', () => import('./previe
 
 Shopware.Service('cmsService').registerCmsElement({
     name: 'blog-newest-listing',
-    label: 'werkl-blog.elements.newestListing.preview.label',
+    label: 'werkl-blog.elements.blogNewestListing.label',
     component: 'werkl-cms-el-newest-listing',
     configComponent: 'werkl-cms-el-config-newest-listing',
     previewComponent: 'werkl-cms-el-preview-newest-listing',
@@ -31,4 +31,5 @@ Shopware.Service('cmsService').registerCmsElement({
             },
         },
     },
+    collect: Shopware.Service('cmsService').getCollectFunction(),
 });

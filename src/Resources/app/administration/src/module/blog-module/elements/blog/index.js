@@ -1,15 +1,15 @@
 const { Component } = Shopware;
 
-Component.register('sw-cms-el-blog', () => import('./component'));
-Component.register('sw-cms-el-config-blog', () => import('./config'));
-Component.register('sw-cms-el-preview-blog', () => import('./preview'));
+Component.register('werkl-cms-el-blog', () => import('./component'));
+Component.register('werkl-cms-el-config-blog', () => import('./config'));
+Component.register('werkl-cms-el-preview-blog', () => import('./preview'));
 
 Shopware.Service('cmsService').registerCmsElement({
     name: 'blog',
-    label: 'Blog',
-    component: 'sw-cms-el-blog',
-    configComponent: 'sw-cms-el-config-blog',
-    previewComponent: 'sw-cms-el-preview-blog',
+    label: 'werkl-blog.elements.blog.label',
+    component: 'werkl-cms-el-blog',
+    configComponent: 'werkl-cms-el-config-blog',
+    previewComponent: 'werkl-cms-el-preview-blog',
     defaultConfig: {
         paginationCount: {
             source: 'static',
@@ -46,4 +46,5 @@ Shopware.Service('cmsService').registerCmsElement({
             },
         },
     },
+    collect: Shopware.Service('cmsService').getCollectFunction(),
 });

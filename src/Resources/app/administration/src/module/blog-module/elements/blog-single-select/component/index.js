@@ -1,8 +1,7 @@
-import template from './sw-cms-el-blog-single-select.html.twig';
-import './sw-cms-el-blog-single-select.scss';
+import template from './werkl-cms-el-blog-single-select.html.twig';
+import './werkl-cms-el-blog-single-select.scss';
 
-const { Mixin, Context } = Shopware;
-const { Criteria } = Shopware.Data;
+const { Filter, Mixin } = Shopware;
 
 export default {
     template,
@@ -13,32 +12,39 @@ export default {
         Mixin.getByName('cms-element'),
     ],
 
+    computed: {
+        assetFilter() {
+            return Filter.getByName('asset');
+        },
+
+        blogEntry() {
+            if (!this.element?.data?.blogEntry) {
+                return {
+                    translated: {
+                        title: 'Article title',
+                        teaser: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque faucibus maximus velit, dictum mollis erat finibus quis. Ut dictum ornare dolor, sed mattis tellus gravida vel.',
+                    },
+                    blogCategories: [{
+                        translated: {
+                            name: 'Blog category',
+                        },
+                    }],
+                    media: {
+                        url: this.assetFilter('/administration/administration/static/img/cms/preview_mountain_small.jpg'),
+                    },
+                };
+            }
+
+            return this.element.data.blogEntry;
+        },
+
+        mediaRepository() {
+            return this.repositoryFactory.create('media');
+        },
+    },
+
     created() {
         this.createdComponent();
-    },
-
-    data() {
-        return {
-            article: null,
-            title: 'Placeholder Article Title',
-            teaser: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque faucibus maximus velit, dictum mollis erat finibus quis. Ut dictum ornare dolor, sed mattis tellus gravida vel.',
-            mediaUrl: null,
-            categoryName: 'Placeholder Category',
-        };
-    },
-
-    computed: {
-        articleImage() {
-            return this.mediaUrl ? this.mediaUrl : `${Shopware.Context.api.assetsPath}/administration/static/img/cms/preview_mountain_small.jpg`;
-        },
-
-        repository() {
-            return this.repositoryFactory.create('werkl_blog_entries');
-        },
-
-        selectedBlogEntry() {
-            return this.element.config.blogEntry.value;
-        },
     },
 
     methods: {
@@ -46,41 +52,19 @@ export default {
             this.initElementConfig('blog-single-select');
             this.initElementData('blog-single-select');
 
-            if (this.element.config.blogEntry.value) {
-                this.getEntityProperties();
-            }
+            this.loadBlogEntryMedia();
         },
 
-        getEntityProperties() {
+        loadBlogEntryMedia() {
+            const blogEntry = this.element?.data?.blogEntry;
 
-            if (this.element.config.blogEntry.value) {
-                const criteria = new Criteria();
-                criteria.addAssociation('blogCategories');
-                criteria.addAssociation('tags');
-
-                this.repository
-                    .get(this.element.config.blogEntry.value, Context.api, criteria)
-                    .then((entity) => {
-                        this.article = entity;
-                        this.title = this.article.translated.title;
-                        this.teaser = this.article.translated.teaser;
-                        this.mediaUrl = this.article.media.url;
-                        this.categoryName = this.article.blogCategories[0] ? this.article.blogCategories[0].translated.name : null;
-                    });
-            } else {
-                this.article = null;
-                this.title = 'Placeholder Article Title';
-                this.teaser = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque faucibus maximus velit, dictum mollis erat finibus quis. Ut dictum ornare dolor, sed mattis tellus gravida vel.';
-                this.mediaUrl = null;
-                this.categoryName = 'Placeholder Category';
+            if (!blogEntry || blogEntry.media || !blogEntry.translated.mediaId) {
+                return;
             }
-        },
 
-    },
-
-    watch: {
-        selectedBlogEntry: function () {
-            this.getEntityProperties();
+            this.mediaRepository.get(blogEntry.translated.mediaId).then((media) => {
+                this.element.data.blogEntry.media = media;
+            });
         },
     },
 };

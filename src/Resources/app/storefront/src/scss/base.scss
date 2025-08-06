@@ -1,13 +1,16 @@
 @import 'layout/header/_search-suggest';
 
-.blog-image,
-.blog-image-placeholder {
-    object-fit: cover;
-    width: 100%;
-    height: 250px;
-}
-
 .blog-card {
+    .blog-image,
+    .blog-image-placeholder {
+        object-fit: cover;
+        width: 100%;
+        height: 250px;
+    }
+
+    .stretched-link::after {
+        height: 250px;
+    }
 
     .card-text {
         height: 85px;

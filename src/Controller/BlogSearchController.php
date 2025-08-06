@@ -3,34 +3,43 @@ declare(strict_types=1);
 
 namespace Werkl\OpenBlogware\Controller;
 
+use Shopware\Core\Framework\Adapter\Cache\Event\AddCacheTagEvent;
 use Shopware\Core\Framework\Routing\RoutingException;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 use Shopware\Storefront\Controller\StorefrontController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Werkl\OpenBlogware\Page\Search\BlogSearchPageLoader;
 
-/**
- * Blog search controllers
- */
 #[Route(defaults: ['_routeScope' => ['storefront']])]
 class BlogSearchController extends StorefrontController
 {
-    private BlogSearchPageLoader $blogSearchPageLoader;
+    final public const ALL_TAG = 'werkl-blog-search';
 
     public function __construct(
-        BlogSearchPageLoader $blogSearchPageLoader
+        private readonly BlogSearchPageLoader $blogSearchPageLoader,
+        private readonly EventDispatcherInterface $dispatcher
     ) {
-        $this->blogSearchPageLoader = $blogSearchPageLoader;
     }
 
-    #[Route(path: '/werkl_blog_search', name: 'werkl.frontend.blog.search', methods: ['GET'])]
+    public static function buildName(string $id): string
+    {
+        return 'werkl-blog-search-' . $id;
+    }
+
+    #[Route(path: '/blog/search', name: 'werkl.frontend.blog.search', methods: ['GET'])]
     public function search(Request $request, SalesChannelContext $context): Response
     {
+        $this->dispatcher->dispatch(new AddCacheTagEvent(
+            self::buildName($context->getSalesChannelId()),
+            self::ALL_TAG
+        ));
+
         try {
             $page = $this->blogSearchPageLoader->load($request, $context);
-        } catch (RoutingException $routingException) {
+        } catch (RoutingException) {
             return $this->forwardToRoute('frontend.home.page');
         }
 
@@ -43,6 +52,8 @@ class BlogSearchController extends StorefrontController
     #[Route(path: '/widgets/blog-search', name: 'widgets.blog.search.pagelet', methods: ['GET', 'POST'], defaults: ['XmlHttpRequest' => true])]
     public function ajax(Request $request, SalesChannelContext $context): Response
     {
+        $this->dispatcher->dispatch(new AddCacheTagEvent(self::buildName($context->getSalesChannelId())));
+
         $request->request->set('no-aggregations', true);
 
         $page = $this->blogSearchPageLoader->load($request, $context);

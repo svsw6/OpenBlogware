@@ -44,6 +44,7 @@ export default {
             get() {
                 return this.blog.customFields?.salesChannelIds || []
             },
+
             set(value) {
                 let salesChannelIds = null;
                 if (value && value.length > 0) {
@@ -78,7 +79,15 @@ export default {
         },
 
         ...mapPageErrors(errorConfig),
-        ...mapPropertyErrors('blog', ['title', 'slug', 'teaser', 'authorId', 'publishedAt', 'blogCategories']),
+
+        ...mapPropertyErrors('blog', [
+            'title',
+            'slug',
+            'teaser',
+            'authorId',
+            'publishedAt',
+            'blogCategories',
+        ]),
     },
 
     methods: {

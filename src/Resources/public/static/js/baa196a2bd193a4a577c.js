@@ -1,1 +1,0 @@
-"use strict";(window["webpackJsonpPluginwerkl-open-blogware"]=window["webpackJsonpPluginwerkl-open-blogware"]||[]).push([[565],{9565:function(e,s,o){o.r(s),s.default={computed:{sortPageTypes(){let e=this.$super("sortPageTypes");return e.push({value:"blog_detail",name:this.$tc("sw-cms.sorting.labelSortByBlogPages")}),e}}}}}]);

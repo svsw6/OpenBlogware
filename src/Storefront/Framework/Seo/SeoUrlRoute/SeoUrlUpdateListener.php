@@ -11,24 +11,19 @@ use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\RangeFilter;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Werkl\OpenBlogware\Content\Blog\BlogEntryCollection;
 use Werkl\OpenBlogware\Content\Blog\BlogSeoUrlRoute;
 use Werkl\OpenBlogware\Content\Blog\Events\BlogIndexerEvent;
 
 class SeoUrlUpdateListener implements EventSubscriberInterface
 {
-    private SeoUrlUpdater $seoUrlUpdater;
-
-    private EntityRepository $blogRepository;
-
     /**
-     * @internal
+     * @param EntityRepository<BlogEntryCollection> $blogRepository
      */
     public function __construct(
-        SeoUrlUpdater $seoUrlUpdater,
-        EntityRepository $blogRepository
+        private readonly SeoUrlUpdater $seoUrlUpdater,
+        private readonly EntityRepository $blogRepository
     ) {
-        $this->seoUrlUpdater = $seoUrlUpdater;
-        $this->blogRepository = $blogRepository;
     }
 
     public static function getSubscribedEvents(): array
@@ -59,9 +54,12 @@ class SeoUrlUpdateListener implements EventSubscriberInterface
             return;
         }
 
-        $this->seoUrlUpdater->update(BlogSeoUrlRoute::ROUTE_NAME, $blogArticlesIds);
+        $this->seoUrlUpdater->update(BlogSeoUrlRoute::ROUTE_NAME, array_values($blogArticlesIds));
     }
 
+    /**
+     * @return list<string>
+     */
     private function getBlogArticlesIds(Context $context): array
     {
         $criteria = new Criteria();
@@ -72,6 +70,9 @@ class SeoUrlUpdateListener implements EventSubscriberInterface
             new RangeFilter('publishedAt', [RangeFilter::LTE => $dateTime->format(\DATE_ATOM)])
         );
 
-        return $this->blogRepository->searchIds($criteria, $context)->getIds();
+        /** @var list<string> $ids */
+        $ids = $this->blogRepository->searchIds($criteria, $context)->getIds();
+
+        return $ids;
     }
 }

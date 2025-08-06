@@ -1,5 +1,5 @@
-import template from './sw-cms-el-preview-categories.html.twig';
-import './sw-cms-el-preview-categories.scss';
+import template from './werkl-cms-el-preview-blog-categories.html.twig';
+import './werkl-cms-el-preview-blog-categories.scss';
 
 export default {
     template,

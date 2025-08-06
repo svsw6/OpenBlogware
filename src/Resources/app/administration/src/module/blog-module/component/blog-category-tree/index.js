@@ -3,6 +3,8 @@ import template from './werkl-blog-category-tree.html.twig';
 export default {
     template,
 
+    emits: ['change-category-id'],
+
     data() {
         return {
             blogCategory: null,
@@ -10,30 +12,21 @@ export default {
         };
     },
 
-    methods: {
-        changeCategory(category) {
-            this.$emit('change-category-id', category.id);
-        },
-    },
-
     computed: {
-        category() {
-            return this.blogCategory;
-        },
-
         categoryRepository() {
             return this.repositoryFactory.create('werkl_blog_category');
         },
 
-        disableContextMenu() {
-            if (!this.allowEdit) {
-                return true;
-            }
+        category() {
+            return this.blogCategory;
+        },
+    },
 
-            return this.currentLanguageId !== Shopware.Context.api.systemLanguageId;
+    methods: {
+        changeCategory(category) {
+            this.$emit('change-category-id', category.id);
         },
-        syncProducts() {
-            return;
-        },
+
+        syncProducts() {},
     },
 };

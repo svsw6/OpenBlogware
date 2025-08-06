@@ -11,17 +11,11 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class BlogPageCriteriaEvent extends Event implements ShopwareSalesChannelEvent
 {
-    protected string $articleId;
-
-    protected Criteria $criteria;
-
-    protected SalesChannelContext $salesChannelContext;
-
-    public function __construct(string $articleId, Criteria $criteria, SalesChannelContext $context)
-    {
-        $this->articleId = $articleId;
-        $this->criteria = $criteria;
-        $this->salesChannelContext = $context;
+    public function __construct(
+        protected string $articleId,
+        protected Criteria $criteria,
+        protected SalesChannelContext $context
+    ) {
     }
 
     public function getArticleId(): string
@@ -36,11 +30,11 @@ class BlogPageCriteriaEvent extends Event implements ShopwareSalesChannelEvent
 
     public function getContext(): Context
     {
-        return $this->salesChannelContext->getContext();
+        return $this->context->getContext();
     }
 
     public function getSalesChannelContext(): SalesChannelContext
     {
-        return $this->salesChannelContext;
+        return $this->context;
     }
 }

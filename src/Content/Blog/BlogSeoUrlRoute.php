@@ -15,20 +15,14 @@ class BlogSeoUrlRoute implements SeoUrlRouteInterface
     public const ROUTE_NAME = 'werkl.frontend.blog.detail';
     public const DEFAULT_TEMPLATE = 'blog/{{ entry.blogCategories.first.translated.name|lower }}/{{ entry.translated.title|lower }}';
 
-    /**
-     * @var BlogEntriesDefinition
-     */
-    private $definition;
-
-    public function __construct(BlogEntriesDefinition $definition)
+    public function __construct(private readonly BlogEntryDefinition $blogEntryDefinition)
     {
-        $this->definition = $definition;
     }
 
     public function getConfig(): SeoUrlRouteConfig
     {
         return new SeoUrlRouteConfig(
-            $this->definition,
+            $this->blogEntryDefinition,
             self::ROUTE_NAME,
             self::DEFAULT_TEMPLATE,
             true
@@ -46,8 +40,8 @@ class BlogSeoUrlRoute implements SeoUrlRouteInterface
 
     public function getMapping(Entity $entry, ?SalesChannelEntity $salesChannel): SeoUrlMapping
     {
-        if (!$entry instanceof BlogEntriesEntity) {
-            throw new \InvalidArgumentException('Expected BlogEntriesEntity');
+        if (!$entry instanceof BlogEntryEntity) {
+            throw new \InvalidArgumentException('Expected BlogEntryEntity');
         }
 
         return new SeoUrlMapping(

@@ -6,7 +6,7 @@ Component.register('werkl-blog-el-blog-detail-preview', () => import('./preview'
 
 Shopware.Service('cmsService').registerCmsElement({
     name: 'blog-detail',
-    label: 'Blog Detail',
+    label: 'werkl-blog.elements.blogDetail.label',
     component: 'werkl-blog-el-blog-detail',
     configComponent: 'sw-cms-el-config-blog-detail',
     previewComponent: 'werkl-blog-el-blog-detail-preview',

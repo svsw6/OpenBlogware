@@ -6,6 +6,7 @@ export default {
             return this.repositoryFactory.create('werkl_blog_category');
         },
     },
+
     methods: {
         searchCategories(term) {
             // create criteria

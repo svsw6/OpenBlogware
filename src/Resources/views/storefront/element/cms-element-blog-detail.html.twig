@@ -1,9 +1,9 @@
 {% block werkl_blog_detail %}
     {% if element.data %}
         <article class="werkl-blog-detail row"
-             itemprop="article"
-             itemscope
-             itemtype="https://schema.org/BlogPosting">
+                 itemprop="article"
+                 itemscope
+                 itemtype="https://schema.org/BlogPosting">
 
             {% block werkl_blog_detail_article_item_meta_published %}
                 <meta itemprop="datePublished" content="{{ product.releaseDate|format_date(pattern="Y-MM-dd", locale=app.request.locale) }}"/>
@@ -21,19 +21,19 @@
                     {% block werkl_blog_detail_article_teaser_image %}
                         {% if element.data.detailTeaserImage and element.data.media %}
                             {% set attributes = {
-                                'class': 'blog-image-teaser card-img-top mb-3',
-                                'alt': (element.data.media.translated.alt ?: element.data.media.fileName),
-                                'title': (element.data.media.translated.title ?: element.data.media.fileName)
+                                class: 'blog-image-teaser card-img-top mb-3',
+                                alt: (element.data.media.translated.alt ?: element.data.media.fileName),
+                                title: (element.data.media.translated.title ?: element.data.media.fileName)
                             } %}
 
                             {% sw_thumbnails 'blog-image-teaser' with {
                                 media: element.data.media,
                                 sizes: {
-                                    'xs': '650px',
-                                    'sm': '650px',
-                                    'md': '650px',
-                                    'lg': '900px',
-                                    'xl': '1280px',
+                                    xs: '650px',
+                                    sm: '650px',
+                                    md: '650px',
+                                    lg: '900px',
+                                    xl: '1280px',
                                 }
                             } %}
                         {% endif %}
@@ -46,8 +46,8 @@
                     {% endblock %}
 
                     {% block werkl_blog_detail_article_meta %}
-                        {% set showAuthor = element.fieldconfig.elements.showAuthor.value ?? element.config.showAuthor.value %}
-                        {% set showCategory = element.fieldconfig.elements.showCategory.value ?? element.config.showCategory.value %}
+                        {% set showAuthor = element.fieldConfig.elements.showAuthor.value ?? element.config.showAuthor.value %}
+                        {% set showCategory = element.fieldConfig.elements.showCategory.value ?? element.config.showCategory.value %}
                         {% if showAuthor or showCategory %}
                             <div class="werkl-blog-detail-article-meta">
                                 {% block werkl_blog_detail_article_meta_author %}
@@ -83,7 +83,7 @@
                             {% set cmsPageClasses = ('cms-page ' ~ element.data.cmsPage.cssClass|striptags)|trim %}
                             <div class="{{ cmsPageClasses }}">
                                 {% block page_content_blocks %}
-                                    {% sw_include "@Storefront/storefront/page/content/detail.html.twig" with {'cmsPage': element.data.cmsPage} %}
+                                    {% sw_include '@Storefront/storefront/page/content/detail.html.twig' with { cmsPage: element.data.cmsPage} %}
                                 {% endblock %}
                             </div>
                         </div>
@@ -93,7 +93,7 @@
         </article>
     {% else %}
         {% sw_include '@Storefront/storefront/utilities/alert.html.twig' with {
-            type: "warning",
+            type: 'warning',
             content: 'werkl-blog.element.detail.warning.content'|trans,
             heading: 'werkl-blog.element.detail.warning.heading'|trans
         } %}

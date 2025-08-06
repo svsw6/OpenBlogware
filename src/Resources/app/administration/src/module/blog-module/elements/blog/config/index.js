@@ -1,5 +1,5 @@
-import template from './sw-cms-el-config-blog.html.twig';
-import './sw-cms-el-config-blog.scss';
+import template from './werkl-cms-el-config-blog.html.twig';
+import './werkl-cms-el-config-blog.scss';
 
 const { Mixin } = Shopware;
 const { EntityCollection, Criteria } = Shopware.Data;
@@ -9,15 +9,16 @@ export default {
 
     inject: ['repositoryFactory'],
 
+    emits: ['element-update'],
+
     mixins: [
         Mixin.getByName('cms-element'),
     ],
 
     data() {
         return {
-            categories: [],
-            selectedCategories: null,
-            selectedTags: null,
+            blogCategoryCollection: null,
+            tagCollection: null,
         };
     },
     computed: {
@@ -29,36 +30,34 @@ export default {
             return this.repositoryFactory.create('tag');
         },
 
-        blogListingSelectContext() {
-            const context = Object.assign({}, Shopware.Context.api);
-            context.inheritance = true;
-
-            return context;
+        showTypeOptions() {
+            return [
+                {
+                    id: 1,
+                    value: 'all',
+                    label: this.$tc('werkl-blog.elements.blog.config.showType.options.all'),
+                },
+                {
+                    id: 2,
+                    value: 'select',
+                    label: this.$tc('werkl-blog.elements.blog.config.showType.options.select'),
+                },
+            ];
         },
 
-        blogCategoriesConfigValue() {
-            return this.element.config.blogCategories.value;
-        },
-
-        blogTagsConfigValue() {
-            return this.element.config.blogTags.value;
-        },
-    },
-
-    watch: {
-        selectedCategories: {
-            handler(value) {
-                this.element.config.blogCategories.value = value.getIds();
-                this.$set(this.element.data, 'blogCategories', value);
-                this.$emit('element-update', this.element);
-            },
-        },
-        selectedTags: {
-            handler(value) {
-                this.element.config.blogTags.value = value.getIds();
-                this.$set(this.element.data, 'tags', value);
-                this.$emit('element-update', this.element);
-            },
+        showTagsOptions() {
+            return [
+                {
+                    id: 1,
+                    value: 'all',
+                    label: this.$tc('werkl-blog.elements.blog.config.showTags.options.all'),
+                },
+                {
+                    id: 2,
+                    value: 'select',
+                    label: this.$tc('werkl-blog.elements.blog.config.showTags.options.select'),
+                },
+            ];
         },
     },
 
@@ -69,48 +68,72 @@ export default {
     methods: {
         async createdComponent() {
             this.initElementConfig('blog');
-            await this.getSelectedCategories();
-            await this.getSelectedTags();
+            this.initElementData('blog');
+
+            await this.loadBlogCategories();
+            await this.loadTags();
         },
 
-        getSelectedCategories() {
-            if (!Shopware.Utils.types.isEmpty(this.blogCategoriesConfigValue)) {
-                const criteria = new Criteria();
-                criteria.setIds(this.blogCategoriesConfigValue);
+        async loadBlogCategories() {
+            this.blogCategoryCollection = new EntityCollection(
+                this.blogCategoryRepository.route,
+                this.blogCategoryRepository.schema.entity,
+                Shopware.Context.api
+            );
 
-                this.blogCategoryRepository
-                    .search(criteria, Shopware.Context.api)
-                    .then((result) => {
-                        this.selectedCategories = result;
-                    });
-            } else {
-                this.selectedCategories = new EntityCollection(
-                    this.blogCategoryRepository.route,
-                    this.blogCategoryRepository.schema.entity,
-                    Shopware.Context.api,
-                    new Criteria(),
-                );
+            if (this.element.config.blogCategories.value.length <= 0) {
+                return;
             }
+
+            const criteria = new Criteria();
+            criteria.setIds(this.element.config.blogCategories.value);
+
+            this.blogCategoryCollection = await this.blogCategoryRepository.search(criteria, Shopware.Context.api);
         },
 
-        getSelectedTags() {
-            if (!Shopware.Utils.types.isEmpty(this.blogTagsConfigValue)) {
-                const criteria = new Criteria();
-                criteria.setIds(this.blogTagsConfigValue);
+        async loadTags() {
+            this.tagCollection = new EntityCollection(
+                this.tagRepository.route,
+                this.tagRepository.schema.entity,
+                Shopware.Context.api
+            );
 
-                this.tagRepository
-                    .search(criteria, Shopware.Context.api)
-                    .then((result) => {
-                        this.selectedTags = result;
-                    });
-            } else {
-                this.selectedTags = new EntityCollection(
-                    this.tagRepository.route,
-                    this.tagRepository.schema.entity,
-                    Shopware.Context.api,
-                    new Criteria(),
-                );
+            if (this.element.config.blogTags.value.length <= 0) {
+                return;
             }
+
+            const criteria = new Criteria();
+            criteria.setIds(this.element.config.blogTags.value);
+
+            this.tagCollection = await this.tagRepository.search(criteria, Shopware.Context.api);
+        },
+
+        onBlogCategoriesChange() {
+            this.element.config.blogCategories.value = this.blogCategoryCollection.getIds();
+
+            if (this.element.translated?.config?.blogCategories) {
+                this.element.translated.config.blogCategories = this.blogCategoryCollection.getIds();
+            }
+
+            if (!this.element?.data) {
+                return;
+            }
+
+            this.element.data.blogCategories = this.blogCategoryCollection;
+        },
+
+        onTagsChange() {
+            this.element.config.blogTags.value = this.tagCollection.getIds();
+
+            if (this.element.translated?.config?.blogTags) {
+                this.element.translated.config.blogTags = this.tagCollection.getIds();
+            }
+
+            if (!this.element?.data) {
+                return;
+            }
+
+            this.element.data.blogTags = this.tagCollection;
         },
     },
 };

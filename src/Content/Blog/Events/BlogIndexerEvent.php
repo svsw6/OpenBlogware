@@ -9,24 +9,19 @@ use Shopware\Core\Framework\Event\NestedEvent;
 class BlogIndexerEvent extends NestedEvent
 {
     /**
-     * @var array
+     * @param list<string> $ids
+     * @param array<string> $skip
      */
-    protected $ids;
-
-    /**
-     * @var Context
-     */
-    protected $context;
-
-    private array $skip;
-
-    public function __construct(array $ids, Context $context, array $skip = [])
-    {
-        $this->ids = $ids;
-        $this->context = $context;
-        $this->skip = $skip;
+    public function __construct(
+        protected array $ids,
+        protected Context $context,
+        private readonly array $skip = []
+    ) {
     }
 
+    /**
+     * @return list<string>
+     */
     public function getIds(): array
     {
         return $this->ids;
@@ -37,6 +32,9 @@ class BlogIndexerEvent extends NestedEvent
         return $this->context;
     }
 
+    /**
+     * @return array<string>
+     */
     public function getSkip(): array
     {
         return $this->skip;

@@ -6,8 +6,6 @@ namespace OpenBlogware\Tests\Page\Blog;
 use OpenBlogware\Tests\Fakes\FakeEntityRepository;
 use OpenBlogware\Tests\Traits\ContextTrait;
 use PHPUnit\Framework\TestCase;
-use Shopware\Core\Content\Category\CategoryEntity;
-use Shopware\Core\Content\Category\Tree\Tree;
 use Shopware\Core\Content\Cms\CmsPageEntity;
 use Shopware\Core\Content\Cms\Exception\PageNotFoundException;
 use Shopware\Core\Content\Cms\SalesChannel\SalesChannelCmsPageLoaderInterface;
@@ -15,16 +13,15 @@ use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\EntitySearchResult;
 use Shopware\Core\Framework\Routing\RoutingException;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
-use Shopware\Core\System\SystemConfig\Exception\ConfigurationNotFoundException;
+use Shopware\Core\System\SystemConfig\SystemConfigException;
 use Shopware\Core\System\SystemConfig\SystemConfigService;
 use Shopware\Storefront\Page\GenericPageLoaderInterface;
 use Shopware\Storefront\Page\MetaInformation;
 use Shopware\Storefront\Page\Page;
-use Shopware\Storefront\Pagelet\Header\HeaderPagelet;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Werkl\OpenBlogware\Content\Blog\BlogEntriesDefinition;
-use Werkl\OpenBlogware\Content\Blog\BlogEntriesEntity;
+use Werkl\OpenBlogware\Content\Blog\BlogEntryDefinition;
+use Werkl\OpenBlogware\Content\Blog\BlogEntryEntity;
 use Werkl\OpenBlogware\Content\BlogAuthor\BlogAuthorEntity;
 use Werkl\OpenBlogware\Page\Blog\BlogPage;
 use Werkl\OpenBlogware\Page\Blog\BlogPageLoader;
@@ -53,7 +50,7 @@ class BlogPageLoaderTest extends TestCase
         $this->genericLoader = $this->createMock(GenericPageLoaderInterface::class);
         $this->cmsPageLoader = $this->createMock(SalesChannelCmsPageLoaderInterface::class);
         $this->eventDispatcher = $this->createMock(EventDispatcherInterface::class);
-        $this->blogRepository = new FakeEntityRepository(new BlogEntriesDefinition());
+        $this->blogRepository = new FakeEntityRepository(new BlogEntryDefinition());
 
         $this->salesChannelContext = $this->getSaleChannelContext($this);
 
@@ -108,15 +105,13 @@ class BlogPageLoaderTest extends TestCase
 
         static::assertIsObject($actualPage);
         static::assertTrue(property_exists($actualPage, 'blogEntry'));
-        static::assertInstanceOf(BlogEntriesEntity::class, $actualPage->getBlogEntry());
+        static::assertInstanceOf(BlogEntryEntity::class, $actualPage->getBlogEntry());
 
         static::assertTrue(property_exists($actualPage, 'metaInformation'));
         static::assertInstanceOf(MetaInformation::class, $actualPage->getMetaInformation());
         static::assertSame($metaInformation['metaTitle'], $actualPage->getMetaInformation()->getMetaTitle());
         static::assertSame($metaInformation['metaDescription'], $actualPage->getMetaInformation()->getMetaDescription());
         static::assertSame($metaInformation['metaAuthor'], $actualPage->getMetaInformation()->getAuthor());
-
-        static::assertNotNull($actualPage->getNavigationId());
     }
 
     /**
@@ -155,7 +150,7 @@ class BlogPageLoaderTest extends TestCase
                 true,
                 null,
                 false,
-                ConfigurationNotFoundException::class,
+                SystemConfigException::class,
                 1,
                 [],
             ],
@@ -196,7 +191,7 @@ class BlogPageLoaderTest extends TestCase
         $searchResults = $this->createMock(EntitySearchResult::class);
 
         if ($hasBlogEntry) {
-            $blogEntry = $this->createConfiguredMock(BlogEntriesEntity::class, [
+            $blogEntry = $this->createConfiguredMock(BlogEntryEntity::class, [
                 'getId' => $articleId,
                 'getTitle' => 'blog title',
                 'getTeaser' => 'blog teaser',
@@ -234,25 +229,13 @@ class BlogPageLoaderTest extends TestCase
 
     /**
      * Create generic page for testing.
-     * It creates category.
-     * It creates tree and config getActive method to return above created category.
-     * It creates header pagelet and config getNavigation method to return above created tree.
-     * It creates generic pagelet and setups its header and meta information.
+     * It creates generic pagelet and setups its meta information.
      */
     private function createGenericPage(): Page
     {
-        $category = $this->createMock(CategoryEntity::class);
-
-        $tree = $this->createMock(Tree::class);
-        $tree->method('getActive')->willReturn($category);
-
-        $headerPagelet = $this->createMock(HeaderPagelet::class);
-        $headerPagelet->method('getNavigation')->willReturn($tree);
-
         $metaInformation = new MetaInformation();
 
         $page = new Page();
-        $page->setHeader($headerPagelet);
         $page->setMetaInformation($metaInformation);
 
         return $page;

@@ -6,13 +6,7 @@ namespace Werkl\OpenBlogware\Content\BlogAuthor;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityCollection;
 
 /**
- * @method void                  add(BlogAuthorEntity $entity)
- * @method void                  set(string $key, BlogAuthorEntity $entity)
- * @method BlogAuthorEntity[]    getIterator()
- * @method BlogAuthorEntity[]    getElements()
- * @method BlogAuthorEntity|null get(string $key)
- * @method BlogAuthorEntity|null first()
- * @method BlogAuthorEntity|null last()
+ * @extends EntityCollection<BlogAuthorEntity>
  */
 class BlogAuthorCollection extends EntityCollection
 {

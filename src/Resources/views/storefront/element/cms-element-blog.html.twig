@@ -10,9 +10,10 @@
     {% set dataUrl = null %}
 
     {% if page.landingPage %}
-        {% set dataUrl = url('frontend.landing.page', { landingPageId: page.landingPage.id }) %}
-    {% elseif page.header.navigation.active.id %}
-        {% set dataUrl = url('frontend.cms.navigation.page', { navigationId: page.header.navigation.active.id }) %}
+        {% set dataUrl = path('frontend.landing.page', { landingPageId: page.landingPage.id }) %}
+    {% elseif shopware.navigation.id %}
+        {% set filterUrl = path('frontend.cms.navigation.filter', { navigationId: shopware.navigation.id }) %}
+        {% set dataUrl = path('frontend.cms.navigation.page', { navigationId: shopware.navigation.id }) %}
     {% endif %}
 
     {% set params = { slots: slot.id, 'no-aggregations': 1 } %}
@@ -22,7 +23,7 @@
             {% if config.showCategoryFilter.value or config.showAuthorFilter.value %}
                 <div id="filter-panel-wrapper"
                      class="filter-panel-wrapper"
-                     data-offcanvas-filter-content="true">
+                     data-off-canvas-filter-content="true">
                     {% sw_include '@Storefront/storefront/component/listing/blog-filter-panel.html.twig' with {
                         listing: searchResult,
                         sidebar: false

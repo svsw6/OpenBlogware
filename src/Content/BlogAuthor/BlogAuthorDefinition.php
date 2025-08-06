@@ -20,7 +20,7 @@ use Shopware\Core\Framework\DataAbstractionLayer\Field\TranslatedField;
 use Shopware\Core\Framework\DataAbstractionLayer\Field\TranslationsAssociationField;
 use Shopware\Core\Framework\DataAbstractionLayer\FieldCollection;
 use Shopware\Core\System\Salutation\SalutationDefinition;
-use Werkl\OpenBlogware\Content\Blog\BlogEntriesDefinition;
+use Werkl\OpenBlogware\Content\Blog\BlogEntryDefinition;
 use Werkl\OpenBlogware\Content\BlogAuthor\BlogAuthorTranslation\BlogAuthorTranslationDefinition;
 
 class BlogAuthorDefinition extends EntityDefinition
@@ -61,7 +61,7 @@ class BlogAuthorDefinition extends EntityDefinition
             new TranslationsAssociationField(BlogAuthorTranslationDefinition::class, 'werkl_blog_author_id'),
 
             (new OneToOneAssociationField('media', 'media_id', 'id', MediaDefinition::class, true))->addFlags(new ApiAware()),
-            (new OneToManyAssociationField('blogEntries', BlogEntriesDefinition::class, 'author_id', 'id'))->addFlags(new CascadeDelete(), new SearchRanking(SearchRanking::ASSOCIATION_SEARCH_RANKING)),
+            (new OneToManyAssociationField('blogEntries', BlogEntryDefinition::class, 'author_id', 'id'))->addFlags(new CascadeDelete(), new SearchRanking(SearchRanking::ASSOCIATION_SEARCH_RANKING)),
             new ManyToOneAssociationField('salutation', 'salutation_id', SalutationDefinition::class, 'id', false),
         ]);
     }

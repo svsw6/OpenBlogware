@@ -3,7 +3,101 @@
 {% set productTotal = page.searchResult.total  %}
 {% set blogResult = page.searchResult.extensions.blogResult %}
 {% set blogTotal = blogResult.total|default(0) %}
-{% block layout_search_suggest %}
+
+{% block layout_search_suggest_container %}
+    {% if blogTotal %}
+        {% set productTabId = 'product-tab' %}
+        {% set productTabHref = '#product-tab-pane' %}
+        {% set productTabContent = 'product-tab-pane' %}
+        {% set blogTabId = 'blog-tab' %}
+        {% set blogTabHref = '#blog-tab-pane' %}
+        {% set blogTabContent = 'blog-tab-pane' %}
+
+        <div class="search-suggest-container search-suggest-container-with-blog">
+            {% block layout_search_suggest_results %}
+                {% if blogTotal %}
+                    <div class="row">
+                        <div class="col-md-3 col-12">
+                            <ul class="nav nav-pills flex-md-column flex-row justify-content-around"
+                                role="tablist"
+                                aria-orientation="vertical">
+                                {% block layout_search_suggest_results_tabs_navigation_product %}
+                                    <li class="nav-item">
+                                        <a class="nav-link flex-fill text-md-left text-center{% if productTotal > 0 %} active{% endif %}"
+                                            id="{{ productTabId }}"
+                                            data-bs-toggle="pill"
+                                            href="{{ productTabHref }}"
+                                            role="tab"
+                                            aria-controls="{{ productTabContent }}"
+                                            aria-selected="true">
+                                            {{ 'werkl-blog.search.tabs.product'|trans|sw_sanitize }} <span class="badge badge-light">{{ productTotal }}</span>
+                                        </a>
+                                    </li>
+                                {% endblock %}
+
+                                {% block layout_search_suggest_results_tabs_navigation_blog %}
+                                    <li class="nav-item">
+                                        <a class="nav-link flex-fill text-md-left text-center{% if blogTotal > 0 %} active{% endif %}"
+                                            id="{{ blogTabId }}"
+                                            data-bs-toggle="pill"
+                                            href="{{ blogTabHref }}"
+                                            role="tab"
+                                            aria-controls="{{ blogTabContent }}"
+                                            aria-selected="false">
+                                            {{ 'werkl-blog.search.tabs.blog'|trans|sw_sanitize }} <span class="badge badge-light">{{ blogTotal }}</span>
+                                        </a>
+                                    </li>
+                                {% endblock %}
+
+                                {% block layout_search_suggest_results_tabs_navigation_others %}{% endblock %}
+                            </ul>
+                        </div>
+
+                        <div class="col-md-9 col-12">
+                            <div class="tab-content">
+                                {% block layout_search_suggest_results_tabs_content_product %}
+                                    <div class="tab-pane fade{% if productTotal > 0 %} show active{% endif %}"
+                                        id="{{ productTabContent }}"
+                                        role="tabpanel"
+                                        aria-labelledby="{{ productTabId }}">
+                                        <ul class="list-unstyled mb-0"
+                                            id="search-suggest-listbox"
+                                            aria-label="{{ 'header.searchDropdownTitle'|trans|striptags }}"
+                                            role="listbox">
+                                            {{ block('layout_search_suggest_results', '@Storefront/storefront/layout/header/search-suggest.html.twig') }}
+
+                                            {{ block('layout_search_suggest_result_total', '@Storefront/storefront/layout/header/search-suggest.html.twig') }}
+                                        </ul>
+                                    </div>
+                                {% endblock %}
+
+                                {% block layout_search_suggest_results_tabs_content_blog %}
+                                    <div class="tab-pane fade{% if blogTotal > 0 %} show active{% endif %}"
+                                        id="{{ blogTabContent }}"
+                                        role="tabpanel"
+                                        aria-labelledby="{{ blogTabId }}">
+                                        {% sw_include "@Storefront/storefront/layout/header/blog-suggest-tab-content.html.twig" with {
+                                            blogResult: blogResult,
+                                            searchTerm: page.searchTerm
+                                        } only %}
+                                    </div>
+                                {% endblock %}
+
+                                {% block layout_search_suggest_results_tabs_content_others %}{% endblock %}
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    {{ parent() }}
+                {% endif %}
+            {% endblock %}
+        </div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{# {% block layout_search_suggest %}
 <div class="search-suggest js-search-result">
     {% block layout_search_suggest_container %}
         <ul class="search-suggest-container {% if blogResult == "" %} search-suggest-container-width {% endif %}">
@@ -38,7 +132,7 @@
                                     {% if productTotal == 0 %}
                                         {% block layout_search_suggest_blog_no_result %}
                                             <li class="search-suggest-no-result">
-                                                {{ "header.searchNoResult"|trans|sw_sanitize }}
+                                                {{ 'header.searchNoResult'|trans|sw_sanitize }}
                                             </li>
                                         {% endblock %}
 
@@ -48,17 +142,17 @@
                                                 {% block layout_search_suggest_result_total_product_link %}
                                                     <div class="col">
                                                         <a href="{{ path('frontend.search.page') }}?search={{ page.searchTerm }}"
-                                                           title="{{ "header.searchAllResults"|trans|striptags }}"
+                                                           title="{{ 'header.searchAllResults'|trans|striptags }}"
                                                            class="search-suggest-total-link">
-                                                            {% sw_icon 'arrow-head-right' style { 'size': 'sm' } %}
-                                                            {{ "header.searchAllResults"|trans|sw_sanitize }}
+                                                            {% sw_icon 'arrow-head-right' style { size: 'sm' } %}
+                                                            {{ 'header.searchAllResults'|trans|sw_sanitize }}
                                                         </a>
                                                     </div>
                                                 {% endblock %}
 
                                                 {% block layout_search_suggest_result_total_product_count %}
                                                     <div class="col-auto search-suggest-total-count">
-                                                        {{ "header.searchResults"|trans({
+                                                        {{ 'header.searchResults'|trans({
                                                             '%count%': productTotal,
                                                         })|sw_sanitize }}
                                                     </div>
@@ -88,4 +182,4 @@
 {% endblock %}
 
 {% block layout_search_suggest_result_total %}
-{% endblock %}
+{% endblock %} #}

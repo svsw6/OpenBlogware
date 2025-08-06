@@ -18,17 +18,14 @@ use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\RangeFilter;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Sorting\FieldSorting;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
-use Werkl\OpenBlogware\Content\Blog\BlogEntriesDefinition;
-use Werkl\OpenBlogware\Content\Blog\BlogListingFilterBuildEvent;
+use Werkl\OpenBlogware\Content\Blog\BlogEntryDefinition;
+use Werkl\OpenBlogware\Content\Blog\Events\BlogListingFilterBuildEvent;
 use Werkl\OpenBlogware\Content\Blog\Events\BlogMainFilterEvent;
 
 class BlogCmsElementResolver extends AbstractCmsElementResolver
 {
-    private EventDispatcherInterface $eventDispatcher;
-
-    public function __construct(EventDispatcherInterface $eventDispatcher)
+    public function __construct(private readonly EventDispatcherInterface $eventDispatcher)
     {
-        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function getType(): string
@@ -38,7 +35,6 @@ class BlogCmsElementResolver extends AbstractCmsElementResolver
 
     public function collect(CmsSlotEntity $slot, ResolverContext $resolverContext): ?CriteriaCollection
     {
-        /* get the config from the element */
         $config = $slot->getFieldConfig();
         $context = $resolverContext->getSalesChannelContext();
 
@@ -107,8 +103,8 @@ class BlogCmsElementResolver extends AbstractCmsElementResolver
         $criteriaCollection = new CriteriaCollection();
 
         $criteriaCollection->add(
-            'werkl_blog',
-            BlogEntriesDefinition::class,
+            BlogEntryDefinition::ENTITY_NAME . '_' . $slot->getUniqueIdentifier(),
+            BlogEntryDefinition::class,
             $criteria
         );
 
@@ -117,7 +113,8 @@ class BlogCmsElementResolver extends AbstractCmsElementResolver
 
     public function enrich(CmsSlotEntity $slot, ResolverContext $resolverContext, ElementDataCollection $result): void
     {
-        $werklBlog = $result->get('werkl_blog');
+        $werklBlog = $result->get(BlogEntryDefinition::ENTITY_NAME . '_' . $slot->getUniqueIdentifier());
+
         if (!$werklBlog instanceof EntitySearchResult) {
             return;
         }

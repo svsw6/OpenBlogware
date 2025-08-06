@@ -5,10 +5,9 @@
         {% sw_include '@Storefront/storefront/component/blog/card/box.html.twig' %}
     {% else %}
         {% sw_include '@Storefront/storefront/utilities/alert.html.twig' with {
-            type: "primary",
-            content: "werkl-blog.element.singleSelect.emptyResult"|trans|sw_sanitize,
+            type: 'primary',
+            content: 'werkl-blog.element.singleSelect.emptyResult'|trans|sw_sanitize,
             icon: false
-            } %}
+        } %}
     {% endif %}
-
 {% endblock %}

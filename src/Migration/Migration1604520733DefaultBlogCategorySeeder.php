@@ -10,10 +10,6 @@ use Shopware\Core\Framework\Migration\MigrationStep;
 use Shopware\Core\Framework\Uuid\Uuid;
 use Shopware\Core\Migration\Traits\ImportTranslationsTrait;
 use Shopware\Core\Migration\Traits\Translations;
-use Werkl\OpenBlogware\Content\Blog\Aggregate\BlogCategoryMappingDefinition;
-use Werkl\OpenBlogware\Content\Blog\BlogEntriesDefinition;
-use Werkl\OpenBlogware\Content\BlogCategory\BlogCategoryDefinition;
-use Werkl\OpenBlogware\Content\BlogCategory\BlogCategoryTranslation\BlogCategoryTranslationDefinition;
 
 class Migration1604520733DefaultBlogCategorySeeder extends MigrationStep
 {
@@ -39,9 +35,9 @@ class Migration1604520733DefaultBlogCategorySeeder extends MigrationStep
             ]
         );
 
-        $this->importTranslation(BlogCategoryTranslationDefinition::ENTITY_NAME, $translations, $connection);
+        $this->importTranslation('werkl_blog_category_translation', $translations, $connection);
 
-        $blogs = $connection->fetchAllAssociative('SELECT id FROM ' . BlogEntriesDefinition::ENTITY_NAME) ? [] : null;
+        $blogs = $connection->fetchAllAssociative('SELECT id FROM `werkl_blog_entries`') ? [] : null;
 
         $queue = new MultiInsertQueryQueue($connection, 50);
 
@@ -54,7 +50,7 @@ class Migration1604520733DefaultBlogCategorySeeder extends MigrationStep
             $insert['werkl_blog_entries_id'] = $insert['id'];
             unset($insert['id']);
 
-            $queue->addInsert(BlogCategoryMappingDefinition::ENTITY_NAME, $insert);
+            $queue->addInsert('werkl_blog_blog_category', $insert);
         }
 
         $queue->execute();
@@ -69,7 +65,7 @@ class Migration1604520733DefaultBlogCategorySeeder extends MigrationStep
     {
         $id = Uuid::randomBytes();
 
-        $connection->insert(BlogCategoryDefinition::ENTITY_NAME, ['id' => $id, 'created_at' => (new \DateTime())->format(Defaults::STORAGE_DATE_TIME_FORMAT)]);
+        $connection->insert('werkl_blog_category', ['id' => $id, 'created_at' => (new \DateTime())->format(Defaults::STORAGE_DATE_TIME_FORMAT)]);
 
         return $id;
     }

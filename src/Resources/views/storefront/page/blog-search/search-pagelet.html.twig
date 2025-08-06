@@ -4,7 +4,7 @@
     <div class="cms-element-sidebar-filter">
         <div id="filter-panel-wrapper"
              class="filter-panel-wrapper"
-             data-offcanvas-filter-content="true">
+             data-off-canvas-filter-content="true">
             {% sw_include '@Storefront/storefront/component/listing/blog-filter-panel.html.twig' with {
                 listing: page.listing,
                 sidebar: false
@@ -13,7 +13,7 @@
 
         {% sw_include '@Storefront/storefront/component/blog/listing.html.twig' with {
             searchResult: page.listing,
-            dataUrl: url('widgets.blog.search.pagelet'),
+            dataUrl: path('widgets.blog.search.pagelet'),
             params: { search: page.searchTerm },
             sidebar: 0,
             boxLayout: 'minimal',

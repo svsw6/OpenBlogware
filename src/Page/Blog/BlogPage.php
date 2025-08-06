@@ -3,38 +3,33 @@ declare(strict_types=1);
 
 namespace Werkl\OpenBlogware\Page\Blog;
 
-use Shopware\Storefront\Page\Navigation\NavigationPage;
-use Werkl\OpenBlogware\Content\Blog\BlogEntriesDefinition;
-use Werkl\OpenBlogware\Content\Blog\BlogEntriesEntity;
+use Shopware\Core\Content\Cms\CmsPageEntity;
+use Shopware\Storefront\Page\Page;
+use Werkl\OpenBlogware\Content\Blog\BlogEntryEntity;
 
-class BlogPage extends NavigationPage
+class BlogPage extends Page
 {
-    protected BlogEntriesEntity $blogEntry;
+    protected ?BlogEntryEntity $blogEntry = null;
 
-    protected ?string $navigationId;
+    protected ?CmsPageEntity $cmsPage = null;
 
-    public function getBlogEntry(): BlogEntriesEntity
+    public function getBlogEntry(): ?BlogEntryEntity
     {
         return $this->blogEntry;
     }
 
-    public function setBlogEntry(BlogEntriesEntity $blogEntry): void
+    public function setBlogEntry(BlogEntryEntity $blogEntry): void
     {
         $this->blogEntry = $blogEntry;
     }
 
-    public function getNavigationId(): ?string
+    public function getCmsPage(): ?CmsPageEntity
     {
-        return $this->navigationId;
+        return $this->cmsPage;
     }
 
-    public function setNavigationId(?string $navigationId): void
+    public function setCmsPage(CmsPageEntity $cmsPage): void
     {
-        $this->navigationId = $navigationId;
-    }
-
-    public function getEntityName(): string
-    {
-        return BlogEntriesDefinition::ENTITY_NAME;
+        $this->cmsPage = $cmsPage;
     }
 }

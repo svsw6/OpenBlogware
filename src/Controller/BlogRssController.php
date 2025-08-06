@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Werkl\OpenBlogware\Controller;
 
+use Shopware\Core\Framework\Adapter\Cache\Event\AddCacheTagEvent;
 use Shopware\Core\Framework\DataAbstractionLayer\EntityRepository;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Criteria;
 use Shopware\Core\Framework\DataAbstractionLayer\Search\Filter\EqualsFilter;
@@ -13,29 +14,38 @@ use Shopware\Storefront\Page\GenericPageLoaderInterface;
 use Shopware\Storefront\Page\Navigation\NavigationPage;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+use Werkl\OpenBlogware\Content\Blog\BlogEntryCollection;
 
-/**
- * Rss controller
- */
 #[Route(defaults: ['_routeScope' => ['storefront']])]
 class BlogRssController extends StorefrontController
 {
-    private GenericPageLoaderInterface $genericPageLoader;
+    final public const ALL_TAG = 'werkl-blog-rss';
 
-    private EntityRepository $blogRepository;
-
+    /**
+     * @param EntityRepository<BlogEntryCollection> $blogRepository
+     */
     public function __construct(
-        GenericPageLoaderInterface $genericPageLoader,
-        EntityRepository $blogRepository
+        private readonly GenericPageLoaderInterface $genericPageLoader,
+        private readonly EntityRepository $blogRepository,
+        private readonly EventDispatcherInterface $dispatcher
     ) {
-        $this->genericPageLoader = $genericPageLoader;
-        $this->blogRepository = $blogRepository;
+    }
+
+    public static function buildName(string $id): string
+    {
+        return 'werkl-blog-rss-' . $id;
     }
 
     #[Route(path: '/blog/rss', name: 'frontend.werkl_blog.rss', methods: ['GET'])]
     public function rss(Request $request, SalesChannelContext $context): Response
     {
+        $this->dispatcher->dispatch(new AddCacheTagEvent(
+            self::buildName($context->getSalesChannelId()),
+            self::ALL_TAG
+        ));
+
         $dateTime = new \DateTime();
 
         $criteria = new Criteria();

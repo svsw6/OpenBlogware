@@ -13,8 +13,8 @@ use Shopware\Core\System\SalesChannel\SalesChannelContext;
 use Shopware\Storefront\Page\GenericPageLoaderInterface;
 use Shopware\Storefront\Page\Page;
 use Symfony\Component\HttpFoundation\Request;
-use Werkl\OpenBlogware\Content\Blog\BlogEntriesDefinition;
-use Werkl\OpenBlogware\Content\Blog\BlogEntriesEntity;
+use Werkl\OpenBlogware\Content\Blog\BlogEntryDefinition;
+use Werkl\OpenBlogware\Content\Blog\BlogEntryEntity;
 use Werkl\OpenBlogware\Page\Search\BlogSearchPage;
 use Werkl\OpenBlogware\Page\Search\BlogSearchPageLoader;
 
@@ -33,7 +33,7 @@ class BlogSearchPageLoaderTest extends TestCase
     protected function setUp(): void
     {
         $this->genericLoader = $this->createMock(GenericPageLoaderInterface::class);
-        $this->blogRepository = new FakeEntityRepository(new BlogEntriesDefinition());
+        $this->blogRepository = new FakeEntityRepository(new BlogEntryDefinition());
 
         $this->salesChannelContext = $this->getSaleChannelContext($this);
 
@@ -59,7 +59,7 @@ class BlogSearchPageLoaderTest extends TestCase
     public function testLoad(): void
     {
         $searchResults = $this->createConfiguredMock(EntitySearchResult::class, [
-            'first' => $this->createMock(BlogEntriesEntity::class),
+            'first' => $this->createMock(BlogEntryEntity::class),
         ]);
         $request = new Request(['search' => 'foo'], [], []);
         $this->blogRepository->entitySearchResults = [$searchResults];

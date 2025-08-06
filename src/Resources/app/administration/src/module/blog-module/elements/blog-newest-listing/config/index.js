@@ -1,5 +1,4 @@
-import template from './werkl-cms-el-config-newest-listing.html.twig';
-import './werkl-cms-el-config-newest-listing.scss';
+import template from './werkl-cms-el-config-blog-newest-listing.html.twig';
 
 const { Mixin } = Shopware;
 const { EntityCollection, Criteria } = Shopware.Data;
@@ -15,8 +14,7 @@ export default {
 
     data() {
         return {
-            categories: [],
-            selectedCategories: null,
+            blogCategoryCollection: null,
         };
     },
 
@@ -25,25 +23,19 @@ export default {
             return this.repositoryFactory.create('werkl_blog_category');
         },
 
-        blogListingSelectContext() {
-            const context = Object.assign({}, Shopware.Context.api);
-            context.inheritance = true;
-
-            return context;
-        },
-
-        blogCategoriesConfigValue() {
-            return this.element.config.blogCategories.value;
-        },
-    },
-
-    watch: {
-        selectedCategories: {
-            handler(value) {
-                this.element.config.blogCategories.value = value.getIds();
-                this.$set(this.element.data, 'blogCategories', value);
-                this.$emit('element-update', this.element);
-            },
+        showTypeOptions() {
+            return [
+                {
+                    id: 1,
+                    value: 'all',
+                    label: this.$tc('werkl-blog.elements.blogNewestListing.config.showType.options.all'),
+                },
+                {
+                    id: 2,
+                    value: 'select',
+                    label: this.$tc('werkl-blog.elements.blogNewestListing.config.showType.options.select'),
+                },
+            ];
         },
     },
 
@@ -54,27 +46,40 @@ export default {
     methods: {
         async createdComponent() {
             this.initElementConfig('blog-newest-listing');
-            await this.getSelectedCategories();
+            this.initElementData('blog-newest-listing');
+
+            await this.loadBlogCategories();
         },
 
-        getSelectedCategories() {
-            if (!Shopware.Utils.types.isEmpty(this.blogCategoriesConfigValue)) {
-                const criteria = new Criteria();
-                criteria.setIds(this.blogCategoriesConfigValue);
+        async loadBlogCategories() {
+            this.blogCategoryCollection = new EntityCollection(
+                this.blogCategoryRepository.route,
+                this.blogCategoryRepository.schema.entity,
+                Shopware.Context.api
+            );
 
-                this.blogCategoryRepository
-                    .search(criteria, Shopware.Context.api)
-                    .then((result) => {
-                        this.selectedCategories = result;
-                    });
-            } else {
-                this.selectedCategories = new EntityCollection(
-                    this.blogCategoryRepository.route,
-                    this.blogCategoryRepository.schema.entity,
-                    Shopware.Context.api,
-                    new Criteria(),
-                );
+            if (this.element.config.blogCategories.value.length <= 0) {
+                return;
             }
+
+            const criteria = new Criteria();
+            criteria.setIds(this.element.config.blogCategories.value);
+
+            this.blogCategoryCollection = await this.blogCategoryRepository.search(criteria, Shopware.Context.api);
+        },
+
+        onBlogCategoriesChange() {
+            this.element.config.blogCategories.value = this.blogCategoryCollection.getIds();
+
+            if (this.element.translated?.config?.blogCategories) {
+                this.element.translated.config.blogCategories = this.blogCategoryCollection.getIds();
+            }
+
+            if (!this.element?.data) {
+                return;
+            }
+
+            this.element.data.blogCategories = this.blogCategoryCollection;
         },
     },
 };

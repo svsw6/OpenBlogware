@@ -23,7 +23,7 @@ use Shopware\Core\Framework\Uuid\Uuid;
 use Shopware\Core\Kernel;
 use Shopware\Core\System\SystemConfig\SystemConfigService;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Werkl\OpenBlogware\Content\Blog\BlogEntriesDefinition;
+use Werkl\OpenBlogware\Content\Blog\BlogEntryDefinition;
 use Werkl\OpenBlogware\Content\Blog\BlogSeoUrlRoute;
 use Werkl\OpenBlogware\Content\Blog\Events\BlogIndexerEvent;
 use Werkl\OpenBlogware\Util\Lifecycle;
@@ -67,14 +67,14 @@ class WerklOpenBlogware extends Plugin
         $connection = Kernel::getConnection();
 
         $connection->executeStatement('SET FOREIGN_KEY_CHECKS=0;');
-        $connection->executeStatement('DROP TABLE IF EXISTS `werkl_blog_entries`');
-        $connection->executeStatement('DROP TABLE IF EXISTS `werkl_blog_entries_translation`');
+        $connection->executeStatement('DROP TABLE IF EXISTS `werkl_blog_entry`');
+        $connection->executeStatement('DROP TABLE IF EXISTS `werkl_blog_entry_translation`');
         $connection->executeStatement('DROP TABLE IF EXISTS `werkl_blog_blog_category`');
         $connection->executeStatement('DROP TABLE IF EXISTS `werkl_blog_category_translation`');
         $connection->executeStatement('DROP TABLE IF EXISTS `werkl_blog_category`');
         $connection->executeStatement('DROP TABLE IF EXISTS `werkl_blog_author_translation`');
         $connection->executeStatement('DROP TABLE IF EXISTS `werkl_blog_author`');
-        $connection->executeStatement('DROP TABLE IF EXISTS `werkl_blog_entries_tag`');
+        $connection->executeStatement('DROP TABLE IF EXISTS `werkl_blog_entry_tag`');
 
         /** @var EntityRepository $cmsBlockRepo */
         $cmsBlockRepo = $this->container->get('cms_block.repository');
@@ -121,7 +121,7 @@ class WerklOpenBlogware extends Plugin
 
         $data = [
             [
-                'entity' => BlogEntriesDefinition::ENTITY_NAME,
+                'entity' => BlogEntryDefinition::ENTITY_NAME,
                 'associationFields' => ['media'],
                 'folder' => [
                     'name' => 'Blog Images',
@@ -144,7 +144,7 @@ class WerklOpenBlogware extends Plugin
         $criteria = new Criteria();
         $criteria->addFilter(
             new EqualsAnyFilter('entity', [
-                BlogEntriesDefinition::ENTITY_NAME,
+                BlogEntryDefinition::ENTITY_NAME,
             ])
         );
 
@@ -187,7 +187,7 @@ class WerklOpenBlogware extends Plugin
     {
         $criteria = new Criteria();
         $criteria->addFilter(
-            new EqualsFilter('entityName', 'werkl_blog_entries')
+            new EqualsFilter('entityName', 'werkl_blog_entry')
         );
 
         /** @var EntityRepository $seoUrlTemplateRepository */
@@ -283,7 +283,7 @@ class WerklOpenBlogware extends Plugin
     {
         $criteria = new Criteria();
         $criteria->addFilter(new EqualsFilter('routeName', BlogSeoUrlRoute::ROUTE_NAME));
-        $criteria->addFilter(new EqualsFilter('entityName', BlogEntriesDefinition::ENTITY_NAME));
+        $criteria->addFilter(new EqualsFilter('entityName', BlogEntryDefinition::ENTITY_NAME));
         $criteria->addFilter(new NotFilter(
             NotFilter::CONNECTION_AND,
             [new EqualsFilter('template', null)]
@@ -343,23 +343,23 @@ class WerklOpenBlogware extends Plugin
     {
         /** @var Connection $connection */
         $connection = $this->container->get(Connection::class);
-        if (!$connection->getSchemaManager()->tablesExist([BlogEntriesDefinition::ENTITY_NAME])) {
+        if (!$connection->createSchemaManager()->tablesExist([BlogEntryDefinition::ENTITY_NAME])) {
             return [];
         }
 
         $now = (new \DateTime())->format(Defaults::STORAGE_DATE_TIME_FORMAT);
 
         $query = $connection->createQueryBuilder();
-        $query->select([
+        $query->select(
             'LOWER(HEX(id)) as id',
-        ]);
+        );
         $query->where('active = true')->andWhere('published_at <= :now');
         $query->setParameter('now', $now);
-        $query->from(BlogEntriesDefinition::ENTITY_NAME);
-        if (!$query->execute() instanceof Result) {
+        $query->from(BlogEntryDefinition::ENTITY_NAME);
+        if (!$query->executeQuery() instanceof Result) {
             return [];
         }
-        $results = $query->execute()->fetchAllAssociative();
+        $results = $query->executeQuery()->fetchAllAssociative();
 
         if (empty($results)) {
             return [];

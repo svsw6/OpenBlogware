@@ -1,0 +1,55 @@
+<?php
+declare(strict_types=1);
+
+namespace Werkl\OpenBlogware\Content\Blog\BlogEntryTranslation;
+
+use Shopware\Core\Content\Media\MediaDefinition;
+use Shopware\Core\Framework\DataAbstractionLayer\EntityTranslationDefinition;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\CustomFields;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\FkField;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\AllowHtml;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\ApiAware;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\Flag\Required;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\LongTextField;
+use Shopware\Core\Framework\DataAbstractionLayer\Field\StringField;
+use Shopware\Core\Framework\DataAbstractionLayer\FieldCollection;
+use Werkl\OpenBlogware\Content\Blog\BlogEntryDefinition;
+
+class BlogEntryTranslationDefinition extends EntityTranslationDefinition
+{
+    public const ENTITY_NAME = 'werkl_blog_entry_translation';
+
+    public function getEntityName(): string
+    {
+        return self::ENTITY_NAME;
+    }
+
+    public function getCollectionClass(): string
+    {
+        return BlogEntryTranslationCollection::class;
+    }
+
+    public function getEntityClass(): string
+    {
+        return BlogEntryTranslationEntity::class;
+    }
+
+    protected function getParentDefinitionClass(): string
+    {
+        return BlogEntryDefinition::class;
+    }
+
+    protected function defineFields(): FieldCollection
+    {
+        return new FieldCollection([
+            new FkField('media_id', 'mediaId', MediaDefinition::class),
+            (new StringField('title', 'title'))->addFlags(new Required()),
+            (new StringField('slug', 'slug'))->addFlags(new Required()),
+            new StringField('teaser', 'teaser'),
+            new StringField('meta_title', 'metaTitle'),
+            new StringField('meta_description', 'metaDescription'),
+            (new LongTextField('content', 'content'))->addFlags(new AllowHtml()),
+            (new CustomFields())->addFlags(new ApiAware()),
+        ]);
+    }
+}

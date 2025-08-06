@@ -1,0 +1,64 @@
+{
+  "base": "/bundles/werklopenblogware/administration/",
+  "entryPoints": {
+    "werkl-open-blogware": {
+      "css": [],
+      "dynamic": [
+        "/bundles/werklopenblogware/administration/assets/index-DKY_k-Yo.js",
+        "/bundles/werklopenblogware/administration/assets/index-BxtcNrp4.js",
+        "/bundles/werklopenblogware/administration/assets/index-DtQDvWrZ.js",
+        "/bundles/werklopenblogware/administration/assets/index-CBacKxT4.js",
+        "/bundles/werklopenblogware/administration/assets/index-BtyE0l3H.js",
+        "/bundles/werklopenblogware/administration/assets/index-bBZPW8ND.js",
+        "/bundles/werklopenblogware/administration/assets/index-DqUpIFkT.js",
+        "/bundles/werklopenblogware/administration/assets/index-COWTY8bX.js",
+        "/bundles/werklopenblogware/administration/assets/index-DWSRdTlC.js",
+        "/bundles/werklopenblogware/administration/assets/index-BeUHZwXb.js",
+        "/bundles/werklopenblogware/administration/assets/index-CLUGXFV6.js",
+        "/bundles/werklopenblogware/administration/assets/index-CRZB28V4.js",
+        "/bundles/werklopenblogware/administration/assets/index-DdoRo4Ou.js",
+        "/bundles/werklopenblogware/administration/assets/index-DzbYnIcH.js",
+        "/bundles/werklopenblogware/administration/assets/index-DkRXdN_W.js",
+        "/bundles/werklopenblogware/administration/assets/index-CN5soPZF.js",
+        "/bundles/werklopenblogware/administration/assets/index-muwxHlYF.js",
+        "/bundles/werklopenblogware/administration/assets/index-BXczMg9k.js",
+        "/bundles/werklopenblogware/administration/assets/index-TNTq2a6R.js",
+        "/bundles/werklopenblogware/administration/assets/index-DnhQa9HV.js",
+        "/bundles/werklopenblogware/administration/assets/index-2czgLEk3.js",
+        "/bundles/werklopenblogware/administration/assets/index-DTMyPH_X.js",
+        "/bundles/werklopenblogware/administration/assets/index-BelHLDB2.js",
+        "/bundles/werklopenblogware/administration/assets/index-D5qeetYG.js",
+        "/bundles/werklopenblogware/administration/assets/index-EvKfUZIk.js",
+        "/bundles/werklopenblogware/administration/assets/index-2sNIYJlr.js",
+        "/bundles/werklopenblogware/administration/assets/index-IBlrgHXs.js",
+        "/bundles/werklopenblogware/administration/assets/index-Nv1kM84q.js",
+        "/bundles/werklopenblogware/administration/assets/index-djFVmhQq.js",
+        "/bundles/werklopenblogware/administration/assets/index-CB3s9RZ7.js",
+        "/bundles/werklopenblogware/administration/assets/index-RInXDG-m.js",
+        "/bundles/werklopenblogware/administration/assets/index-B1VMVOxB.js",
+        "/bundles/werklopenblogware/administration/assets/index-Cm7h7nCh.js",
+        "/bundles/werklopenblogware/administration/assets/index-DLbe5nbw.js",
+        "/bundles/werklopenblogware/administration/assets/index-DE9rQuyz.js",
+        "/bundles/werklopenblogware/administration/assets/index-OQ9pEuOh.js",
+        "/bundles/werklopenblogware/administration/assets/index-Dck_g9tK.js",
+        "/bundles/werklopenblogware/administration/assets/index-C1ThOcnB.js",
+        "/bundles/werklopenblogware/administration/assets/index-BpoHearA.js",
+        "/bundles/werklopenblogware/administration/assets/index-C293HHHL.js"
+      ],
+      "js": [
+        "/bundles/werklopenblogware/administration/assets/werkl-open-blogware-BN-UUpf1.js"
+      ],
+      "legacy": false,
+      "preload": []
+    }
+  },
+  "legacy": false,
+  "metadatas": {},
+  "version": [
+    "7.1.0",
+    7,
+    1,
+    0
+  ],
+  "viteServer": null
+}

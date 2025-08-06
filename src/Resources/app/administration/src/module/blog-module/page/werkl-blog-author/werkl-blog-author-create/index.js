@@ -1,7 +1,7 @@
 export default {
     methods: {
         createdComponent() {
-            Shopware.State.commit('context/resetLanguageToDefault');
+            Shopware.Store.get('context').resetLanguageToDefault();
 
             this.blogAuthor = this.blogAuthorRepository.create(Shopware.Context.api);
         },
