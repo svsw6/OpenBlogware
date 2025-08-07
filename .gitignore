@@ -11,6 +11,8 @@ src/Resources/app/administration/node_modules
 /.vscode
 /.idea
 /vendor
+.php_cs.cache
+docker-compose.override.yml
 composer.lock
 
 src/Resources/app/administration/node_modules
@@ -20,5 +22,3 @@ src/Resources/app/storefront/node_modules
 
 src/Resources/public/administration/css/
 src/Resources/public/administration/js/
-
-.php_cs.cache
