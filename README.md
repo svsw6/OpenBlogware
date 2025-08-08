@@ -4,6 +4,8 @@
 
 [![Sponsor](https://img.shields.io/badge/Sponsor-%E2%9D%A4-ff69b4?logo=github&style=for-the-badge)](https://github.com/sponsors/7underlines)
 
+**Note:** Version 5 and above require Shopware 6.7 or higher.
+
 After the plugin installation you can find the entity if you hop to `content -> blog`.
 
 ![](https://sbp-plugin-images.s3.eu-west-1.amazonaws.com/phpZoe2dS)
