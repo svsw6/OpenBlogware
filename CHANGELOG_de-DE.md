@@ -1,3 +1,6 @@
+# 5.0.1
+- Fehler beim Speichern der SEO URL Templates behoben [#42](https://github.com/Werkstattl/OpenBlogware/pull/42)
+
 # 5.0.0
 - Kompatibilität mit Shopware 6.7
 - BlogEntries Entitäten zu BlogEntry umbenannt

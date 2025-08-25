@@ -1,7 +1,7 @@
 {
     "name": "werkstattl/openblogware",
     "description": "OpenBlogware: A Blog Module for Shopware 6.",
-    "version": "5.0.0",
+    "version": "5.0.1",
     "type": "shopware-platform-plugin",
     "keywords": ["blog", "news"],
     "license":"MIT",
@@ -18,9 +18,9 @@
         "docs": "https://github.com/Werkstattl/OpenBlogware/blob/main/README.md"
     },
     "require": {
-        "shopware/administration": "~6.7",
-        "shopware/core": "~6.7",
-        "shopware/storefront": "~6.7"
+        "shopware/administration": "~6.7.0",
+        "shopware/core": "~6.7.0",
+        "shopware/storefront": "~6.7.0"
     },
     "require-dev":{
         "phpunit/phpunit": "^9.5",
