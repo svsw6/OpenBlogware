@@ -79,6 +79,10 @@ export default {
         isCreateMode() {
             return this.$route.name === 'blog.module.create';
         },
+        
+        salesChannelRepository() {
+            return this.repositoryFactory.create('sales_channel');
+        },
     },
 
     watch: {
