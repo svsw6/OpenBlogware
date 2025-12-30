@@ -6,11 +6,11 @@ namespace Werkl\OpenBlogware\Migration;
 use Doctrine\DBAL\Connection;
 use Shopware\Core\Framework\Migration\MigrationStep;
 
-class Migration1735580257UpdateSeoUrlTemplateToUseSlug extends MigrationStep
+class Migration1767122033UpdateSeoUrlTemplateToUseSlug extends MigrationStep
 {
     public function getCreationTimestamp(): int
     {
-        return 1735580257;
+        return 1767122033;
     }
 
     public function update(Connection $connection): void
