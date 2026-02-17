@@ -1,3 +1,9 @@
+# 5.1.1
+- Fixed error when re-saving the blog detail layout [#46](https://github.com/Werkstattl/OpenBlogware/issues/46)
+
+# 5.1.0
+- Make blog entry slug editable for SEO optimization in [#30](https://github.com/Werkstattl/OpenBlogware/issues/30)
+
 # 5.0.2
 - Compatibility with Shopware 6.7.5.0
 

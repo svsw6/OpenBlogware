@@ -1,3 +1,9 @@
+# 5.1.1
+- Fehler beim erneuten Speichern des Blog-Detail-Layouts behoben [#46](https://github.com/Werkstattl/OpenBlogware/issues/46)
+
+# 5.1.0
+- Blog-Eintrags-Slug für SEO-Optimierung bearbeitbar gemacht in [#30](https://github.com/Werkstattl/OpenBlogware/issues/30)
+
 # 5.0.2
 - Kompatibilität mit Shopware 6.7.5.0
 
