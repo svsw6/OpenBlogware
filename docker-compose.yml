@@ -1,6 +1,6 @@
 services:
   shop:
-    image: dockware/dev:latest
+    image: dockware/shopware:latest
     ports:
       - "80:80"
     volumes:
