@@ -7,7 +7,6 @@
            path="/landingPage/{landingPageId}"
            methods="GET"
            controller="Shopware\Storefront\Controller\LandingPageController::index">
-        <default key="_httpCache">true</default>
         <default key="_routeScope"><list><string>storefront</string></list></default>
         <default key="XmlHttpRequest">true</default>
         <default key="_controllerName">landingpage</default>
