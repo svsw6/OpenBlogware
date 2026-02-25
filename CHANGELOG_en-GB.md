@@ -1,3 +1,6 @@
+# 5.1.2
+- Fixed SEO URL template to include /blog/ prefix to preserve existing URLs [#61](https://github.com/Werkstattl/OpenBlogware/pull/61)
+
 # 5.1.1
 - Fixed error when re-saving the blog detail layout [#46](https://github.com/Werkstattl/OpenBlogware/issues/46)
 

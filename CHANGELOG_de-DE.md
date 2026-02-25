@@ -1,3 +1,6 @@
+# 5.1.2
+- SEO URL Template mit /blog/ Prefix behoben um bestehende URLs zu erhalten [#61](https://github.com/Werkstattl/OpenBlogware/pull/61)
+
 # 5.1.1
 - Fehler beim erneuten Speichern des Blog-Detail-Layouts behoben [#46](https://github.com/Werkstattl/OpenBlogware/issues/46)
 
